@@ -162,7 +162,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 197708156}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -340,16 +340,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1256513cc400de439d1942e22b93cfd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  xSize: 10
-  ySize: 10
+  xSize: 50
+  ySize: 50
   offset: 1
-  grass: {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
   path: {fileID: 2622019978693544177, guid: fe9e0b4e54b02274c919ab616935502e, type: 3}
-  water: {fileID: 2622019978693544177, guid: 994e86822ef59ac488769d7e347748f0, type: 3}
   blocks:
   - {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
+  - {fileID: 2622019978693544177, guid: be72b9b05a9612c45ab41f9437ed0e4a, type: 3}
+  - {fileID: 2622019978693544177, guid: fc13de09eed32d94680407112ce4a0ed, type: 3}
+  - {fileID: 2622019978693544177, guid: 29995df3bb9621a42be5191703054350, type: 3}
+  - {fileID: 2622019978693544177, guid: 48effd4b7e7b5bb43b6892b827da8a83, type: 3}
+  - {fileID: 2622019978693544177, guid: 26239fee09d09b543a3be98837d3f944, type: 3}
   - {fileID: 2622019978693544177, guid: 994e86822ef59ac488769d7e347748f0, type: 3}
-  - {fileID: 2622019978693544177, guid: fe9e0b4e54b02274c919ab616935502e, type: 3}
+  - {fileID: 2622019978693544177, guid: 60063876196e94d47989d5876c385a65, type: 3}
+  - {fileID: 2622019978693544177, guid: 89bf8744f90216649bc48e8227876991, type: 3}
+  - {fileID: 2622019978693544177, guid: 190acc38dc980294ebc894bc2c22fa87, type: 3}
+  - {fileID: 2622019978693544177, guid: 8078bbe20d0a34a48a055fb58065cca9, type: 3}
+  structCount: 5
+  minYSize: 3
+  maxYSize: 10
+  minXSize: 3
+  maxXSize: 10
+  spawningPoint: {x: 0, y: 0}
 --- !u!4 &721864335
 Transform:
   m_ObjectHideFlags: 0
@@ -417,7 +429,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 60
+  orthographic size: 15
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

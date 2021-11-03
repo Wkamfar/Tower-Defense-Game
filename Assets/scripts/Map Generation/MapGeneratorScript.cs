@@ -28,16 +28,39 @@ public class MapGeneratorScript : MonoBehaviour
         landmarkgenerator = new LandmarkGenerator();
         landgenerator = new LandGenerator();
         worldbuilder = new WorldBuilder();
-        GenerateMap(map);
+        GenerateMap();
     }
 
-    void GenerateMap(int[,] array)
+    void GenerateMap()
     {
-        array = new int[ySize, xSize];
-        pathgenerator.GeneratePath2(array);
-        array = landmarkgenerator.StructureGenerator(array, structCount, minYSize, maxYSize, minXSize, maxXSize);
-        array = landgenerator.LandGeneration(array);
+        CreateGrid(xSize, ySize);
+        pathgenerator.GeneratePath();
+        pathgenerator.GeneratePath2(5, 10, 5);
+        pathgenerator.GeneratePath2(2, 7, 3);
+        landmarkgenerator.StructureGenerator(structCount, minYSize, maxYSize, minXSize, maxXSize);
+        landgenerator.LandGeneration();
         //Add forest generation later
-        worldbuilder.SpawnBlocks(array, blocks, path, spawningPoint, offset);
+        worldbuilder.SpawnBlocks(blocks, path, spawningPoint, offset);
+    }
+    public static void CreateGrid(int _xLength, int _yLength)
+    {
+        MapData.xLength = _xLength;
+        MapData.yLength = _yLength;
+        for (int y = 0; y < _yLength; ++y)
+        {
+            List<int> row = new List<int>();
+            for (int x = 0; x < _xLength; ++x)
+            {
+                row.Add(0);
+            }
+            MapData.grid.Add(row);
+        }
+        MapData.startingPoint.Add(0);
+        MapData.startingPoint.Add(Random.Range(0, MapData.yLength));
+        MapData.endingPoint.Add(MapData.xLength - 1);
+        MapData.endingPoint.Add(Random.Range(0, MapData.yLength));
+        MapData.UpdateGrid(MapData.startingPoint, tiles.entrance);
+        MapData.UpdateGrid(MapData.endingPoint, tiles.exit);
+        MapData.isGridCreated = true;
     }
 }

@@ -4,19 +4,18 @@ using UnityEngine;
 
 public class LandGenerator
 {
-    public int[,] LandGeneration(int[,] array)
+    public void LandGeneration()
     {
-        for (int y = 0; y < array.GetLength(0); y++)
+        for (int y = 0; y < MapData.yLength; y++)
         {
-            for (int x = 0; x < array.GetLength(1); x++)
+            for (int x = 0; x < MapData.xLength; x++)
             {
-                if (array[y, x] == 0)
+                if (MapData.grid[y][x] == 0)
                 {
-                    array[y, x] = RandomTile();
+                    MapData.grid[y][x] = RandomTile();
                 }
             }
         }
-        return array;
     }
     int RandomTile()
     {

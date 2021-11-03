@@ -11,77 +11,76 @@ public class PathGenerator
     //improve the generation AI later
     //can add left later, doesn't need it now
     // make a path list here and upload it to path data later
-    public int[,] GeneratePath(int[,] array)
-    {
-        Vector2 startingPoint = new Vector2(0, Random.Range(0, array.GetLength(0)));
-        Vector2 endingPoint = new Vector2(array.GetLength(1) - 1, Random.Range(0, array.GetLength(0)));
-        Vector2 pathbuilderLocation = new Vector2(startingPoint.x, startingPoint.y);
-        array[(int)startingPoint.y, (int)startingPoint.x] = (int)tiles.entrance;
-        array[(int)endingPoint.y, (int)endingPoint.x] = (int)tiles.exit;
-        PathData.pathLocations.Add(startingPoint);
-        while (pathbuilderLocation != endingPoint)
-        {
-            bool[] pathbuilderConditions = new bool[] { pathbuilderLocation.x > 0, 
-                                                        pathbuilderLocation.x < array.GetLength(1) - 1,
-                                                        pathbuilderLocation.y < array.GetLength(0) - 1,
-                                                        pathbuilderLocation.y > 0}; // 0 = right, 1 = up, 2 = down
-            int[] xDirection = new int[] {-1, 1, 0, 0 };
-            int[] yDirection = new int[] { 0, 0, 1,-1 };
-            for (int i = 1; i < 4; i++)
-            {
-                if (pathbuilderConditions[i])
-                {
-                    if (array[(int)(pathbuilderLocation.y + yDirection[i]), (int)(pathbuilderLocation.x + xDirection[i])] == 0)
-                    {
-                        int currentDistance = (int)(Mathf.Abs(endingPoint.x - pathbuilderLocation.x) + Mathf.Abs(endingPoint.y - pathbuilderLocation.y));
-                        int moveDistance = (int)(Mathf.Abs(endingPoint.x - pathbuilderLocation.x - xDirection[i]) + Mathf.Abs(endingPoint.y - pathbuilderLocation.y - yDirection[i]));
-                        if (currentDistance > moveDistance)
-                        {
-                            pathbuilderLocation = new Vector2(pathbuilderLocation.x + xDirection[i], pathbuilderLocation.y + yDirection[i]);
-                            PathData.pathLocations.Add(pathbuilderLocation);
-                            array[(int)pathbuilderLocation.y, (int)pathbuilderLocation.x] = -3;
-                            continue;
-                        }
-                    }
-                    else if (array[(int)(pathbuilderLocation.y + yDirection[i]), (int)(pathbuilderLocation.x + xDirection[i])] == -2)
-                    {
-                        pathbuilderLocation = endingPoint;
-                        PathData.pathLocations.Add(endingPoint);
-                        continue;
-                    }
-                }
-            }
-        }
-        return array;
-    }
-    public void GeneratePath2(int[,] map)
+    public void GeneratePath()
     { // 1 = y, 0 = x
-        List<int> startingPoint = new List<int>() { 0, Random.Range(0, map.GetLength(0)) };
-        List<int> endingPoint = new List<int>() { map.GetLength(1) - 1, Random.Range(0, map.GetLength(0)) };
-        AddToPath(map, startingPoint, tiles.entrance);
-        AddToPath(map, endingPoint, tiles.exit);
-        int xSize = map.GetLength(1);
-        int ySize = map.GetLength(0);
-        int currentX = startingPoint[0];
-        int currentY = startingPoint[1];
-        for (currentX = 1; currentX < xSize; ++currentX) // ++x is faster than x++, but if x = 1 ++x would make it 2 and then use the value of x, and x++ would use the value of x and then make it 2
+        int currentX = MapData.startingPoint[0];
+        int currentY = MapData.startingPoint[1];
+        for (currentX = 1; currentX < MapData.xLength - 1; ++currentX) // ++x is faster than x++, but if x = 1 ++x would make it 2 and then use the value of x, and x++ would use the value of x and then make it 2
         {
-            
-            if (currentY > endingPoint[1])
+            if (currentY > MapData.endingPoint[1])
             {
                 --currentY;
             }
-            else if (currentY < endingPoint[1])
+            else if (currentY < MapData.endingPoint[1])
             {
                 ++currentY;
             }
-            AddToPath(map, new List<int>() { currentX, currentY }, tiles.path);
-
+            GeneratePathTile(currentX, currentY);
         }
+        SavePath();
     }
-    void AddToPath(int[,] map, List<int> point, tiles tile)
+    public void GeneratePath2(int min, int max, int cooldown)
+    { // 1 = y, 0 = x
+        int currentX = MapData.startingPoint[0];
+        int currentY = MapData.startingPoint[1];
+        int yDirection;
+        int gap = cooldown;
+        for (currentX = 1; currentX < MapData.xLength - 2; ++currentX) // ++x is faster than x++, but if x = 1 ++x would make it 2 and then use the value of x, and x++ would use the value of x and then make it 2
+        {
+            yDirection = Random.Range(0, 3);
+            yDirection--;
+            int yDisplacement = Random.Range(min, max);
+            gap = gap <= 0 ? -1 : gap;
+            for (;yDisplacement > 0; currentY += yDirection)
+            {
+                if (currentY < 0)
+                {
+                    currentY = 0;
+                    yDisplacement = 0;
+                }
+                if (currentY >= MapData.yLength)
+                {
+                    currentY = MapData.yLength - 1;
+                    yDisplacement = 0;
+                }
+                GeneratePathTile(currentX, currentY);
+                if (yDirection == 0 || gap > 0)
+                {
+                    --gap;
+                    currentY += yDirection;
+                    break;
+                }
+                --yDisplacement;
+            }
+            currentY -= yDirection;
+            gap = gap <= -1 ? cooldown : gap;
+        }
+        yDirection = currentY > MapData.endingPoint[1] ? -1 : 1;
+        while (currentY != MapData.endingPoint[1])
+        {
+            GeneratePathTile(currentX, currentY);
+            currentY += yDirection;
+        }
+        SavePath();
+    }
+    private void GeneratePathTile(int currentX, int currentY)
     {
-        PathData.listLocations.Add(point);
-        map[point[1], point[0]] = (int)tile;
+        PathData.pathLocations.Add(new List<int>() { currentX, currentY });
+        MapData.UpdateGrid(new List<int>() { currentX, currentY }, tiles.path);
+    }
+    private void SavePath()
+    {
+        PathData.possiblePaths.Add(PathData.pathLocations);
+        PathData.pathLocations.Clear();
     }
 }

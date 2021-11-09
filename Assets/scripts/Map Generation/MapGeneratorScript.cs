@@ -34,13 +34,14 @@ public class MapGeneratorScript : MonoBehaviour
     void GenerateMap()
     {
         CreateGrid(xSize, ySize);
-        pathgenerator.GeneratePath();
-        pathgenerator.GeneratePath2(5, 10, 5);
-        pathgenerator.GeneratePath2(2, 7, 3);
+        //pathgenerator.GeneratePath();
+        //pathgenerator.GeneratePath2(5, 10, 5);
+         pathgenerator.GeneratePath2(2, 7, 3);
         landmarkgenerator.StructureGenerator(structCount, minYSize, maxYSize, minXSize, maxXSize);
         landgenerator.LandGeneration();
         //Add forest generation later
         worldbuilder.SpawnBlocks(blocks, path, spawningPoint, offset);
+        MapData.isMapSpawned = true;
     }
     public static void CreateGrid(int _xLength, int _yLength)
     {

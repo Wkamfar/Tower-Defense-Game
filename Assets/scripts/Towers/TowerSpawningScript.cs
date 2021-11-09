@@ -4,15 +4,8 @@ using UnityEngine;
 
 public class Tower : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public void SpawnTower(Vector3 spawnLocation, GameObject Tower)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Instantiate(Tower, spawnLocation, Quaternion.identity);
     }
 }

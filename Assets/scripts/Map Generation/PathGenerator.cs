@@ -71,6 +71,7 @@ public class PathGenerator
             GeneratePathTile(currentX, currentY);
             currentY += yDirection;
         }
+        GeneratePathTile(currentX, currentY);
         SavePath();
     }
     private void GeneratePathTile(int currentX, int currentY)

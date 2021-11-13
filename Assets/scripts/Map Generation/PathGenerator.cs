@@ -11,8 +11,18 @@ public class PathGenerator
     //improve the generation AI later
     //can add left later, doesn't need it now
     // make a path list here and upload it to path data later
+    private static int currentPath = 0;
+    private void start()
+    {
+        if (currentPath > 0)
+        {
+            return;
+        }
+        PathData.possiblePaths.Add(new List<List<int>>());
+    }
     public void GeneratePath()
     { // 1 = y, 0 = x
+        start();
         int currentX = MapData.startingPoint[0];
         int currentY = MapData.startingPoint[1];
         for (currentX = 1; currentX < MapData.xLength - 1; ++currentX) // ++x is faster than x++, but if x = 1 ++x would make it 2 and then use the value of x, and x++ would use the value of x and then make it 2
@@ -31,6 +41,7 @@ public class PathGenerator
     }
     public void GeneratePath2(int min, int max, int cooldown)
     { // 1 = y, 0 = x
+        start();
         int currentX = MapData.startingPoint[0];
         int currentY = MapData.startingPoint[1];
         int yDirection;
@@ -72,16 +83,17 @@ public class PathGenerator
             currentY += yDirection;
         }
         GeneratePathTile(currentX, currentY);
+        GeneratePathTile(currentX + 1, currentY);
         SavePath();
     }
     private void GeneratePathTile(int currentX, int currentY)
     {
-        PathData.pathLocations.Add(new List<int>() { currentX, currentY });
+        PathData.possiblePaths[currentPath].Add(new List<int>() { currentX, currentY });
         MapData.UpdateGrid(new List<int>() { currentX, currentY }, tiles.path);
     }
     private void SavePath()
     {
-        PathData.possiblePaths.Add(PathData.pathLocations);
-        PathData.pathLocations.Clear();
+        PathData.possiblePaths.Add(new List<List<int>>());
+        currentPath++;
     }
 }

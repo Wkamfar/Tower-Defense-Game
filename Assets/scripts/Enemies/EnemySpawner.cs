@@ -5,25 +5,35 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour
 {
     public GameObject enemy;
-    private Queue<GameObject> enemiesToSpawn;
+    private Queue<GameObject> enemiesToSpawn; // Queue<(GameObject, float)>
+    private float timer = 0;
     // Start is called before the first frame update
     void Start()
     {
         enemiesToSpawn = new Queue<GameObject>();
-        enemiesToSpawn.Enqueue(enemy);
+        for (int i = 0; i < 50; i++)
+        {
+            enemiesToSpawn.Enqueue(enemy);
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (MapData.isMapSpawned && enemiesToSpawn.Count > 0)
+        if (MapData.isMapSpawned && enemiesToSpawn.Count > 0 && timer <= 0)
         {
-            Spawn(enemiesToSpawn.Dequeue());
+            GameObject unit = enemiesToSpawn.Dequeue();
+            Spawn(unit);
+            timer = unit.GetComponent<EnemyAI>().GetSpawnRate();
+        }
+        else if (timer > 0)
+        {
+            timer -= Time.deltaTime;
         }
     }
+    
     public void Spawn(GameObject _enemy)
     {
         GameObject currentEnemy = Instantiate(_enemy, MapData.PointToRealWorld(MapData.startingPoint), Quaternion.identity);
-        Debug.Log("This function happened");
     }
 }

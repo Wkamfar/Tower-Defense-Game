@@ -9,6 +9,7 @@ public class WorldBuilder : MonoBehaviour
         Vector2 startingLocation = new Vector2(centerPoint.x + MapData.xLength / 2 * -offset, centerPoint.y + MapData.yLength / 2 * offset);
         Vector2 spawningLocation = new Vector2(startingLocation.x, startingLocation.y);
         CalculateOffset(startingLocation.x, startingLocation.y, offset);
+        ConvertPathToReal();
         for (int y = 0; y < MapData.yLength; y++)
         {
             for (int x = 0; x < MapData.xLength; x++)
@@ -33,5 +34,18 @@ public class WorldBuilder : MonoBehaviour
         MapData.offset.Add(x);
         MapData.offset.Add(y);
         MapData.offset.Add(d);
+    }
+    private void ConvertPathToReal()
+    {
+        int currentPath = 0;
+        for (int i = 0; i < PathData.possiblePaths.Count; i++)
+        {
+            PathData.realPossiblePaths.Add(new List<Vector3>());
+            for (int j = 0; j < PathData.possiblePaths[i].Count; j++)
+            {
+                PathData.realPossiblePaths[currentPath].Add(MapData.PointToRealWorld(PathData.possiblePaths[i][j]));
+            }
+            currentPath++;
+        }
     }
 }

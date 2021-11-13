@@ -22,6 +22,7 @@ public class TowerSelectionScript : MonoBehaviour
             {
                 p.GetComponent<Image>().color = normalColor;
             }
+            TowerData.hasSelectedTower = false;
             TowerSelectionMenu.SetActive(false);
 
         }
@@ -32,12 +33,14 @@ public class TowerSelectionScript : MonoBehaviour
     }
     public void TowerSelectionButtonPressed()
     {
-        GameObject pressedButton = EventSystem.current.currentSelectedGameObject;
-        currentTower = pressedButton.GetComponent<TowerButtonData>().Tower;
+
         foreach(GameObject p in GameObject.FindGameObjectsWithTag("TowerButton"))
         {
             p.GetComponent<Image>().color = normalColor;
         }
+        GameObject pressedButton = EventSystem.current.currentSelectedGameObject;
         pressedButton.GetComponent<Image>().color = selectedColor;
+        TowerData.hasSelectedTower = true;
+        TowerData.selectedTower = pressedButton.GetComponent<TowerButtonData>().Tower;
     }
 }

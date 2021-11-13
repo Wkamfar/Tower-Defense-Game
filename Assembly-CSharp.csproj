@@ -59,9 +59,12 @@
     <Compile Include="Assets\scripts\Map Generation\LandGenerator.cs" />
     <Compile Include="Assets\scripts\Map Generation\MapData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
+    <Compile Include="Assets\scripts\Towers\TowerButtonData.cs" />
     <Compile Include="Assets\scripts\Towers\TowerData.cs" />
+    <Compile Include="Assets\scripts\Enemies\EnemySpawner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\scripts\Map Generation\ForestGenerator.cs" />
+    <Compile Include="Assets\scripts\Player\PlayerActionScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
@@ -79,6 +82,8 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
+    <Compile Include="Assets\scripts\Player\MoneyManager.cs" />
+    <Compile Include="Assets\scripts\Enemies\EnemyAI.cs" />
     <Compile Include="Assets\scripts\Info.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\CameraController.cs" />
@@ -102,11 +107,9 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\scripts\Map Generation\MapGeneratorScript.cs" />
-    <Compile Include="Assets\scripts\Player\PlayerActionScript.cs" />
-    <Compile Include="Assets\scripts\Player\MoneyManager.cs" />
-    <Compile Include="Assets\scripts\Enemies\Enemy AI.cs" />
-    <Compile Include="Assets\scripts\Towers\TowerButtonData.cs" />
-    <Compile Include="Assets\scripts\Enemies\EnemySpawner.cs" />
+    <Compile Include="Assets\scripts\Towers\TowerStats.cs" />
+    <Compile Include="Assets\scripts\Towers\TowerTargeting.cs" />
+    <Compile Include="Assets\scripts\Towers\RadiusDetection.cs" />
   </ItemGroup>
   <ItemGroup>
      <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

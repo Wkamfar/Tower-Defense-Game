@@ -8,9 +8,11 @@ public enum Towers
     barracks = 2,
     solar_laser = 3,
     black_hole_gun = 4,
-    support_beacon = 5
+    support_beacon = 5,
+    farm = 6
 }
 public static class TowerData
 {
-    
+    public static GameObject selectedTower;
+    public static bool hasSelectedTower = false;
 }

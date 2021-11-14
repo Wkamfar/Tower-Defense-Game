@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 public class EnemyAI : MonoBehaviour
 {
     // Make an explosion effect on the death of enemies
-    private float maxHp;
+    [SerializeField]private float maxHp;
+    [SerializeField]private int damage;
     public float spawnRate = 1f;
     private float currentHp;
     private float movementSpeed = 10f;
@@ -22,12 +23,17 @@ public class EnemyAI : MonoBehaviour
     }
     private void Start()
     {
+        currentHp = maxHp;
         GetRandomPath();
         AI = this.gameObject;
     }
     private void Update()
     {
         Move();
+        if (currentHp <= 0 && !IsDead)
+        {
+            KillAI();
+        }
     }
     public float GetSpawnRate()
     {
@@ -37,10 +43,8 @@ public class EnemyAI : MonoBehaviour
     {
         if (currentWaypoint >= PathData.realPossiblePaths[currentPath].Count && !IsDead)
         {
-            //Add explosion particle
-            Instantiate(deathEffect, this.gameObject.transform.position, Quaternion.identity, this.gameObject.transform);
-            Invoke("DespawnBody", 1f);
-            IsDead = true;
+            PlayerData.TakeDamage(damage);
+            KillAI();
         }
         if (IsDead)
         {
@@ -55,6 +59,13 @@ public class EnemyAI : MonoBehaviour
         }
         
     }
+    private void KillAI()
+    {
+        //Add explosion particle
+        Instantiate(deathEffect, this.gameObject.transform.position, Quaternion.identity, this.gameObject.transform);
+        Invoke("DespawnBody", 1f);
+        IsDead = true;
+    }
     private void DespawnBody()
     {
         Destroy(this.gameObject);
@@ -64,5 +75,9 @@ public class EnemyAI : MonoBehaviour
         float x = Mathf.Abs(this.transform.position.x - PathData.realPossiblePaths[currentPath][currentWaypoint].x);
         float y = Mathf.Abs(this.transform.position.z - PathData.realPossiblePaths[currentPath][currentWaypoint].z);
         return Mathf.Sqrt(x * x + y * y);
+    }
+    public void TakeDamage(float damage)
+    {
+        currentHp -= damage;
     }
 }

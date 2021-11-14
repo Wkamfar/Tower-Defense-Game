@@ -24,6 +24,10 @@ public class TowerTargeting : MonoBehaviour
     }//Do these two later
     public GameObject FirstEnemy()
     {
+        while (targets.Count > 0 && !targets[0])
+        {
+            DeleteDeadObject(0);
+        }
         if (targets.Count > 0)
         {
             return targets[0];
@@ -37,5 +41,9 @@ public class TowerTargeting : MonoBehaviour
             return targets[targets.Count - 1];
         }
         return null;
+    }
+    private void DeleteDeadObject(int i)
+    {
+        targets.Remove(targets[i]);
     }
 }

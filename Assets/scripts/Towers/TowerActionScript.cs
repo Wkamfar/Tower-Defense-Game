@@ -5,6 +5,7 @@ using UnityEngine;
 public class TowerActionScript : MonoBehaviour
 {
     public GameObject targetedEnemy;
+    private float shotTimer;
     // Update is called once per frame
     void Update()
     {
@@ -12,6 +13,10 @@ public class TowerActionScript : MonoBehaviour
         if (HasEnemy())
         {
             TrackEnemy();
+            if (CanShoot())
+            {
+                HitScanShoot();
+            }
         }
     }
     bool HasEnemy()
@@ -43,5 +48,23 @@ public class TowerActionScript : MonoBehaviour
         angle = Mathf.Abs(360 - angle);
         this.gameObject.transform.rotation = Quaternion.Euler(this.gameObject.transform.rotation.x, angle, this.gameObject.transform.rotation.z);
 
+    }
+    void HitScanShoot()
+    {
+        shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
+        targetedEnemy.GetComponent<EnemyAI>().TakeDamage(this.gameObject.GetComponent<TowerStats>().damage);
+    }
+    void ProjectileShoot()
+    {
+
+    }
+    bool CanShoot()
+    {
+        if (shotTimer > 0)
+        {
+            shotTimer -= Time.deltaTime;
+            return false;
+        }
+        return true;
     }
 }

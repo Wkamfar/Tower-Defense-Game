@@ -1069,7 +1069,7 @@ GameObject:
   - component: {fileID: 850674847}
   - component: {fileID: 850674846}
   m_Layer: 0
-  m_Name: Turret Selection Turret
+  m_Name: Turret Selection Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1233,7 +1233,7 @@ GameObject:
   - component: {fileID: 886015654}
   - component: {fileID: 886015653}
   m_Layer: 0
-  m_Name: Farm Selection Turret
+  m_Name: Farm Selection Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1386,6 +1386,7 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 610912450}
+  - {fileID: 1306063585}
   m_Father: {fileID: 963194228}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2119,6 +2120,41 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1151539650}
   m_CullTransparentMesh: 1
+--- !u!1 &1306063584
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1306063585}
+  m_Layer: 0
+  m_Name: Tower Menu Holder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1306063585
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1306063584}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 891345824}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1331654587
 GameObject:
   m_ObjectHideFlags: 0
@@ -2959,7 +2995,7 @@ GameObject:
   - component: {fileID: 1551747421}
   - component: {fileID: 1551747420}
   m_Layer: 0
-  m_Name: Barracks Selection Turret
+  m_Name: Barracks Selection Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3654,6 +3690,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   height: 1.5
   mouseFollower: {fileID: 851661976}
+  towerMenu: {fileID: 7788001142562653385, guid: 15b7efd73bb0bfc42bae55fe9ae5cc6b, type: 3}
+  towerMenuHolder: {fileID: 1306063584}
   towerRadius: {fileID: 7286095809447431495, guid: 86d246d82d03b4c4f95c5a4a474fde8b, type: 3}
 --- !u!4 &2032738413
 Transform:

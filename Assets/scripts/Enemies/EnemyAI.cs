@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class EnemyAI : MonoBehaviour
 {
@@ -13,7 +14,8 @@ public class EnemyAI : MonoBehaviour
     private int currentWaypoint = 0;
     private float minDistance = 0.1f;
     private GameObject AI;
-
+    public GameObject deathEffect;
+    private bool IsDead;
     private void GetRandomPath()
     {
         currentPath = Random.Range(0, PathData.realPossiblePaths.Count - 1);
@@ -33,10 +35,15 @@ public class EnemyAI : MonoBehaviour
     }
     private void Move()
     {
-        if (currentWaypoint >= PathData.realPossiblePaths[currentPath].Count)
+        if (currentWaypoint >= PathData.realPossiblePaths[currentPath].Count && !IsDead)
         {
             //Add explosion particle
-            Destroy(this.gameObject);
+            Instantiate(deathEffect, this.gameObject.transform.position, Quaternion.identity, this.gameObject.transform);
+            Invoke("DespawnBody", 1f);
+            IsDead = true;
+        }
+        if (IsDead)
+        {
             return;
         }
         //Debug.Log("EnemyAI.Move: This happened");
@@ -47,6 +54,10 @@ public class EnemyAI : MonoBehaviour
             currentWaypoint++;
         }
         
+    }
+    private void DespawnBody()
+    {
+        Destroy(this.gameObject);
     }
     private float GetDistance()
     {

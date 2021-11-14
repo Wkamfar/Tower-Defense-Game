@@ -6,16 +6,36 @@ public class TowerTargeting : MonoBehaviour
 {
     //add anything that comes into the radius and can be shot into a list, and then from there choose the priority, either strongest target, first target, or last target, and then remove them when they leave the radius
     public List<GameObject> targets;
-    private GameObject chosenTarget;
-    // Start is called before the first frame update
-    void Start()
+    public GameObject StrongestEnemy()
     {
-        
-    }
+        if (targets.Count > 0)
+        {
 
-    // Update is called once per frame
-    void Update()
+        }
+        return null;
+    }
+    public GameObject WeakestEnemy()
     {
-        
+        if (targets.Count > 0)
+        {
+
+        }
+        return null;
+    }//Do these two later
+    public GameObject FirstEnemy()
+    {
+        if (targets.Count > 0)
+        {
+            return targets[0];
+        }
+        return null;
+    }
+    public GameObject LastEnemy()
+    {
+        if (targets.Count > 0)
+        {
+            return targets[targets.Count - 1];
+        }
+        return null;
     }
 }

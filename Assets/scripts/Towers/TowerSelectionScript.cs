@@ -12,24 +12,31 @@ public class TowerSelectionScript : MonoBehaviour
     public Color normalColor;
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) { MenuButtonPressed(); }
+        if (Input.GetKeyDown(KeyCode.Escape)) { MenuToggle(); }
     }
-    void MenuButtonPressed()
+    void MenuToggle()
     {
         if (TowerSelectionMenu.activeInHierarchy)
         {
-            foreach (GameObject p in GameObject.FindGameObjectsWithTag("TowerButton"))
-            {
-                p.GetComponent<Image>().color = normalColor;
-            }
-            TowerData.hasSelectedTower = false;
-            TowerSelectionMenu.SetActive(false);
-
+            CloseMenu();
         }
         else
         {
-            TowerSelectionMenu.SetActive(true);
+            OpenMenu();
         }
+    }
+    public void CloseMenu()
+    {
+        foreach (GameObject p in GameObject.FindGameObjectsWithTag("TowerButton"))
+        {
+            p.GetComponent<Image>().color = normalColor;
+        }
+        TowerData.hasSelectedTower = false;
+        TowerSelectionMenu.SetActive(false);
+    }
+    public void OpenMenu()
+    {
+        TowerSelectionMenu.SetActive(true);
     }
     public void TowerSelectionButtonPressed()
     {

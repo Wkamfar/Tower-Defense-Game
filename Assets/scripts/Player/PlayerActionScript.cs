@@ -25,7 +25,6 @@ public class PlayerActionScript : MonoBehaviour
         //Debug.Log("The mouse position is: (" + mousePos.x + ", " + mousePos.z + ")");
     }*/
     public float height;
-    public GameObject mouseFollower;
     public GameObject towerMenu;
     public GameObject towerMenuHolder;
     public GameObject towerRadius;
@@ -34,7 +33,6 @@ public class PlayerActionScript : MonoBehaviour
     {
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 spawnPos = new Vector3(mousePos.x, height, mousePos.z);
-        mouseFollower.transform.position = spawnPos;
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             if (CanPlaceTower())
@@ -46,23 +44,23 @@ public class PlayerActionScript : MonoBehaviour
             RaycastHit hit;
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             LayerMask layerMask = LayerMask.GetMask("Tower");
-            if (!CanPlaceTower() && Physics.Raycast(ray, out hit, layerMask))
+            if (!CanPlaceTower() && Physics.Raycast(ray, out hit, 100, layerMask))
             {
                 if(hit.collider.gameObject.tag == "Tower")
                 {
                     hit.collider.gameObject.GetComponent<TowerMenuScript>().OpenTowerMenu();
                 }
-                else if (hit.collider.gameObject.name == "Tower Radius(Clone)")
+                /*else if (hit.collider.gameObject.name == "Tower Radius(Clone)")
                 {
                     GameObject tower = hit.collider.gameObject.GetComponent<RadiusDetection>().tower;
                     tower.GetComponent<TowerMenuScript>().OpenTowerMenu();
-                }
+                }*/
             }
         }
     }
     private bool CanPlaceTower()
     {
-        if (!TowerData.hasSelectedTower || IsMouseOverUI())
+        if (!TowerData.hasSelectedTower || IsMouseOverUI() || PlayerData.playerMoney < TowerData.selectedTower.GetComponent<TowerStats>().cost)
         {
             return false;
         }
@@ -79,6 +77,7 @@ public class PlayerActionScript : MonoBehaviour
     {
         //Add a spawning effect
         GameObject currentTower = Instantiate(TowerData.selectedTower, spawnPos, Quaternion.identity);
+        PlayerData.ChangeMoney(-currentTower.GetComponent<TowerStats>().cost);
         SpawnRadius(currentTower);
         SpawnMenu(currentTower);
     }

@@ -6,9 +6,13 @@ public static class PlayerData
 {
     public static float playerMaxHp = 150;
     public static float playerCurrentHp = 150;
-    public static int playerMoney;
-    public static void TakeDamage(int damage)
+    public static int playerMoney = 100;
+    public static void ChangeHealth(int amount)
     {
-        playerCurrentHp -= damage;
+        playerCurrentHp += amount;
+    }
+    public static void ChangeMoney(int amount)
+    {
+        playerMoney += amount;
     }
 }

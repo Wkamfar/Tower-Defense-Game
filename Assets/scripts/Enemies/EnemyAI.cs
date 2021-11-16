@@ -2,17 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-
+using UnityEngine.Profiling;
 public class EnemyAI : MonoBehaviour
 {
     // Make an explosion effect on the death of enemies
-    [SerializeField]private float maxHp;
-    [SerializeField]private int damage;
+    [SerializeField] private float maxHp;
+    [SerializeField] private int damage;
+    [SerializeField] private float movementSpeed = 10f;
     public float spawnRate = 1f;
     private float currentHp;
-    private float movementSpeed = 10f;
     private int currentPath;
-    private int currentWaypoint = 0;
+    public int currentWaypoint = 0;
     private float minDistance = 0.1f;
     private GameObject AI;
     public GameObject deathEffect;
@@ -34,6 +34,7 @@ public class EnemyAI : MonoBehaviour
         {
             KillAI();
         }
+        UseAbility();
     }
     public float GetSpawnRate()
     {
@@ -43,7 +44,7 @@ public class EnemyAI : MonoBehaviour
     {
         if (currentWaypoint >= PathData.realPossiblePaths[currentPath].Count && !IsDead)
         {
-            PlayerData.TakeDamage(damage);
+            PlayerData.ChangeHealth(-damage);
             KillAI();
         }
         if (IsDead)
@@ -79,5 +80,14 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(float damage)
     {
         currentHp -= damage;
+        DamageIndicator();
+    }
+    private void DamageIndicator()
+    {
+        this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+    }
+    protected virtual void UseAbility()
+    {
+
     }
 }

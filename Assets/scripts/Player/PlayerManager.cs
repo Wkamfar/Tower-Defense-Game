@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
 {
     public GameObject healthBar;
     public TextMeshProUGUI healthBarText;
+    public TextMeshProUGUI coinCount;
     public GameObject deathCanvas;
     // Start is called before the first frame update
     void Start()
@@ -24,6 +25,7 @@ public class PlayerManager : MonoBehaviour
         }
         healthBar.GetComponent<Slider>().value = PlayerData.playerCurrentHp / PlayerData.playerMaxHp;
         healthBarText.text = PlayerData.playerCurrentHp.ToString();
+        coinCount.text = PlayerData.playerMoney.ToString();
     }
     public void KillPlayer()
     {

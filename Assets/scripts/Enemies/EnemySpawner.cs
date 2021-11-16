@@ -11,7 +11,7 @@ public class EnemySpawner : MonoBehaviour
     void Start()
     {
         enemiesToSpawn = new Queue<GameObject>();
-        for (int i = 0; i < 50; i++)
+        for (int i = 0; i < 1; i++)
         {
             enemiesToSpawn.Enqueue(enemy);
         }

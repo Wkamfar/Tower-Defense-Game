@@ -6,10 +6,18 @@ using UnityEngine.UI;
 public class TowerSelectionScript : MonoBehaviour
 {
     public GameObject[] towers;
+    public GameObject[] buttons;
     public GameObject TowerSelectionMenu;
     private GameObject currentTower;
     public Color selectedColor;
     public Color normalColor;
+    private void Start()
+    {
+        foreach (GameObject b in buttons)
+        {
+            GameObject tower = b.GetComponent<TowerButtonData>().Tower;
+        }
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape)) { MenuToggle(); }

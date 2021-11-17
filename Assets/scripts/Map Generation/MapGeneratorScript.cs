@@ -35,7 +35,7 @@ public class MapGeneratorScript : MonoBehaviour
     {
         CreateGrid(xSize, ySize);
         //pathgenerator.GeneratePath();
-        //pathgenerator.GeneratePath2(5, 10, 5);
+        pathgenerator.GeneratePath2(5, 10, 5);
         pathgenerator.GeneratePath2(2, 7, 3);
         //pathgenerator.GeneratePath2(10, 4, 1);
         landmarkgenerator.StructureGenerator(structCount, minYSize, maxYSize, minXSize, maxXSize);

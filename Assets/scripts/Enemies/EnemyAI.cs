@@ -7,19 +7,23 @@ public class EnemyAI : MonoBehaviour
 {
     // Make an explosion effect on the death of enemies
     [SerializeField] private float maxHp;
+    [SerializeField] private int bounty;
     [SerializeField] private int damage;
     [SerializeField] private float movementSpeed = 10f;
-    public float spawnRate = 1f;
+    public int cost;
     private float currentHp;
-    private int currentPath;
+    public int currentPath = -1;
     public int currentWaypoint = 0;
     private float minDistance = 0.1f;
     private GameObject AI;
     public GameObject deathEffect;
-    private bool IsDead;
+    public bool IsDead;
     private void GetRandomPath()
     {
-        currentPath = Random.Range(0, PathData.realPossiblePaths.Count - 1);
+        if (currentPath == -1)
+        {
+            currentPath = Random.Range(0, PathData.realPossiblePaths.Count - 1); 
+        }
     }
     private void Start()
     {
@@ -36,14 +40,11 @@ public class EnemyAI : MonoBehaviour
         }
         UseAbility();
     }
-    public float GetSpawnRate()
-    {
-        return spawnRate;
-    }
     private void Move()
     {
         if (currentWaypoint >= PathData.realPossiblePaths[currentPath].Count && !IsDead)
         {
+            bounty = 0;
             PlayerData.ChangeHealth(-damage);
             KillAI();
         }
@@ -62,10 +63,10 @@ public class EnemyAI : MonoBehaviour
     }
     private void KillAI()
     {
-        //Add explosion particle
-        Instantiate(deathEffect, this.gameObject.transform.position, Quaternion.identity, this.gameObject.transform);
+        //Instantiate(deathEffect, this.gameObject.transform.position, Quaternion.identity, this.gameObject.transform);
         Invoke("DespawnBody", 1f);
         IsDead = true;
+        PlayerData.ChangeMoney(bounty);
     }
     private void DespawnBody()
     {

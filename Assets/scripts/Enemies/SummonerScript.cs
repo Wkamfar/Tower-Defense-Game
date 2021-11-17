@@ -6,22 +6,32 @@ public class SummonerScript : EnemyAI
 {
     [SerializeField] private GameObject spawnedEnemy;
     [SerializeField] private int spawningAmount;
-    [SerializeField] private float spawningRate;
+    [SerializeField] private float SPAWNING_TIMER;
+    [SerializeField] private float spawnDelay;
     private float spawningTimer;
     [SerializeField] private int spawningMax;
-    [SerializeField] private List<GameObject> summonedEnemies;
+    public List<GameObject> summonedEnemies = new List<GameObject>();
     protected override void UseAbility()
     {
         if (spawningTimer <= 0 && summonedEnemies.Count < spawningMax)
         {
             for (int i = 0; i < spawningAmount; ++i)
             {
-                GameObject currentEnemy = Instantiate(spawnedEnemy, this.gameObject.transform.position, Quaternion.identity);
-                currentEnemy.GetComponent<EnemyAI>().currentWaypoint = currentWaypoint;
-            summonedEnemies.Add(currentEnemy);
+                Invoke("Spawn", i * spawnDelay); 
             }
-            spawningTimer = spawningRate;
+            spawningTimer = SPAWNING_TIMER;
         }
         spawningTimer -= Time.deltaTime;
+    }
+    private void Spawn()
+    {
+        if (summonedEnemies.Count >= spawningMax)
+        {
+            return;
+        }
+        GameObject currentEnemy = Instantiate(spawnedEnemy, this.gameObject.transform.position, Quaternion.identity);
+        currentEnemy.GetComponent<EnemyAI>().currentPath = currentPath;
+        currentEnemy.GetComponent<EnemyAI>().currentWaypoint = currentWaypoint;
+        summonedEnemies.Add(currentEnemy); 
     }
 }

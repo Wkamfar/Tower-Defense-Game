@@ -24,7 +24,7 @@ public class TowerTargeting : MonoBehaviour
     }//Do these two later
     public GameObject FirstEnemy()
     {
-        while (targets.Count > 0 && !targets[0])
+        while (targets.Count > 0 && (!targets[0] || targets[0].GetComponent<EnemyAI>().IsDead))
         {
             DeleteDeadObject(0);
         }

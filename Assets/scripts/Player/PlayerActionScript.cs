@@ -46,15 +46,15 @@ public class PlayerActionScript : MonoBehaviour
             LayerMask layerMask = LayerMask.GetMask("Tower");
             if (!CanPlaceTower() && Physics.Raycast(ray, out hit, 100, layerMask))
             {
-                if(hit.collider.gameObject.tag == "Tower")
+                hit.collider.gameObject.GetComponent<TowerMenuScript>().OpenTowerMenu();
+            }
+            else if (CanPlaceTower())
+            {
+                GameObject[] towerMenus = GameObject.FindGameObjectsWithTag("Tower");
+                foreach (GameObject t in towerMenus)
                 {
-                    hit.collider.gameObject.GetComponent<TowerMenuScript>().OpenTowerMenu();
+                    t.GetComponent<TowerMenuScript>().CloseTowerMenu();
                 }
-                /*else if (hit.collider.gameObject.name == "Tower Radius(Clone)")
-                {
-                    GameObject tower = hit.collider.gameObject.GetComponent<RadiusDetection>().tower;
-                    tower.GetComponent<TowerMenuScript>().OpenTowerMenu();
-                }*/
             }
         }
     }

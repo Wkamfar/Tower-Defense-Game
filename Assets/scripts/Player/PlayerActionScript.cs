@@ -44,11 +44,11 @@ public class PlayerActionScript : MonoBehaviour
             RaycastHit hit;
             ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             LayerMask layerMask = LayerMask.GetMask("Tower");
-            if (!CanPlaceTower() && Physics.Raycast(ray, out hit, 100, layerMask))
+            if (!CanSelectTower() && Physics.Raycast(ray, out hit, 100, layerMask))
             {
                 hit.collider.gameObject.GetComponent<TowerMenuScript>().OpenTowerMenu();
             }
-            else if (CanPlaceTower())
+            else if (CanSelectTower())
             {
                 GameObject[] towerMenus = GameObject.FindGameObjectsWithTag("Tower");
                 foreach (GameObject t in towerMenus)
@@ -64,10 +64,15 @@ public class PlayerActionScript : MonoBehaviour
         {
             return false;
         }
-        else
+        return true;
+    }
+    private bool CanSelectTower()
+    {
+        if (TowerData.hasSelectedTower || !IsMouseOverUI())
         {
-            return true;
+            return false;
         }
+        return true;
     }
     private bool IsMouseOverUI()
     {

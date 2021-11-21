@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WorldBuilder : MonoBehaviour
 {
-    public void SpawnBlocks(GameObject[] blockReferences, GameObject pathReference, Vector2 centerPoint, float offset)
+    public void SpawnBlocks(GameObject[] blockReferences, GameObject pathReference, GameObject beaconReference, Vector2 centerPoint, float offset)
     {
         Vector2 startingLocation = new Vector2(centerPoint.x + MapData.xLength / 2 * -offset, centerPoint.y + MapData.yLength / 2 * offset);
         Vector2 spawningLocation = new Vector2(startingLocation.x, startingLocation.y);
@@ -18,6 +18,11 @@ public class WorldBuilder : MonoBehaviour
                 if (MapData.grid[y][x] == (int)tiles.path || MapData.grid[y][x] == (int)tiles.exit || MapData.grid[y][x] == (int)tiles.entrance)
                 {
                     Instantiate(pathReference, new Vector3(spawningLocation.x, 0, spawningLocation.y), Quaternion.identity);
+                }
+                else if (MapData.grid[y][x] == (int)tiles.beacon)
+                {
+                    Instantiate(blockReferences[0], new Vector3(spawningLocation.x, 0, spawningLocation.y), Quaternion.identity);
+                    Instantiate(beaconReference, new Vector3(spawningLocation.x, 1.5f, spawningLocation.y), Quaternion.identity);
                 }
                 else
                 {

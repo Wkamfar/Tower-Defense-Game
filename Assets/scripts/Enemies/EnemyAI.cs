@@ -10,6 +10,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private int bounty;
     [SerializeField] private int damage;
     [SerializeField] private float movementSpeed = 10f;
+    [SerializeField] private int level;
     public int cost;
     private float currentHp;
     public int currentPath = -1;

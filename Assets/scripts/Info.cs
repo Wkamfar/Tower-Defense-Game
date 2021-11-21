@@ -13,6 +13,7 @@ public enum tiles
     entrance = -1,
     exit = -2,
     path = -3,
+    beacon = -4,
     grass = 0,
     crystal = 1,
     plutonium = 2,

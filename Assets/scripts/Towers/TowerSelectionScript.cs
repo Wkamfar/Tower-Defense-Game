@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using TMPro;
 public class TowerSelectionScript : MonoBehaviour
 {
     public GameObject[] towers;
     public GameObject[] buttons;
-    public GameObject TowerSelectionMenu;
     private GameObject currentTower;
     public Color selectedColor;
     public Color normalColor;
@@ -16,35 +16,25 @@ public class TowerSelectionScript : MonoBehaviour
         foreach (GameObject b in buttons)
         {
             GameObject tower = b.GetComponent<TowerButtonData>().Tower;
+            TextMeshProUGUI priceTextBox = b.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            priceTextBox.text = tower.GetComponent<TowerStats>().cost.ToString();
         }
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape)) { MenuToggle(); }
-    }
-    void MenuToggle()
-    {
-        if (TowerSelectionMenu.activeInHierarchy)
+        if (Input.GetKeyDown(KeyCode.Escape)) 
         {
-            CloseMenu();
-        }
-        else
-        {
-            OpenMenu();
+            DeselectTower();
         }
     }
-    public void CloseMenu()
+
+    public void DeselectTower()
     {
         foreach (GameObject p in GameObject.FindGameObjectsWithTag("TowerButton"))
         {
             p.GetComponent<Image>().color = normalColor;
         }
         TowerData.hasSelectedTower = false;
-        TowerSelectionMenu.SetActive(false);
-    }
-    public void OpenMenu()
-    {
-        TowerSelectionMenu.SetActive(true);
     }
     public void TowerSelectionButtonPressed()
     {

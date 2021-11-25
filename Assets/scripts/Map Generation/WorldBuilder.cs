@@ -14,21 +14,20 @@ public class WorldBuilder : MonoBehaviour
         {
             for (int x = 0; x < MapData.xLength; x++)
             {
-
+                GameObject currentBlock;
                 if (MapData.grid[y][x] == (int)tiles.path || MapData.grid[y][x] == (int)tiles.exit || MapData.grid[y][x] == (int)tiles.entrance)
                 {
-                    Instantiate(pathReference, new Vector3(spawningLocation.x, 0, spawningLocation.y), Quaternion.identity);
+                    currentBlock = Instantiate(pathReference, new Vector3(spawningLocation.x, 0, spawningLocation.y), Quaternion.identity);
                 }
                 else if (MapData.grid[y][x] == (int)tiles.beacon)
                 {
-                    Instantiate(blockReferences[0], new Vector3(spawningLocation.x, 0, spawningLocation.y), Quaternion.identity);
-                    Instantiate(beaconReference, new Vector3(spawningLocation.x, 1.5f, spawningLocation.y), Quaternion.identity);
+                    currentBlock = Instantiate(blockReferences[0], new Vector3(spawningLocation.x, 0, spawningLocation.y), Quaternion.identity);
+                    GameObject currentBeacon = Instantiate(beaconReference, new Vector3(spawningLocation.x, 1.5f, spawningLocation.y), Quaternion.identity);
                 }
                 else
                 {
-                    Instantiate(blockReferences[MapData.grid[y][x]], new Vector3(spawningLocation.x, 0, spawningLocation.y), Quaternion.identity);
+                    currentBlock = Instantiate(blockReferences[MapData.grid[y][x]], new Vector3(spawningLocation.x, 0, spawningLocation.y), Quaternion.identity);
                 }
-                
                 spawningLocation = new Vector2(spawningLocation.x + offset, spawningLocation.y);
             }
             spawningLocation = new Vector2(startingLocation.x, spawningLocation.y - offset);

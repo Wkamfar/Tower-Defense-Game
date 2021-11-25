@@ -25,6 +25,7 @@ public class MapGeneratorScript : MonoBehaviour
     private WorldBuilder worldbuilder;
     void Start()
     {
+        MapData.mapCenter = spawningPoint;
         pathgenerator = new PathGenerator();
         landmarkgenerator = new LandmarkGenerator();
         landgenerator = new LandGenerator();
@@ -43,7 +44,7 @@ public class MapGeneratorScript : MonoBehaviour
         landgenerator.LandGeneration();
         //Add forest generation later
         PlaceBeacon(3);
-        worldbuilder.SpawnBlocks(blocks, path, beacon, spawningPoint, offset);
+        worldbuilder.SpawnBlocks(blocks, path, beacon, MapData.mapCenter, offset);
         MapData.isMapSpawned = true;
     }
     public static void CreateGrid(int _xLength, int _yLength)
@@ -59,6 +60,7 @@ public class MapGeneratorScript : MonoBehaviour
             }
             MapData.grid.Add(row);
         }
+        
         MapData.startingPoint.Add(0);
         MapData.startingPoint.Add(Random.Range(0, MapData.yLength));
         MapData.endingPoint.Add(MapData.xLength - 1);

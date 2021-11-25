@@ -6,6 +6,8 @@ public class TowerActionScript : MonoBehaviour
 {
     public GameObject targetedEnemy;
     private float shotTimer;
+    public GameObject bullet;
+    public GameObject shootPoint;
     // Update is called once per frame
     void Update()
     {
@@ -15,7 +17,8 @@ public class TowerActionScript : MonoBehaviour
             TrackEnemy();
             if (CanShoot())
             {
-                HitScanShoot();
+                ProjectileShoot();
+                //HitScanShoot();
             }
         }
     }
@@ -56,7 +59,10 @@ public class TowerActionScript : MonoBehaviour
     }
     void ProjectileShoot()
     {
-
+        shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
+        GameObject currentBullet = Instantiate(bullet, shootPoint.transform.position, Quaternion.identity);
+        currentBullet.GetComponent<BulletStats>().damage = this.gameObject.GetComponent<TowerStats>().damage;
+        currentBullet.GetComponent<Rigidbody>().AddForce((targetedEnemy.transform.position - this.gameObject.transform.position) * this.gameObject.GetComponent<TowerStats>().bulletSpeed, ForceMode.Impulse);
     }
     bool CanShoot()
     {

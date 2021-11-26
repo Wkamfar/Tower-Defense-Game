@@ -64,7 +64,7 @@ public class PlayerActionScript : MonoBehaviour
     }
     private bool CanPlaceTower()
     {
-        if (!TowerData.hasSelectedTower || IsMouseOverUI() || PlayerData.playerMoney < TowerData.selectedTower.GetComponent<TowerStats>().cost || TooCloseToOtherTower() || WrongBlock() || !SpecialRequirement())
+        if (!TowerData.hasSelectedTower || IsMouseOverUI() || PlayerData.playerMoney < TowerData.selectedTower.GetComponent<TowerStats>().cost || TooCloseToOtherTower() || WrongBlock() || !SpecialRequirement() || !IsInMap())
         {
             return false;
         }
@@ -86,8 +86,70 @@ public class PlayerActionScript : MonoBehaviour
     }
     private bool WrongBlock()
     {
+        List<List<float>> blocks = InRangeBlocks();
+        Vector3 mousePos = mouseFollower.transform.position;
+        for (int i = 0; i < blocks.Count; ++i)
+        {
+            //Debug.Log("PlayerActionScript.WrongBlock: The InRange locations are: (" + blocks[i][0] + ", " + blocks[i][1] + ")");
+            float topDistance = Mathf.Abs(mousePos.z - (blocks[i][1] + 0.5f));
+            float bottomDistance = Mathf.Abs(mousePos.z - (blocks[i][1] - 0.5f));
+            if (mousePos.x <= blocks[i][0] + 0.5f && mousePos.x >= blocks[i][0] - 0.5f && mousePos.x <= blocks[i][1] + 0.5f && mousePos.x >= blocks[i][1] - 0.5f)
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+    private List<List<float>> InRangeBlocks()
+    {
         List<GameObject> allowedBlocks = TowerData.selectedTower.GetComponent<TowerStats>().allowedBlocks;
-        
+        List<float> centerPoint = new List<float>() { (mouseFollower.transform.position.x - MapData.offset[0]) / MapData.offset[2], (mouseFollower.transform.position.z - MapData.offset[1]) / - MapData.offset[2] };
+        List<List<float>> blocks = new List<List<float>>();
+        centerPoint[0] = Mathf.Ceil(centerPoint[0]);
+        centerPoint[1] = Mathf.Ceil(centerPoint[1]);
+        float radius = TowerData.selectedTower.GetComponent<TowerStats>().hitbox / MapData.offset[2];
+        radius = Mathf.Ceil(radius);
+        //Debug.Log("PlayerActionScript.InRangeBlocks: centerPoint[0] is: " +  centerPoint[0] + ", and centerPoint[1] is: " + )
+        //Debug.Log("PlayerActionScript.InRangeBlocks: The x on the grid is: " + centerPoint[1] + ", and the y on the grid is: " + centerPoint[0]);
+        if (IsInMap())
+        {
+            List<int> startingPoint = new List<int>() { (int)centerPoint[0], (int)centerPoint[1] };
+            for (int y = (int)radius; y >= -radius - 1; --y)
+            {
+                for (int x = (int)radius; x >= -radius - 1; --x)
+                {
+                    if (startingPoint[0] + y < MapData.grid.Count && startingPoint[0] + y >= 0 && startingPoint[1] + x < MapData.grid[0].Count && startingPoint[1] + x >= 0)
+                    {
+                        bool allowedBlock = false;
+                        for (int i = 0; i < allowedBlocks.Count; ++i)
+                        {
+                            if (MapData.grid[startingPoint[0] + y][startingPoint[1] + x] == allowedBlocks[i].GetComponent<BlockStats>().blockNumber)
+                            {
+                                allowedBlock = true;
+                            }
+                        }
+                        if (!allowedBlock)
+                        {
+                            Vector3 temp = MapData.PointToRealWorld(new List<int>() { startingPoint[0] + y, startingPoint[1] + x });
+                            Debug.Log("PlayerActionScript.InRangeBlocks: The current block number is " + MapData.grid[startingPoint[0] + y][startingPoint[1] + x]);
+                            blocks.Add(new List<float>() { temp.x, temp.z });
+                        }
+                    }
+                }
+            }
+            
+        } 
+        return blocks;
+    }
+    private bool IsInMap()
+    {
+        float xPoint = (mouseFollower.transform.position.x - MapData.offset[0]) / MapData.offset[2];
+        float yPoint = (mouseFollower.transform.position.z - MapData.offset[1]) / -MapData.offset[2];
+        //Debug.Log("PlayerActionScript.IsInMap: The xPoint is: " + xPoint + ", and the yPoint is: " + yPoint);
+        if (yPoint < MapData.grid.Count - 1 && yPoint >= 0 && xPoint < MapData.grid[0].Count - 1 && xPoint >= 0)
+        {
+            return true;
+        }
         return false;
     }
     private bool SpecialRequirement()

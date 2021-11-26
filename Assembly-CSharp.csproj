@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <LangVersion>latest</LangVersion>
+    <LangVersion>8.0</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -53,6 +53,9 @@
     <UnityVersion>2021.2.3f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio Tools for Unity\16.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="Assets\scripts\Map Generation\LandGenerator.cs" />
     <Compile Include="Assets\scripts\Towers\TowerData.cs" />
     <Compile Include="Assets\scripts\Enemies\EnemySpawner.cs" />
@@ -74,6 +77,7 @@
     <Compile Include="Assets\scripts\Towers\TowerSelectionScript.cs" />
     <Compile Include="Assets\scripts\Player\PlayerData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
+    <Compile Include="Assets\scripts\Blocks\BlockStats.cs" />
     <Compile Include="Assets\scripts\Towers\TowerStats.cs" />
     <Compile Include="Assets\CameraShakeFX\Scripts\StressReceiver.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
@@ -91,6 +95,7 @@
     <Compile Include="Assets\scripts\Map Generation\LandmarkGenerator.cs" />
     <Compile Include="Assets\scripts\Towers\TowerSpawningScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
+    <Compile Include="Assets\scripts\Towers\BulletStats.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\scripts\Towers\RadiusDetection.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\EnvMapAnimator.cs" />
@@ -115,8 +120,6 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventCheck.cs" />
     <Compile Include="Assets\scripts\Map Generation\MapGeneratorScript.cs" />
-    <Compile Include="Assets\scripts\Towers\BulletStats.cs" />
-    <Compile Include="Assets\scripts\Blocks\BlockStats.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

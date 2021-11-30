@@ -12,6 +12,7 @@ public class PlayerActionScript : MonoBehaviour
     public GameObject mouseFollower;
     public GameObject towerModelDisplay;
     public GameObject towerDisplayRadius;
+    [SerializeField]private List<GameObject> activeColliders = new List<GameObject>(); 
 
     private void Update()
     {
@@ -86,59 +87,91 @@ public class PlayerActionScript : MonoBehaviour
     }
     private bool WrongBlock()
     {
-        List<List<float>> blocks = InRangeBlocks();
-        Vector3 mousePos = mouseFollower.transform.position;
-        for (int i = 0; i < blocks.Count; ++i)
+        List<List<int>> blocks = InRangeBlocks();
+        for (int i = 0; i < activeColliders.Count; ++i)
         {
-            //Debug.Log("PlayerActionScript.WrongBlock: The InRange locations are: (" + blocks[i][0] + ", " + blocks[i][1] + ")");
-            float topDistance = Mathf.Abs(mousePos.z - (blocks[i][1] + 0.5f));
-            float bottomDistance = Mathf.Abs(mousePos.z - (blocks[i][1] - 0.5f));
-            if (mousePos.x <= blocks[i][0] + 0.5f && mousePos.x >= blocks[i][0] - 0.5f && mousePos.x <= blocks[i][1] + 0.5f && mousePos.x >= blocks[i][1] - 0.5f)
+            bool isInRange = false;
+            for (int j = 0; j < blocks.Count; ++j)
             {
-                return true;
+                if (MapData.gameObjectGrid[blocks[j][1]][blocks[j][0]] == activeColliders[i])
+                {
+                    isInRange = true;
+                    break;
+                }
+            }
+            if (!isInRange)
+            {
+                activeColliders[i].GetComponent<BoxCollider>().enabled = false;
+                activeColliders.RemoveAt(i);
             }
         }
-        return false;
+        for (int i = 0; i < blocks.Count; ++i)
+        {
+            bool isActive = false;
+            for (int j = 0; j < activeColliders.Count; ++j)
+            {
+                if (MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]] == activeColliders[j])
+                {
+                    isActive = true;
+                    break;
+                }
+            }
+            if (!isActive)
+            {
+                MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]].GetComponent<BoxCollider>().enabled = true;
+                activeColliders.Add(MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]]);
+                /*Debug.Log("PlayerActionScript.WrongBlock: The Location of this collider on the grid is: (" + blocks[i][1] + ", " + blocks[i][0] + ")");
+                Vector3 realWorldPoint = MapData.PointToRealWorld(blocks[i][0], blocks[i][1]);
+                Debug.Log("PlayerActionScript.WrongBlock: The Location of this collider in the real world is: (" + realWorldPoint.x + ", " + realWorldPoint.z + ")");*/
+            }
+        }
+        return !towerModelDisplay.GetComponent<TowerPlacerGroundCollision>().CanPlace();
     }
-    private List<List<float>> InRangeBlocks()
+    private List<List<int>> InRangeBlocks()
     {
         List<GameObject> allowedBlocks = TowerData.selectedTower.GetComponent<TowerStats>().allowedBlocks;
-        List<float> centerPoint = new List<float>() { (mouseFollower.transform.position.x - MapData.offset[0]) / MapData.offset[2], (mouseFollower.transform.position.z - MapData.offset[1]) / - MapData.offset[2] };
-        List<List<float>> blocks = new List<List<float>>();
-        centerPoint[0] = Mathf.Ceil(centerPoint[0]);
-        centerPoint[1] = Mathf.Ceil(centerPoint[1]);
-        float radius = TowerData.selectedTower.GetComponent<TowerStats>().hitbox / MapData.offset[2];
+        List<float> centerPoint = new List<float>() {(mouseFollower.transform.position.z - MapData.offset[1]) / - MapData.offset[2], (mouseFollower.transform.position.x - MapData.offset[0]) / MapData.offset[2] };
+        List<List<int>> blocks = new List<List<int>>();
+        centerPoint[0] = Mathf.Round(centerPoint[0]);
+        centerPoint[1] = Mathf.Round(centerPoint[1]);
+        float radius = TowerData.selectedTower.GetComponent<TowerStats>().hitbox + 1;
         radius = Mathf.Ceil(radius);
-        //Debug.Log("PlayerActionScript.InRangeBlocks: centerPoint[0] is: " +  centerPoint[0] + ", and centerPoint[1] is: " + )
-        //Debug.Log("PlayerActionScript.InRangeBlocks: The x on the grid is: " + centerPoint[1] + ", and the y on the grid is: " + centerPoint[0]);
+        Debug.Log("PlayerActionScript.InRangeBlocks: The centerPoint's grid location is: (" + centerPoint[1] + ", " + centerPoint[0] + ")");
+        Vector3 realWorldCenterPoint = MapData.PointToRealWorld((int)(centerPoint[0]), (int)(centerPoint[1]));
+        Debug.Log("PlayerActionScript.InRangeBlocks: The centerPoint's real World location is: (" + realWorldCenterPoint.x + ", " + realWorldCenterPoint.z + ")");
+        //Debug.Log("PlayerActionScript.InRangeBlocks: The mouse Location is: (" + mouseFollower.transform.position.x + ", " + mouseFollower.transform.position.z + ")");
         if (IsInMap())
         {
-            List<int> startingPoint = new List<int>() { (int)centerPoint[0], (int)centerPoint[1] };
-            for (int y = (int)radius; y >= -radius - 1; --y)
+            List<int> startingPoint = new List<int>() { (int)centerPoint[1], (int)centerPoint[0] };
+            for (int y = (int)radius; y >= -radius; --y)
             {
-                for (int x = (int)radius; x >= -radius - 1; --x)
+                for (int x = (int)radius; x >= -radius; --x)
                 {
-                    if (startingPoint[0] + y < MapData.grid.Count && startingPoint[0] + y >= 0 && startingPoint[1] + x < MapData.grid[0].Count && startingPoint[1] + x >= 0)
+                    if (startingPoint[1] + y < MapData.grid.Count && startingPoint[1] + y >= 0 && startingPoint[0] + x < MapData.grid[0].Count && startingPoint[0] + x >= 0)
                     {
                         bool allowedBlock = false;
                         for (int i = 0; i < allowedBlocks.Count; ++i)
                         {
-                            if (MapData.grid[startingPoint[0] + y][startingPoint[1] + x] == allowedBlocks[i].GetComponent<BlockStats>().blockNumber)
+                            if (MapData.grid[startingPoint[1] + y][startingPoint[0] + x] == allowedBlocks[i].GetComponent<BlockStats>().blockNumber)
                             {
                                 allowedBlock = true;
                             }
                         }
                         if (!allowedBlock)
                         {
-                            Vector3 temp = MapData.PointToRealWorld(new List<int>() { startingPoint[0] + y, startingPoint[1] + x });
-                            Debug.Log("PlayerActionScript.InRangeBlocks: The current block number is " + MapData.grid[startingPoint[0] + y][startingPoint[1] + x]);
-                            blocks.Add(new List<float>() { temp.x, temp.z });
+                            Vector3 realWorldPoint = MapData.PointToRealWorld(new List<int>() { startingPoint[1] + x, startingPoint[0] + y });
+                            /*Debug.Log("{");
+                            Debug.Log("PlayerActionScript.InRangeBlocks: The current block number is: " + MapData.grid[startingPoint[0] + y][startingPoint[1] + x]);
+                            Debug.Log("PlayerActionScript.InRangeBlocks: The grid location is: (" + (startingPoint[0] + x) + ", " + (startingPoint[1] + y) + ")");
+                            Debug.Log("PlayerActionScript.InRangeBlocks: The real world position of the block is: (" + realWorldPoint.x + ", " + realWorldPoint.z + ")");
+                            Debug.Log("}");*/
+                            blocks.Add(new List<int>() { (int)startingPoint[0] + x, (int)startingPoint[1] + y });
                         }
                     }
                 }
             }
             
-        } 
+        }
         return blocks;
     }
     private bool IsInMap()

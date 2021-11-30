@@ -13,6 +13,7 @@ public static class MapData
     public static List<float> offset = new List<float>();
     public static float spawnHeight = 1.5f; //add some value here later
     public static bool isMapSpawned = false;
+    public static List<List<GameObject>> gameObjectGrid = new List<List<GameObject>>();
     public static Vector2 mapCenter;
     public static Vector3 PointToRealWorld(List<int> gridPoint)
     {

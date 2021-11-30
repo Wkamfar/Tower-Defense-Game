@@ -62,7 +62,8 @@ public class TowerActionScript : MonoBehaviour
         shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
         GameObject currentBullet = Instantiate(bullet, shootPoint.transform.position, Quaternion.identity);
         currentBullet.GetComponent<BulletStats>().damage = this.gameObject.GetComponent<TowerStats>().damage;
-        currentBullet.GetComponent<Rigidbody>().AddForce((targetedEnemy.transform.position - this.gameObject.transform.position) * this.gameObject.GetComponent<TowerStats>().bulletSpeed, ForceMode.Impulse);
+        Vector3 direction = (targetedEnemy.transform.position - this.gameObject.transform.position).normalized;
+        currentBullet.GetComponent<Rigidbody>().AddForce(direction * this.gameObject.GetComponent<TowerStats>().bulletSpeed, ForceMode.Impulse);
     }
     bool CanShoot()
     {

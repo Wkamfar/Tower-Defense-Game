@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TowerPlacerGroundCollision : MonoBehaviour
 {
-    [SerializeField] private bool canPlace = true;
+    public bool canPlace = true;
     private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Block")

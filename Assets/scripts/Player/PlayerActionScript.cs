@@ -35,8 +35,9 @@ public class PlayerActionScript : MonoBehaviour
             }
         }
         else
-        {
+        { // This is where the tower placer gets disabled
             mouseFollower.SetActive(false);
+            towerModelDisplay.GetComponent<TowerPlacerGroundCollision>().canPlace = true;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -107,23 +108,11 @@ public class PlayerActionScript : MonoBehaviour
         }
         for (int i = 0; i < blocks.Count; ++i)
         {
-            bool isActive = false;
-            for (int j = 0; j < activeColliders.Count; ++j)
-            {
-                if (MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]] == activeColliders[j])
-                {
-                    isActive = true;
-                    break;
-                }
-            }
-            if (!isActive)
+            if (MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]].GetComponent<BoxCollider>().enabled == false)
             {
                 MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]].GetComponent<BoxCollider>().enabled = true;
                 activeColliders.Add(MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]]);
-                /*Debug.Log("PlayerActionScript.WrongBlock: The Location of this collider on the grid is: (" + blocks[i][1] + ", " + blocks[i][0] + ")");
-                Vector3 realWorldPoint = MapData.PointToRealWorld(blocks[i][0], blocks[i][1]);
-                Debug.Log("PlayerActionScript.WrongBlock: The Location of this collider in the real world is: (" + realWorldPoint.x + ", " + realWorldPoint.z + ")");*/
-            }
+            } 
         }
         return !towerModelDisplay.GetComponent<TowerPlacerGroundCollision>().CanPlace();
     }
@@ -136,10 +125,10 @@ public class PlayerActionScript : MonoBehaviour
         centerPoint[1] = Mathf.Round(centerPoint[1]);
         float radius = TowerData.selectedTower.GetComponent<TowerStats>().hitbox + 1;
         radius = Mathf.Ceil(radius);
-        Debug.Log("PlayerActionScript.InRangeBlocks: The centerPoint's grid location is: (" + centerPoint[1] + ", " + centerPoint[0] + ")");
+        /*Debug.Log("PlayerActionScript.InRangeBlocks: The centerPoint's grid location is: (" + centerPoint[1] + ", " + centerPoint[0] + ")");
         Vector3 realWorldCenterPoint = MapData.PointToRealWorld((int)(centerPoint[0]), (int)(centerPoint[1]));
         Debug.Log("PlayerActionScript.InRangeBlocks: The centerPoint's real World location is: (" + realWorldCenterPoint.x + ", " + realWorldCenterPoint.z + ")");
-        //Debug.Log("PlayerActionScript.InRangeBlocks: The mouse Location is: (" + mouseFollower.transform.position.x + ", " + mouseFollower.transform.position.z + ")");
+        Debug.Log("PlayerActionScript.InRangeBlocks: The mouse Location is: (" + mouseFollower.transform.position.x + ", " + mouseFollower.transform.position.z + ")");*/
         if (IsInMap())
         {
             List<int> startingPoint = new List<int>() { (int)centerPoint[1], (int)centerPoint[0] };
@@ -147,7 +136,10 @@ public class PlayerActionScript : MonoBehaviour
             {
                 for (int x = (int)radius; x >= -radius; --x)
                 {
-                    if (startingPoint[1] + y < MapData.grid.Count && startingPoint[1] + y >= 0 && startingPoint[0] + x < MapData.grid[0].Count && startingPoint[0] + x >= 0)
+                    if (startingPoint[1] + y < MapData.grid.Count && 
+                        startingPoint[1] + y >= 0 && 
+                        startingPoint[0] + x < MapData.grid[0].Count &&
+                        startingPoint[0] + x >= 0)
                     {
                         bool allowedBlock = false;
                         for (int i = 0; i < allowedBlocks.Count; ++i)
@@ -159,7 +151,7 @@ public class PlayerActionScript : MonoBehaviour
                         }
                         if (!allowedBlock)
                         {
-                            Vector3 realWorldPoint = MapData.PointToRealWorld(new List<int>() { startingPoint[1] + x, startingPoint[0] + y });
+                            //Vector3 realWorldPoint = MapData.PointToRealWorld(new List<int>() { startingPoint[1] + x, startingPoint[0] + y });
                             /*Debug.Log("{");
                             Debug.Log("PlayerActionScript.InRangeBlocks: The current block number is: " + MapData.grid[startingPoint[0] + y][startingPoint[1] + x]);
                             Debug.Log("PlayerActionScript.InRangeBlocks: The grid location is: (" + (startingPoint[0] + x) + ", " + (startingPoint[1] + y) + ")");

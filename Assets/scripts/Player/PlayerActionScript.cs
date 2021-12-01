@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 public class PlayerActionScript : MonoBehaviour
 {
     public float height;
@@ -223,6 +224,11 @@ public class PlayerActionScript : MonoBehaviour
         }
         tower.GetComponent<TowerMenuScript>().towerMenu = currentTowerMenu;
         GameObject towerName = currentTowerMenu.transform.GetChild(0).gameObject;
+        GameObject target = currentTowerMenu.transform.GetChild(1).gameObject;
+        GameObject upgradeOne = currentTowerMenu.transform.GetChild(2).gameObject;
+        GameObject upgradeTwo = currentTowerMenu.transform.GetChild(3).gameObject;
+        GameObject sell = currentTowerMenu.transform.GetChild(4).gameObject;
         towerName.GetComponent<TextMeshProUGUI>().text = TowerData.selectedTower.name;
+        sell.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().Sell(); });
     }
 }

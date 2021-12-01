@@ -36,4 +36,12 @@ public class TowerMenuScript : MonoBehaviour
         towerMenu.SetActive(false);
         towerRadius.GetComponent<Renderer>().enabled = false;
     }
+    public void Sell()
+    {
+        PlayerData.ChangeMoney(this.gameObject.GetComponent<TowerStats>().SellValue());
+        TowerData.towers.Remove(this.gameObject);
+        Destroy(towerMenu);
+        Destroy(towerRadius);
+        Destroy(this.gameObject);
+    }
 }

@@ -13,4 +13,18 @@ public class TowerStats : MonoBehaviour
     public bool seesCamo;
     public int cost;
     public List<GameObject> allowedBlocks;
+    public int value;
+    public int sellPercentage;
+    private void Start()
+    {
+        value = cost;
+    }
+    public void AddValue(int _value)
+    {
+        value += _value;
+    }
+    public int SellValue()
+    {
+        return value * sellPercentage / 100;
+    }
 }

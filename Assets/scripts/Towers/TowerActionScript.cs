@@ -11,7 +11,7 @@ public class TowerActionScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        targetedEnemy = this.gameObject.GetComponent<TowerTargeting>().FirstEnemy();
+        targetedEnemy = this.gameObject.GetComponent<TowerTargeting>().targeting(this.GetComponent<TowerStats>().targetingOptions[this.GetComponent<TowerStats>().targetingIndex]);
         if (HasEnemy())
         {
             TrackEnemy();

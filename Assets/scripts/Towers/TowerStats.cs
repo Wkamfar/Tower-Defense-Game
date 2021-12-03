@@ -15,6 +15,8 @@ public class TowerStats : MonoBehaviour
     public List<GameObject> allowedBlocks;
     public int value;
     public int sellPercentage;
+    public List<int> targetingOptions = new List<int>() { 0, 1 };
+    public int targetingIndex = 0;
     private void Start()
     {
         value = cost;

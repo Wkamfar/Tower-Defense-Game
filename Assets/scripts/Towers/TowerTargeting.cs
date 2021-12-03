@@ -6,6 +6,28 @@ public class TowerTargeting : MonoBehaviour
 {
     //add anything that comes into the radius and can be shot into a list, and then from there choose the priority, either strongest target, first target, or last target, and then remove them when they leave the radius
     public List<GameObject> targets;
+    public List<string> targetingOptionNames = new List<string>() { "First Enemy", "Last Enemy", "Strongest Enemy", "Weakest Enemy" };
+    public GameObject targeting(int mode)
+    {
+        if (mode == 0)
+        {
+            return FirstEnemy();
+        }
+        else if (mode == 1)
+        {
+            return LastEnemy();
+        }
+        else if (mode == 2)
+        {
+            return StrongestEnemy();
+        }
+        else if (mode == 3)
+        {
+            return WeakestEnemy();
+        }
+        //Add more firing modes later, and maybe some specialty ones
+        return null;
+    }
     public GameObject StrongestEnemy()
     {
         if (targets.Count > 0)

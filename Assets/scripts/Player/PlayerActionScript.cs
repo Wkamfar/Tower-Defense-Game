@@ -229,7 +229,11 @@ public class PlayerActionScript : MonoBehaviour
         GameObject targetLeft = target.transform.GetChild(0).gameObject;
         GameObject targetRight = target.transform.GetChild(1).gameObject;
         GameObject upgradeOne = currentTowerMenu.transform.GetChild(2).gameObject;
+        GameObject upgradeOneName = upgradeOne.transform.GetChild(0).gameObject;
+        GameObject upgradeOneCost = upgradeOne.transform.GetChild(1).gameObject;
         GameObject upgradeTwo = currentTowerMenu.transform.GetChild(3).gameObject;
+        GameObject upgradeTwoName = upgradeTwo.transform.GetChild(0).gameObject;
+        GameObject upgradeTwoCost = upgradeTwo.transform.GetChild(1).gameObject;
         GameObject sell = currentTowerMenu.transform.GetChild(4).gameObject;
         towerName.GetComponent<TextMeshProUGUI>().text = TowerData.selectedTower.name;
         sell.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().Sell(); });
@@ -239,5 +243,11 @@ public class PlayerActionScript : MonoBehaviour
         tower.GetComponent<TowerMenuScript>().targetDisplay = target;
         targetLeft.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().ChangeTargetLeft(); });
         targetRight.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().ChangeTargetRight(); });
+        tower.GetComponent<TowerMenuScript>().upgradeOneDisplay = upgradeOne;
+        tower.GetComponent<TowerMenuScript>().upgradeTwoDisplay = upgradeTwo;
+        upgradeOneName.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeNames[0][0];
+        upgradeOneCost.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeCost[0][0].ToString();
+        upgradeTwoName.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeNames[1][0];
+        upgradeTwoCost.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeCost[1][0].ToString();
     }
 }

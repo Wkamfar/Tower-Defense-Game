@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
 
 public class TowerMenuScript : MonoBehaviour
 {
@@ -56,8 +57,10 @@ public class TowerMenuScript : MonoBehaviour
             this.GetComponent<TowerStats>().upgradeCost[0][this.GetComponent<TowerStats>().upgradePathLevel[0]] <= PlayerData.playerMoney)
         {
             PlayerData.ChangeMoney(-this.GetComponent<TowerStats>().upgradeCost[0][this.GetComponent<TowerStats>().upgradePathLevel[0]]);
+            this.GetComponent<TowerStats>().AddValue(this.GetComponent<TowerStats>().upgradeCost[1][this.GetComponent<TowerStats>().upgradePathLevel[0]]);
             TextMeshProUGUI upgradeNameDisplay = upgradeOneDisplay.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI upgradeCostDisplay = upgradeOneDisplay.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+            this.gameObject.GetComponent<TowerStats>().upgradeIndicators[0][this.GetComponent<TowerStats>().upgradePathLevel[0]].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
             ++this.GetComponent<TowerStats>().upgradePathLevel[0];
             if (this.GetComponent<TowerStats>().upgradePathMaxLevel[0] > this.GetComponent<TowerStats>().upgradePathLevel[0])
             {
@@ -78,8 +81,10 @@ public class TowerMenuScript : MonoBehaviour
             this.GetComponent<TowerStats>().upgradeCost[1][this.GetComponent<TowerStats>().upgradePathLevel[1]] <= PlayerData.playerMoney)
         {
             PlayerData.ChangeMoney(-this.GetComponent<TowerStats>().upgradeCost[1][this.GetComponent<TowerStats>().upgradePathLevel[1]]);
+            this.GetComponent<TowerStats>().AddValue(this.GetComponent<TowerStats>().upgradeCost[1][this.GetComponent<TowerStats>().upgradePathLevel[1]]);
             TextMeshProUGUI upgradeNameDisplay = upgradeTwoDisplay.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI upgradeCostDisplay = upgradeTwoDisplay.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+            this.gameObject.GetComponent<TowerStats>().upgradeIndicators[1][this.GetComponent<TowerStats>().upgradePathLevel[1]].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
             ++this.GetComponent<TowerStats>().upgradePathLevel[1];
             if (this.GetComponent<TowerStats>().upgradePathMaxLevel[1] > this.GetComponent<TowerStats>().upgradePathLevel[1])
             {

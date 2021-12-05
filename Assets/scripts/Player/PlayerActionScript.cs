@@ -223,31 +223,51 @@ public class PlayerActionScript : MonoBehaviour
             currentTowerMenu.transform.localPosition = new Vector3(-740, 0, 0);
         }
         tower.GetComponent<TowerMenuScript>().towerMenu = currentTowerMenu;
+        //tower name
         GameObject towerName = currentTowerMenu.transform.GetChild(0).gameObject;
+        //target //Change the image to an arrow
         GameObject target = currentTowerMenu.transform.GetChild(1).gameObject;
-        //Change the image to an arrow
         GameObject targetLeft = target.transform.GetChild(0).gameObject;
         GameObject targetRight = target.transform.GetChild(1).gameObject;
+        //Upgrade One
         GameObject upgradeOne = currentTowerMenu.transform.GetChild(2).gameObject;
         GameObject upgradeOneName = upgradeOne.transform.GetChild(0).gameObject;
         GameObject upgradeOneCost = upgradeOne.transform.GetChild(1).gameObject;
+        GameObject upgradeOneIndicatorOne = upgradeOne.transform.GetChild(2).gameObject;
+        GameObject upgradeOneIndicatorTwo = upgradeOne.transform.GetChild(3).gameObject;
+        //Upgrade Two
         GameObject upgradeTwo = currentTowerMenu.transform.GetChild(3).gameObject;
         GameObject upgradeTwoName = upgradeTwo.transform.GetChild(0).gameObject;
         GameObject upgradeTwoCost = upgradeTwo.transform.GetChild(1).gameObject;
+        GameObject upgradeTwoIndicatorOne = upgradeTwo.transform.GetChild(2).gameObject;
+        GameObject upgradeTwoIndicatorTwo = upgradeTwo.transform.GetChild(3).gameObject;
+        //Sell
         GameObject sell = currentTowerMenu.transform.GetChild(4).gameObject;
+
         towerName.GetComponent<TextMeshProUGUI>().text = TowerData.selectedTower.name;
+
         sell.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().Sell(); });
+
         upgradeOne.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().UpgradePathOne(); });
         upgradeTwo.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().UpgradePathTwo(); });
+
         target.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerTargeting>().targetingOptionNames[tower.GetComponent<TowerStats>().targetingOptions[0]];
         tower.GetComponent<TowerMenuScript>().targetDisplay = target;
+
         targetLeft.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().ChangeTargetLeft(); });
         targetRight.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().ChangeTargetRight(); });
+
         tower.GetComponent<TowerMenuScript>().upgradeOneDisplay = upgradeOne;
         tower.GetComponent<TowerMenuScript>().upgradeTwoDisplay = upgradeTwo;
+
         upgradeOneName.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeNames[0][0];
         upgradeOneCost.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeCost[0][0].ToString();
         upgradeTwoName.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeNames[1][0];
         upgradeTwoCost.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeCost[1][0].ToString();
+
+        tower.GetComponent<TowerStats>().upgradeIndicators[0][0] = upgradeOneIndicatorOne;
+        tower.GetComponent<TowerStats>().upgradeIndicators[0][1] = upgradeOneIndicatorTwo;
+        tower.GetComponent<TowerStats>().upgradeIndicators[1][0] = upgradeTwoIndicatorOne;
+        tower.GetComponent<TowerStats>().upgradeIndicators[1][1] = upgradeTwoIndicatorTwo;
     }
 }

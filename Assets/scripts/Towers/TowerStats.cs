@@ -24,12 +24,16 @@ public class TowerStats : MonoBehaviour
                                                                 new List<int>() { 100, 200 }  //upgrade path two cost
                                                                };
     public List<List<string>> upgradeNames = new List<List<string>>() { 
-                                                                       new List<string>() { "", "" }, //upgrade path one names
-                                                                       new List<string>() { "", "" }  //upgrade path two names
+                                                                       new List<string>() { "Higher Fire Rate", "Bullet Rain" }, //upgrade path one names
+                                                                       new List<string>() { "Depleted Plutonium", "Armor Piercing" }  //upgrade path two names
                                                                       };
+    public List<List<GameObject>> upgradeIndicators = new List<List<GameObject>>() { 
+                                                                                    new List<GameObject>() { null, null },
+                                                                                    new List<GameObject>() { null, null }
+                                                                                   };
+
     private void Start()
     {
-        Debug.Log("TowerStats.Start: The cost of the first upgrade on path one is: " + upgradeCost[0][0]);
         value = cost;
     }
     public void AddValue(int _value)

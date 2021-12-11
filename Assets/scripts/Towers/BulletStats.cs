@@ -5,14 +5,25 @@ using UnityEngine;
 public class BulletStats : MonoBehaviour
 {
     public float damage;
-    [SerializeField] private int maxDistance;
-    [SerializeField] private float despawnTimer;
+    public float maxDistance;
+    public float despawnTimer;
+    public float pierce;
+    public GameObject tower;
     private Vector2 startingPosition;
     private void OnTriggerEnter(Collider col)
     {
         if (col.gameObject.tag == "Enemy")
         {
-            col.gameObject.GetComponent<EnemyAI>().TakeDamage(damage);
+            if (!col.gameObject.GetComponent<EnemyAI>().isHit)
+            {
+                col.gameObject.GetComponent<EnemyAI>().TakeDamage(damage);
+                tower.GetComponent<TowerStats>().IncreaseDamageDealt(damage);
+                pierce--;
+                if (pierce <= 0)
+                {
+                    Destroy(this.gameObject);
+                }
+            } 
         }
     }
     private void Start()

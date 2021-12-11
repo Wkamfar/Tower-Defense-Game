@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class TowerActionScript : MonoBehaviour
@@ -56,12 +54,17 @@ public class TowerActionScript : MonoBehaviour
     {
         shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
         targetedEnemy.GetComponent<EnemyAI>().TakeDamage(this.gameObject.GetComponent<TowerStats>().damage);
+        this.gameObject.GetComponent<TowerStats>().IncreaseDamageDealt(this.gameObject.GetComponent<TowerStats>().damage);
     }
     void ProjectileShoot()
     {
         shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
         GameObject currentBullet = Instantiate(bullet, shootPoint.transform.position, Quaternion.identity);
         currentBullet.GetComponent<BulletStats>().damage = this.gameObject.GetComponent<TowerStats>().damage;
+        currentBullet.GetComponent<BulletStats>().tower = this.gameObject;
+        currentBullet.GetComponent<BulletStats>().despawnTimer = this.gameObject.GetComponent<TowerStats>().bulletLifespan;
+        currentBullet.GetComponent<BulletStats>().maxDistance = this.gameObject.GetComponent<TowerStats>().maxTravelDistance;
+        currentBullet.GetComponent<BulletStats>().pierce = this.gameObject.GetComponent<TowerStats>().pierce;
         Vector3 direction = (targetedEnemy.transform.position - this.gameObject.transform.position).normalized;
         currentBullet.GetComponent<Rigidbody>().AddForce(direction * this.gameObject.GetComponent<TowerStats>().bulletSpeed, ForceMode.Impulse);
     }

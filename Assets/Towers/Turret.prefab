@@ -219,13 +219,20 @@ MonoBehaviour:
   damage: 5
   fireRate: 180
   bulletSpeed: 35
+  bulletLifespan: 20
+  maxTravelDistance: 100
+  pierce: 1
   seesCamo: 0
   cost: 100
   allowedBlocks:
   - {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
   value: 0
   sellPercentage: 70
+  damageDealt: 0
   targetingOptions: 0000000001000000
+  targetingIndex: 0
+  upgradePathLevel: 0000000000000000
+  upgradePathMaxLevel: 0200000002000000
 --- !u!114 &5314334376233680956
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,6 +265,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   towerMenu: {fileID: 0}
   towerRadius: {fileID: 0}
+  targetDisplay: {fileID: 0}
+  upgradeOneDisplay: {fileID: 0}
+  upgradeTwoDisplay: {fileID: 0}
+  damageDealtDisplay: {fileID: 0}
 --- !u!114 &3983162630016942639
 MonoBehaviour:
   m_ObjectHideFlags: 0

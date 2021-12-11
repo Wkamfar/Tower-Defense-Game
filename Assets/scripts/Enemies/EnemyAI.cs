@@ -11,6 +11,9 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private int damage;
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private int level;
+    [SerializeField] private float indicatorDisableTime = 0.25f;
+    public bool isHit;
+    private float currentIndicatorDisableTime = 0;
     public int cost;
     private float currentHp;
     public int currentPath = -1;
@@ -40,6 +43,7 @@ public class EnemyAI : MonoBehaviour
             KillAI();
         }
         UseAbility();
+        CheckIndicator();
     }
     private void Move()
     {
@@ -87,6 +91,20 @@ public class EnemyAI : MonoBehaviour
     private void DamageIndicator()
     {
         this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+        currentIndicatorDisableTime = indicatorDisableTime;
+        isHit = true;
+    }
+    private void CheckIndicator()
+    {
+        if (currentIndicatorDisableTime > 0)
+        {
+            currentIndicatorDisableTime -= Time.deltaTime;
+        }
+        else
+        {
+            this.gameObject.GetComponent<Renderer>().material.color = Color.white;
+            isHit = false;
+        }
     }
     protected virtual void UseAbility()
     {

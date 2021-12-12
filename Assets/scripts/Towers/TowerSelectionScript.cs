@@ -6,16 +6,14 @@ using UnityEngine.UI;
 using TMPro;
 public class TowerSelectionScript : MonoBehaviour
 {
-    public GameObject[] towers;
     public GameObject[] buttons;
-    private GameObject currentTower;
     public Color selectedColor;
     public Color normalColor;
     private void Start()
     {
         foreach (GameObject b in buttons)
         {
-            GameObject tower = b.GetComponent<TowerButtonData>().Tower;
+            GameObject tower = b.GetComponent<TowerButtonData>().tower;
             TextMeshProUGUI priceTextBox = b.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
             priceTextBox.text = tower.GetComponent<TowerStats>().cost.ToString();
         }
@@ -46,6 +44,6 @@ public class TowerSelectionScript : MonoBehaviour
         GameObject pressedButton = EventSystem.current.currentSelectedGameObject;
         pressedButton.GetComponent<Image>().color = selectedColor;
         TowerData.hasSelectedTower = true;
-        TowerData.selectedTower = pressedButton.GetComponent<TowerButtonData>().Tower;
+        TowerData.selectedTower = pressedButton.GetComponent<TowerButtonData>().tower;
     }
 }

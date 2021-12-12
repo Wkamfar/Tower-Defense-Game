@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class TowerButtonData : MonoBehaviour
 {
-    public GameObject Tower;
+    public GameObject tower;
 }

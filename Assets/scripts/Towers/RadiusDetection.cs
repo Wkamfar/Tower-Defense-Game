@@ -9,14 +9,14 @@ public class RadiusDetection : MonoBehaviour
     {
         if (other.gameObject.tag == "Enemy")
         {
-            tower.GetComponent<TowerTargeting>().targets.Add(other.gameObject);
+            tower.GetComponent<TowerStats>().targets.Add(other.gameObject);
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.gameObject.tag == "Enemy")
         {
-            tower.GetComponent<TowerTargeting>().targets.Remove(other.gameObject);
+            tower.GetComponent<TowerStats>().targets.Remove(other.gameObject);
         }
     }
 }

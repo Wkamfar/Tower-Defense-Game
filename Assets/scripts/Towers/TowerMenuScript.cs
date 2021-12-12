@@ -54,43 +54,29 @@ public class TowerMenuScript : MonoBehaviour
     //Make a bar that fills up squares until you reach max level
     public void UpgradePathOne()
     {
-        if (this.GetComponent<TowerStats>().upgradePathMaxLevel[0] > this.GetComponent<TowerStats>().upgradePathLevel[0] &&
-            this.GetComponent<TowerStats>().upgradeCost[0][this.GetComponent<TowerStats>().upgradePathLevel[0]] <= PlayerData.playerMoney)
-        {
-            PlayerData.ChangeMoney(-this.GetComponent<TowerStats>().upgradeCost[0][this.GetComponent<TowerStats>().upgradePathLevel[0]]);
-            this.GetComponent<TowerStats>().AddValue(this.GetComponent<TowerStats>().upgradeCost[1][this.GetComponent<TowerStats>().upgradePathLevel[0]]);
-            TextMeshProUGUI upgradeNameDisplay = upgradeOneDisplay.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI upgradeCostDisplay = upgradeOneDisplay.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-            this.gameObject.GetComponent<TowerStats>().upgradeIndicators[0][this.GetComponent<TowerStats>().upgradePathLevel[0]].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
-            ++this.GetComponent<TowerStats>().upgradePathLevel[0];
-            if (this.GetComponent<TowerStats>().upgradePathMaxLevel[0] > this.GetComponent<TowerStats>().upgradePathLevel[0])
-            {
-                upgradeNameDisplay.text = this.gameObject.GetComponent<TowerStats>().upgradeNames[0][this.GetComponent<TowerStats>().upgradePathLevel[0]];
-                upgradeCostDisplay.text = this.gameObject.GetComponent<TowerStats>().upgradeCost[0][this.GetComponent<TowerStats>().upgradePathLevel[0]].ToString();
-            }
-            else
-            {
-                //Change this later to make it neater
-                upgradeNameDisplay.text = "Max Level"; 
-                upgradeCostDisplay.text = "";
-            }
-        }
+        TextMeshProUGUI upgradeNameDisplay = upgradeOneDisplay.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI upgradeCostDisplay = upgradeOneDisplay.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        UpdateUpgradePath(0, upgradeNameDisplay, upgradeCostDisplay);
     }
     public void UpgradePathTwo()
     {
-        if (this.GetComponent<TowerStats>().upgradePathMaxLevel[1] > this.GetComponent<TowerStats>().upgradePathLevel[1] &&
-            this.GetComponent<TowerStats>().upgradeCost[1][this.GetComponent<TowerStats>().upgradePathLevel[1]] <= PlayerData.playerMoney)
+        TextMeshProUGUI upgradeNameDisplay = upgradeTwoDisplay.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI upgradeCostDisplay = upgradeTwoDisplay.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        UpdateUpgradePath(1, upgradeNameDisplay, upgradeCostDisplay);
+    }
+    private void UpdateUpgradePath(int p, TextMeshProUGUI upgradeNameDisplay, TextMeshProUGUI upgradeCostDisplay)
+    {
+        if (this.GetComponent<TowerUpgradeScript>().upgradePathMaxLevel[p] > this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p] &&
+            this.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]] <= PlayerData.playerMoney)
         {
-            PlayerData.ChangeMoney(-this.GetComponent<TowerStats>().upgradeCost[1][this.GetComponent<TowerStats>().upgradePathLevel[1]]);
-            this.GetComponent<TowerStats>().AddValue(this.GetComponent<TowerStats>().upgradeCost[1][this.GetComponent<TowerStats>().upgradePathLevel[1]]);
-            TextMeshProUGUI upgradeNameDisplay = upgradeTwoDisplay.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-            TextMeshProUGUI upgradeCostDisplay = upgradeTwoDisplay.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-            this.gameObject.GetComponent<TowerStats>().upgradeIndicators[1][this.GetComponent<TowerStats>().upgradePathLevel[1]].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
-            ++this.GetComponent<TowerStats>().upgradePathLevel[1];
-            if (this.GetComponent<TowerStats>().upgradePathMaxLevel[1] > this.GetComponent<TowerStats>().upgradePathLevel[1])
+            PlayerData.ChangeMoney(-this.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]]);
+            this.GetComponent<TowerStats>().AddValue(this.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]]);
+            this.gameObject.GetComponent<TowerUpgradeScript>().upgradeIndicators[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
+            ++this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p];
+            if (this.GetComponent<TowerUpgradeScript>().upgradePathMaxLevel[p] > this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p])
             {
-                upgradeNameDisplay.text = this.gameObject.GetComponent<TowerStats>().upgradeNames[1][this.GetComponent<TowerStats>().upgradePathLevel[1]];
-                upgradeCostDisplay.text = this.gameObject.GetComponent<TowerStats>().upgradeCost[1][this.GetComponent<TowerStats>().upgradePathLevel[1]].ToString();
+                upgradeNameDisplay.text = this.gameObject.GetComponent<TowerUpgradeScript>().upgradeNames[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]];
+                upgradeCostDisplay.text = this.gameObject.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]].ToString();
             }
             else
             {
@@ -98,26 +84,6 @@ public class TowerMenuScript : MonoBehaviour
                 upgradeNameDisplay.text = "Max Level";
                 upgradeCostDisplay.text = "";
             }
-        }
-    }
-    private void UpdateUpgradePath(int p)
-    {
-        PlayerData.ChangeMoney(-this.GetComponent<TowerStats>().upgradeCost[p][this.GetComponent<TowerStats>().upgradePathLevel[p]]);
-        this.GetComponent<TowerStats>().AddValue(this.GetComponent<TowerStats>().upgradeCost[p][this.GetComponent<TowerStats>().upgradePathLevel[p]]);
-        TextMeshProUGUI upgradeNameDisplay = upgradeOneDisplay.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI upgradeCostDisplay = upgradeOneDisplay.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        this.gameObject.GetComponent<TowerStats>().upgradeIndicators[p][this.GetComponent<TowerStats>().upgradePathLevel[p]].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
-        ++this.GetComponent<TowerStats>().upgradePathLevel[p];
-        if (this.GetComponent<TowerStats>().upgradePathMaxLevel[p] > this.GetComponent<TowerStats>().upgradePathLevel[p])
-        {
-            upgradeNameDisplay.text = this.gameObject.GetComponent<TowerStats>().upgradeNames[p][this.GetComponent<TowerStats>().upgradePathLevel[p]];
-            upgradeCostDisplay.text = this.gameObject.GetComponent<TowerStats>().upgradeCost[p][this.GetComponent<TowerStats>().upgradePathLevel[p]].ToString();
-        }
-        else
-        {
-            //Change this later to make it neater
-            upgradeNameDisplay.text = "Max Level";
-            upgradeCostDisplay.text = "";
         }
     }
     public void ChangeTargetLeft()
@@ -133,6 +99,6 @@ public class TowerMenuScript : MonoBehaviour
     private void UpdateTarget()
     {
         this.GetComponent<TowerStats>().targetingIndex = _targetingIndex;
-        targetDisplay.GetComponent<TextMeshProUGUI>().text = this.GetComponent<TowerTargeting>().targetingOptionNames[this.GetComponent<TowerStats>().targetingOptions[_targetingIndex]];
+        targetDisplay.GetComponent<TextMeshProUGUI>().text = this.GetComponent<TowerStats>().targetingOptionNames[this.GetComponent<TowerStats>().targetingOptions[_targetingIndex]];
     }
 }

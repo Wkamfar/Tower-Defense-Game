@@ -732,14 +732,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73138cd236760084b98e73093b8dc0c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  towers:
-  - {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  - {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
-  - {fileID: 5435715626267769603, guid: b98d061dabac9214db71b20b8a293d15, type: 3}
-  - {fileID: 5435715626267769603, guid: 701b408cc50b0e64d96398efcc23ac9c, type: 3}
-  - {fileID: 5435715626267769603, guid: de6517020d7388e4a93a64841dd93af6, type: 3}
-  - {fileID: 5435715626267769603, guid: ffe0a96d451f6c543bf06016f8cab297, type: 3}
-  - {fileID: 3724075810726857580, guid: bbab339ddd001694db791b3e4b501ee4, type: 3}
   buttons:
   - {fileID: 1104764171}
   - {fileID: 689293137}
@@ -804,7 +796,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32cfbfee8a115e48a15f2cc923ea8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  tower: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
 --- !u!114 &689293140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1933,7 +1925,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32cfbfee8a115e48a15f2cc923ea8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 3724075810726857580, guid: bbab339ddd001694db791b3e4b501ee4, type: 3}
+  tower: {fileID: 3724075810726857580, guid: bbab339ddd001694db791b3e4b501ee4, type: 3}
 --- !u!114 &941461711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2216,7 +2208,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32cfbfee8a115e48a15f2cc923ea8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 5435715626267769603, guid: b98d061dabac9214db71b20b8a293d15, type: 3}
+  tower: {fileID: 5435715626267769603, guid: b98d061dabac9214db71b20b8a293d15, type: 3}
 --- !u!114 &1103008746
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2459,7 +2451,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32cfbfee8a115e48a15f2cc923ea8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  tower: {fileID: 1678817109574290378, guid: a29450deca5f9044782d4563a6307854, type: 3}
 --- !u!1 &1120136959
 GameObject:
   m_ObjectHideFlags: 0
@@ -3299,7 +3291,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32cfbfee8a115e48a15f2cc923ea8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 5435715626267769603, guid: 701b408cc50b0e64d96398efcc23ac9c, type: 3}
+  tower: {fileID: 5435715626267769603, guid: 701b408cc50b0e64d96398efcc23ac9c, type: 3}
 --- !u!114 &1485272386
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3954,7 +3946,6 @@ GameObject:
   - component: {fileID: 1578042541}
   - component: {fileID: 1578042540}
   - component: {fileID: 1578042539}
-  - component: {fileID: 1578042542}
   - component: {fileID: 1578042543}
   m_Layer: 0
   m_Name: Tower Model
@@ -4041,19 +4032,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1578042537}
   m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
---- !u!114 &1578042542
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1578042537}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c325cfe3d2d862640afa9b444ec9b980, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  canPlace: 1
 --- !u!54 &1578042543
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4124,7 +4102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32cfbfee8a115e48a15f2cc923ea8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 5435715626267769603, guid: de6517020d7388e4a93a64841dd93af6, type: 3}
+  tower: {fileID: 5435715626267769603, guid: de6517020d7388e4a93a64841dd93af6, type: 3}
 --- !u!114 &1646247541
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4801,7 +4779,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b32cfbfee8a115e48a15f2cc923ea8c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Tower: {fileID: 5435715626267769603, guid: ffe0a96d451f6c543bf06016f8cab297, type: 3}
+  tower: {fileID: 5435715626267769603, guid: ffe0a96d451f6c543bf06016f8cab297, type: 3}
 --- !u!114 &2003226924
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4932,7 +4910,6 @@ MonoBehaviour:
   mouseFollower: {fileID: 1277423776}
   towerModelDisplay: {fileID: 1578042537}
   towerDisplayRadius: {fileID: 6687049502784124955}
-  activeColliders: []
 --- !u!4 &2032738413
 Transform:
   m_ObjectHideFlags: 0

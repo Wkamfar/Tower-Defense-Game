@@ -5,8 +5,11 @@ using UnityEngine;
 public class TowerTargeting : MonoBehaviour
 {
     //add anything that comes into the radius and can be shot into a list, and then from there choose the priority, either strongest target, first target, or last target, and then remove them when they leave the radius
-    public List<GameObject> targets;
-    public List<string> targetingOptionNames = new List<string>() { "First Enemy", "Last Enemy", "Strongest Enemy", "Weakest Enemy" };
+    private List<GameObject> targets = new List<GameObject>();
+    private void Update()
+    {
+        targets = GetComponent<TowerStats>().targets;
+    }
     public GameObject targeting(int mode)
     {
         if (mode == 0)

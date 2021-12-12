@@ -13,7 +13,6 @@ public class PlayerActionScript : MonoBehaviour
     public GameObject mouseFollower;
     public GameObject towerModelDisplay;
     public GameObject towerDisplayRadius;
-    [SerializeField]private List<GameObject> activeColliders = new List<GameObject>(); 
 
     private void Update()
     {
@@ -38,7 +37,6 @@ public class PlayerActionScript : MonoBehaviour
         else
         { // This is where the tower placer gets disabled
             mouseFollower.SetActive(false);
-            towerModelDisplay.GetComponent<TowerPlacerGroundCollision>().canPlace = true;
         }
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
@@ -53,7 +51,7 @@ public class PlayerActionScript : MonoBehaviour
             LayerMask layerMask = LayerMask.GetMask("Tower");
             if (CanSelectTower() && Physics.Raycast(ray, out hit, 100, layerMask))
             {
-                hit.collider.gameObject.GetComponent<TowerMenuScript>().OpenTowerMenu();
+                hit.collider.transform.GetComponentInParent<TowerMenuScript>().OpenTowerMenu();
             }
             else if (CanSelectTower())
             {
@@ -90,32 +88,21 @@ public class PlayerActionScript : MonoBehaviour
     private bool WrongBlock()
     {
         List<List<int>> blocks = InRangeBlocks();
-        for (int i = 0; i < activeColliders.Count; ++i)
-        {
-            bool isInRange = false;
-            for (int j = 0; j < blocks.Count; ++j)
-            {
-                if (MapData.gameObjectGrid[blocks[j][1]][blocks[j][0]] == activeColliders[i])
-                {
-                    isInRange = true;
-                    break;
-                }
-            }
-            if (!isInRange)
-            {
-                activeColliders[i].GetComponent<BoxCollider>().enabled = false;
-                activeColliders.RemoveAt(i);
-            }
-        }
+
         for (int i = 0; i < blocks.Count; ++i)
         {
-            if (MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]].GetComponent<BoxCollider>().enabled == false)
+            GameObject b = MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]];
+            float x = Mathf.Abs(b.transform.position.x - this.transform.position.x);
+            float y = Mathf.Abs(b.transform.position.z - this.transform.position.z);
+            float totalDistance = Mathf.Sqrt(x * x + y * y);
+            float angle = Mathf.Asin(y / totalDistance);
+            float blockRadius = (b.GetComponent<BlockStats>().blockSize / 2) / Mathf.Cos(angle);
+            if (blockRadius + TowerData.selectedTower.GetComponent<TowerStats>().hitbox > totalDistance) 
             {
-                MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]].GetComponent<BoxCollider>().enabled = true;
-                activeColliders.Add(MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]]);
-            } 
+                return true;
+            }
         }
-        return !towerModelDisplay.GetComponent<TowerPlacerGroundCollision>().CanPlace();
+        return false;
     }
     private List<List<int>> InRangeBlocks()
     {
@@ -199,6 +186,9 @@ public class PlayerActionScript : MonoBehaviour
     {
         //Add a spawning effect
         GameObject currentTower = Instantiate(TowerData.selectedTower, spawnPos, Quaternion.identity);
+        GameObject currentTowerModel = Instantiate(currentTower.GetComponent<TowerUpgradeScript>().baseTowerModel, currentTower.transform);
+        currentTower.GetComponent<TowerUpgradeScript>().currentActiveTowerModel = currentTowerModel;
+        currentTower.GetComponent<TowerStats>().shootPoint = currentTowerModel.transform.GetChild(0).gameObject; //Change this later!!!!
         PlayerData.ChangeMoney(-currentTower.GetComponent<TowerStats>().cost);
         SpawnRadius(currentTower);
         SpawnMenu(currentTower);
@@ -253,7 +243,7 @@ public class PlayerActionScript : MonoBehaviour
         upgradeOne.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().UpgradePathOne(); });
         upgradeTwo.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().UpgradePathTwo(); });
 
-        target.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerTargeting>().targetingOptionNames[tower.GetComponent<TowerStats>().targetingOptions[0]];
+        target.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().targetingOptionNames[tower.GetComponent<TowerStats>().targetingOptions[0]];
         tower.GetComponent<TowerMenuScript>().targetDisplay = target;
 
         targetLeft.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().ChangeTargetLeft(); });
@@ -262,15 +252,15 @@ public class PlayerActionScript : MonoBehaviour
         tower.GetComponent<TowerMenuScript>().upgradeOneDisplay = upgradeOne;
         tower.GetComponent<TowerMenuScript>().upgradeTwoDisplay = upgradeTwo;
 
-        upgradeOneName.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeNames[0][0];
-        upgradeOneCost.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeCost[0][0].ToString();
-        upgradeTwoName.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeNames[1][0];
-        upgradeTwoCost.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().upgradeCost[1][0].ToString();
+        upgradeOneName.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerUpgradeScript>().upgradeNames[0][0];
+        upgradeOneCost.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerUpgradeScript>().upgradeCost[0][0].ToString();
+        upgradeTwoName.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerUpgradeScript>().upgradeNames[1][0];
+        upgradeTwoCost.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerUpgradeScript>().upgradeCost[1][0].ToString();
 
-        tower.GetComponent<TowerStats>().upgradeIndicators[0][0] = upgradeOneIndicatorOne;
-        tower.GetComponent<TowerStats>().upgradeIndicators[0][1] = upgradeOneIndicatorTwo;
-        tower.GetComponent<TowerStats>().upgradeIndicators[1][0] = upgradeTwoIndicatorOne;
-        tower.GetComponent<TowerStats>().upgradeIndicators[1][1] = upgradeTwoIndicatorTwo;
+        tower.GetComponent<TowerUpgradeScript>().upgradeIndicators[0][0] = upgradeOneIndicatorOne;
+        tower.GetComponent<TowerUpgradeScript>().upgradeIndicators[0][1] = upgradeOneIndicatorTwo;
+        tower.GetComponent<TowerUpgradeScript>().upgradeIndicators[1][0] = upgradeTwoIndicatorOne;
+        tower.GetComponent<TowerUpgradeScript>().upgradeIndicators[1][1] = upgradeTwoIndicatorTwo;
 
         tower.GetComponent<TowerMenuScript>().damageDealtDisplay = damageDealtDisplay;
         damageDealtDisplay.GetComponent<TextMeshProUGUI>().text = 0.ToString();

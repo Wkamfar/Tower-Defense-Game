@@ -1,0 +1,134 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1678817109574290378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2306747170983195593}
+  - component: {fileID: 8706562176387132240}
+  - component: {fileID: 7075564763143479156}
+  - component: {fileID: 918867734044799644}
+  - component: {fileID: 8455011646563030400}
+  - component: {fileID: 492499781502309119}
+  m_Layer: 0
+  m_Name: Turret Holder
+  m_TagString: Tower
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2306747170983195593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8706562176387132240
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55fea14d3170fb04c9c4250bdb92d3c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 5
+  hitbox: 0.5
+  damage: 5
+  fireRate: 180
+  bulletSpeed: 35
+  bulletLifespan: 20
+  maxTravelDistance: 100
+  pierce: 1
+  seesCamo: 0
+  cost: 100
+  allowedBlocks:
+  - {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
+  value: 0
+  sellPercentage: 70
+  damageDealt: 0
+  targetingOptions: 0000000001000000
+  targetingIndex: 0
+  bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
+  shootPoint: {fileID: 0}
+  targetedEnemy: {fileID: 0}
+  targets: []
+  targetingOptionNames:
+  - First Enemy
+  - Last Enemy
+  - Strongest Enemy
+  - Weakest Enemy
+--- !u!114 &7075564763143479156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bb47231a32bbc4ca061fbd0efaef6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &918867734044799644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a1612f870e5cd448ce4e2a7b42ed82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerMenu: {fileID: 0}
+  towerRadius: {fileID: 0}
+  targetDisplay: {fileID: 0}
+  upgradeOneDisplay: {fileID: 0}
+  upgradeTwoDisplay: {fileID: 0}
+  damageDealtDisplay: {fileID: 0}
+--- !u!114 &8455011646563030400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cddcafba9ee7c041bb3df7c538643d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &492499781502309119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc7b335620068941863825a46317bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseTowerModel: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  upgradePathLevel: 0000000000000000
+  upgradePathMaxLevel: 0200000002000000
+  currentActiveTowerModel: {fileID: 0}

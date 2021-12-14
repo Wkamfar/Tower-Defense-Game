@@ -2,6 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// World Builder spawns the real blocks from the map grid
+/// Calculates offsets
+/// Converts Virtual path to real world
+/// </summary>
 public class WorldBuilder : MonoBehaviour
 {
     public void SpawnBlocks(GameObject[] blockReferences, GameObject pathReference, GameObject beaconReference, Vector2 centerPoint, float offset)
@@ -24,7 +29,7 @@ public class WorldBuilder : MonoBehaviour
                 else if (MapData.grid[y][x] == (int)tiles.beacon)
                 {
                     currentBlock = Instantiate(blockReferences[0], new Vector3(spawningLocation.x, 0, spawningLocation.y), Quaternion.identity);
-                    GameObject currentBeacon = Instantiate(beaconReference, new Vector3(spawningLocation.x, 1.5f, spawningLocation.y), Quaternion.identity);
+                    //GameObject currentBeacon = Instantiate(beaconReference, new Vector3(spawningLocation.x, 1.5f, spawningLocation.y), Quaternion.identity); //turn this on later
                 }
                 else
                 {

@@ -88,15 +88,26 @@ public class PlayerActionScript : MonoBehaviour
     private bool WrongBlock()
     {
         List<List<int>> blocks = InRangeBlocks();
+        float blockRadius = 0;
 
         for (int i = 0; i < blocks.Count; ++i)
         {
             GameObject b = MapData.gameObjectGrid[blocks[i][1]][blocks[i][0]];
-            float x = Mathf.Abs(b.transform.position.x - this.transform.position.x);
-            float y = Mathf.Abs(b.transform.position.z - this.transform.position.z);
+            float x = Mathf.Abs(b.transform.position.x - mouseFollower.transform.position.x);
+            float y = Mathf.Abs(b.transform.position.z - mouseFollower.transform.position.z);
             float totalDistance = Mathf.Sqrt(x * x + y * y);
-            float angle = Mathf.Asin(y / totalDistance);
-            float blockRadius = (b.GetComponent<BlockStats>().blockSize / 2) / Mathf.Cos(angle);
+            float radiant = Mathf.Asin(y / totalDistance);
+            float angle = radiant * 180 / Mathf.PI;
+            if (angle >= 45)
+            {
+                blockRadius = (b.GetComponent<BlockStats>().blockSize / 2) / Mathf.Sin(radiant);
+            }
+            else
+            {
+                blockRadius = (b.GetComponent<BlockStats>().blockSize / 2) / Mathf.Cos(radiant);
+            }           
+            //Debug.Log("PlayerActionScript.WrongBlock: The radius of the block currently is")
+            //Fix all of the issues
             if (blockRadius + TowerData.selectedTower.GetComponent<TowerStats>().hitbox > totalDistance) 
             {
                 return true;
@@ -240,8 +251,8 @@ public class PlayerActionScript : MonoBehaviour
 
         sell.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().Sell(); });
 
-        upgradeOne.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().UpgradePathOne(); });
-        upgradeTwo.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().UpgradePathTwo(); });
+        upgradeOne.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().UpdateUpgradePath(0, upgradeOneName.GetComponent<TextMeshProUGUI>(), upgradeOneCost.GetComponent<TextMeshProUGUI>()); });
+        upgradeTwo.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().UpdateUpgradePath(1, upgradeTwoName.GetComponent<TextMeshProUGUI>(), upgradeTwoCost.GetComponent<TextMeshProUGUI>()); });
 
         target.GetComponent<TextMeshProUGUI>().text = tower.GetComponent<TowerStats>().targetingOptionNames[tower.GetComponent<TowerStats>().targetingOptions[0]];
         tower.GetComponent<TowerMenuScript>().targetDisplay = target;

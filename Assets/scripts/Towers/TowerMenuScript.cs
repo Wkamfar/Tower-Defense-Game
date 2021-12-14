@@ -51,20 +51,7 @@ public class TowerMenuScript : MonoBehaviour
         Destroy(towerRadius);
         Destroy(this.gameObject);
     }
-    //Make a bar that fills up squares until you reach max level
-    public void UpgradePathOne()
-    {
-        TextMeshProUGUI upgradeNameDisplay = upgradeOneDisplay.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI upgradeCostDisplay = upgradeOneDisplay.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        UpdateUpgradePath(0, upgradeNameDisplay, upgradeCostDisplay);
-    }
-    public void UpgradePathTwo()
-    {
-        TextMeshProUGUI upgradeNameDisplay = upgradeTwoDisplay.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
-        TextMeshProUGUI upgradeCostDisplay = upgradeTwoDisplay.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
-        UpdateUpgradePath(1, upgradeNameDisplay, upgradeCostDisplay);
-    }
-    private void UpdateUpgradePath(int p, TextMeshProUGUI upgradeNameDisplay, TextMeshProUGUI upgradeCostDisplay)
+    public void UpdateUpgradePath(int p, TextMeshProUGUI upgradeNameDisplay, TextMeshProUGUI upgradeCostDisplay)
     {
         if (this.GetComponent<TowerUpgradeScript>().upgradePathMaxLevel[p] > this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p] &&
             this.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]] <= PlayerData.playerMoney)

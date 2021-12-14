@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// adds anything that comes into the radius and can be shot into a list, and then from there choose the priority, either strongest target, weakest target, first target, or last target, and then remove them when they leave the radius
+/// Is used in TowerActionScirpt
+/// </summary>
 public class TowerTargeting : MonoBehaviour
 {
-    //add anything that comes into the radius and can be shot into a list, and then from there choose the priority, either strongest target, first target, or last target, and then remove them when they leave the radius
+    
     private List<GameObject> targets = new List<GameObject>();
     private void Update()
     {

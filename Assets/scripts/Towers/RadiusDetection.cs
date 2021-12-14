@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// Adds enemies within radius
+/// Is used in TowerTargeting
+/// </summary>
 public class RadiusDetection : MonoBehaviour
 {
     public GameObject tower;

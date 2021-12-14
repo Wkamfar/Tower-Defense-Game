@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+/// <summary>
+/// TowerUpgradeScript keeps track of the upgrades what the changes are and what the upgrade level is.
+/// </summary>
 public class TowerUpgradeScript : MonoBehaviour
 {
     public GameObject baseTowerModel;
@@ -20,15 +22,4 @@ public class TowerUpgradeScript : MonoBehaviour
                                                                                     new List<GameObject>() { null, null }
                                                                                    };
     public GameObject currentActiveTowerModel;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

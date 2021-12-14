@@ -28,8 +28,13 @@ public class EnemySpawner : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        Debug.Log("EnemySpawner.Update: The amount of AI: " + AIData.totalNumberOfAI);
         if (currentWave >= waveCount)
         {
+            if (AIData.totalNumberOfAI == 0)
+            {
+                Debug.Log("You Win!");
+            }
             return;
         }
         if (enemiesToSpawn.Count == 0)

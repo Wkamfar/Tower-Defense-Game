@@ -31,6 +31,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void Start()
     {
+        ++AIData.totalNumberOfAI;
         currentHp = maxHp;
         GetRandomPath();
         AI = this.gameObject;
@@ -69,6 +70,7 @@ public class EnemyAI : MonoBehaviour
     private void KillAI()
     {
         //Instantiate(deathEffect, this.gameObject.transform.position, Quaternion.identity, this.gameObject.transform);
+        --AIData.totalNumberOfAI;
         Invoke("DespawnBody", 1f);
         IsDead = true;
         PlayerData.ChangeMoney(bounty);

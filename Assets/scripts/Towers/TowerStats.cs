@@ -2,6 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+/// <summary>
+/// TowerStats stores the stats of the tower
+/// We don't need to change this
+/// </summary>
 public class TowerStats : MonoBehaviour
 {
     //Add overheating, reloading, and everything else later

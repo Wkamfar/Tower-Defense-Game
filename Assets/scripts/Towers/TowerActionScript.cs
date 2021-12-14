@@ -1,5 +1,8 @@
 using UnityEngine;
 
+/// <summary>
+/// TowerActionScript tracks and shoots an enemy
+/// </summary>
 public class TowerActionScript : MonoBehaviour
 {
 

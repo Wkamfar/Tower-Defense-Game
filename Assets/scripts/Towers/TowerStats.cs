@@ -9,6 +9,7 @@ using TMPro;
 public class TowerStats : MonoBehaviour
 {
     //Add overheating, reloading, and everything else later
+    //Add stat caps later
     public float radius;
     public float hitbox;
     public float damage;
@@ -30,6 +31,7 @@ public class TowerStats : MonoBehaviour
     public GameObject targetedEnemy;
     public List<GameObject> targets;
     public List<string> targetingOptionNames = new List<string>() { "First Enemy", "Last Enemy", "Strongest Enemy", "Weakest Enemy" };
+    public string towerName;
 
     private void Start()
     {

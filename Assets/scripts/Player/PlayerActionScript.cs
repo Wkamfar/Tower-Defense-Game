@@ -247,7 +247,7 @@ public class PlayerActionScript : MonoBehaviour
         //Sell
         GameObject sell = currentTowerMenu.transform.GetChild(5).gameObject;
 
-        towerName.GetComponent<TextMeshProUGUI>().text = TowerData.selectedTower.name;
+        towerName.GetComponent<TextMeshProUGUI>().text = TowerData.selectedTower.GetComponent<TowerStats>().towerName;
 
         sell.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().Sell(); });
 

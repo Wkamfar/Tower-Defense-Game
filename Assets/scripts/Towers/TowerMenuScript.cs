@@ -60,6 +60,7 @@ public class TowerMenuScript : MonoBehaviour
             this.GetComponent<TowerStats>().AddValue(this.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]]);
             this.gameObject.GetComponent<TowerUpgradeScript>().upgradeIndicators[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
             ++this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p];
+            GetComponent<TowerUpgradeScript>().UpdateTower(p);
             if (this.GetComponent<TowerUpgradeScript>().upgradePathMaxLevel[p] > this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p])
             {
                 upgradeNameDisplay.text = this.gameObject.GetComponent<TowerUpgradeScript>().upgradeNames[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]];

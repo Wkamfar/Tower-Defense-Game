@@ -178,6 +178,10 @@ public class PlayerActionScript : MonoBehaviour
     }
     private bool SpecialRequirement()
     {
+        if (IsInMap())
+        {
+            return TowerData.selectedTower.GetComponent<TowerSpecialRequirement>().HasMetSpecialRequirement(mouseFollower);
+        }
         return true;
     }
 

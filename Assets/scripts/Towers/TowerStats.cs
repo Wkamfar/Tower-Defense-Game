@@ -25,12 +25,13 @@ public class TowerStats : MonoBehaviour
     public int sellPercentage;
     public float damageDealt = 0;
     public List<int> targetingOptions = new List<int>() { 0, 1 }; // 0 = first enemy, 1 = last enemy, 2 = strongest enemy, 3 = weakest enemy
+    public List<string> targetingOptionNames = new List<string>() { "First Enemy", "Last Enemy", "Strongest Enemy", "Weakest Enemy" };
     public int targetingIndex = 0;
     public GameObject bullet;
     public GameObject shootPoint;
     public GameObject targetedEnemy;
     public List<GameObject> targets;
-    public List<string> targetingOptionNames = new List<string>() { "First Enemy", "Last Enemy", "Strongest Enemy", "Weakest Enemy" };
+    
     public string towerName;
 
     private void Start()

@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 918867734044799644}
   - component: {fileID: 8455011646563030400}
   - component: {fileID: 492499781502309119}
+  - component: {fileID: 4918653066395866781}
   m_Layer: 0
   m_Name: Turret Holder
   m_TagString: Tower
@@ -64,16 +65,16 @@ MonoBehaviour:
   sellPercentage: 70
   damageDealt: 0
   targetingOptions: 0000000001000000
-  targetingIndex: 0
-  bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
-  shootPoint: {fileID: 0}
-  targetedEnemy: {fileID: 0}
-  targets: []
   targetingOptionNames:
   - First Enemy
   - Last Enemy
   - Strongest Enemy
   - Weakest Enemy
+  targetingIndex: 0
+  bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
+  shootPoint: {fileID: 0}
+  targetedEnemy: {fileID: 0}
+  targets: []
   towerName: Turret
 --- !u!114 &7075564763143479156
 MonoBehaviour:
@@ -146,3 +147,15 @@ MonoBehaviour:
   upgradePathTwoOne: {fileID: 4609958870734015659, guid: b7b46a8a270d3b74fba786099e2c71e3, type: 3}
   upgradePathTwoTwo: {fileID: 4609958870734015659, guid: dc43bb839c91e9f428b11cead3140553, type: 3}
   currentActiveTowerModel: {fileID: 0}
+--- !u!114 &4918653066395866781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d051f441db988444aa69014e634d8e97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

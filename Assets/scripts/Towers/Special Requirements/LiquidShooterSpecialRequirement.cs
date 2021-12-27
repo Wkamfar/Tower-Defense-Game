@@ -88,6 +88,9 @@ public class LiquidShooterSpecialRequirement : TowerSpecialRequirement
             }
             if (blockRadius + TowerData.selectedTower.GetComponent<TowerStats>().hitbox < maxDistance)
             {
+                GetComponent<LiquidShooterStats>().connectedLiquid = closestBlock;
+                GetComponent<TowerStats>().bullet = closestBlock.GetComponent<LiquidStats>().liquidBullet;
+                GetComponent<TowerStats>().bullet.GetComponent<LiquidBulletStats>().SetStats(gameObject);
                 return true;
             }
         }

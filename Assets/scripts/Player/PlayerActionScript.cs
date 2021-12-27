@@ -201,6 +201,7 @@ public class PlayerActionScript : MonoBehaviour
     {
         //Add a spawning effect
         GameObject currentTower = Instantiate(TowerData.selectedTower, spawnPos, Quaternion.identity);
+        currentTower.GetComponent<TowerUpgradeScript>().InstantiateUpgrades();
         GameObject currentTowerModel = Instantiate(currentTower.GetComponent<TowerUpgradeScript>().baseTowerModel, currentTower.transform);
         currentTower.GetComponent<TowerUpgradeScript>().currentActiveTowerModel = currentTowerModel;
         currentTower.GetComponent<TowerStats>().shootPoint = currentTowerModel.transform.GetChild(0).gameObject; //Change this later!!!!
@@ -251,7 +252,7 @@ public class PlayerActionScript : MonoBehaviour
         //Sell
         GameObject sell = currentTowerMenu.transform.GetChild(5).gameObject;
 
-        towerName.GetComponent<TextMeshProUGUI>().text = TowerData.selectedTower.GetComponent<TowerStats>().towerName;
+        towerName.GetComponent<TextMeshProUGUI>().text = TowerData.selectedTower.GetComponent<TowerStats>().GetTowerName();
 
         sell.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerMenuScript>().Sell(); });
 

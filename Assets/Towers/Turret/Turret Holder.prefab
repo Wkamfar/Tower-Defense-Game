@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 8455011646563030400}
   - component: {fileID: 492499781502309119}
   - component: {fileID: 4918653066395866781}
+  - component: {fileID: 403831169694627971}
   m_Layer: 0
   m_Name: Turret Holder
   m_TagString: Tower
@@ -133,6 +134,14 @@ MonoBehaviour:
   baseTowerModel: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
   upgradePathLevel: 0000000000000000
   upgradePathMaxLevel: 0200000002000000
+  costOneOne: 100
+  costOneTwo: 200
+  costTwoOne: 100
+  costTwoTwo: 200
+  nameOneOne: Higher Fire Rate
+  nameOneTwo: Bullet Rain
+  nameTwoOne: Depleted Plutonium
+  nameTwoTwo: Armor Piercing
   modelZeroZero: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
   modelZeroOne: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
   modelZeroTwo: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
@@ -159,3 +168,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d051f441db988444aa69014e634d8e97, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &403831169694627971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1feb41a1df0b7784d9e9bf43957a8872, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 5
+  hitbox: 0.5
+  damage: 5
+  fireRate: 180
+  bulletSpeed: 35
+  bulletLifespan: 20
+  maxTravelDistance: 100
+  pierce: 1
+  seesCamo: 0
+  cost: 100
+  allowedBlocks:
+  - {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
+  value: 0
+  sellPercentage: 70
+  damageDealt: 0
+  targetingOptions: 0000000001000000
+  targetingOptionNames:
+  - First Enemy
+  - Last Enemy
+  - Strongest Enemy
+  - Weakest Enemy
+  targetingIndex: 0
+  bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
+  shootPoint: {fileID: 0}
+  targetedEnemy: {fileID: 0}
+  targets: []
+  towerName: Turret

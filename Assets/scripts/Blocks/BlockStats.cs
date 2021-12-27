@@ -6,4 +6,5 @@ public class BlockStats : MonoBehaviour
 {
     public int blockNumber;
     public float blockSize = 1;
+    public string blockName;
 }

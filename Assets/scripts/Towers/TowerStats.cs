@@ -31,6 +31,12 @@ public class TowerStats : MonoBehaviour
     public GameObject shootPoint;
     public GameObject targetedEnemy;
     public List<GameObject> targets;
+    public bool hasEffect;
+    public GameObject bulletEffect;
+    public float effectDuration;
+    public bool isPermanent;
+    public float effectIntensity;
+
     
     public string towerName;
 
@@ -50,5 +56,9 @@ public class TowerStats : MonoBehaviour
     {
         damageDealt += amount;
         this.gameObject.GetComponent<TowerMenuScript>().damageDealtDisplay.GetComponent<TextMeshProUGUI>().text = damageDealt.ToString();
+    }
+    public virtual string GetTowerName()
+    {
+        return towerName;
     }
 }

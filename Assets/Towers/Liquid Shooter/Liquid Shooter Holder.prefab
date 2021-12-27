@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2306747170983195593}
-  - component: {fileID: 8706562176387132240}
   - component: {fileID: 7075564763143479156}
   - component: {fileID: 918867734044799644}
   - component: {fileID: 8455011646563030400}
   - component: {fileID: 492499781502309119}
   - component: {fileID: 4934417263685160134}
+  - component: {fileID: 4557793439607848751}
   m_Layer: 0
   m_Name: Liquid Shooter Holder
   m_TagString: Tower
@@ -37,45 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8706562176387132240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1678817109574290378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55fea14d3170fb04c9c4250bdb92d3c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 5
-  hitbox: 0.5
-  damage: 5
-  fireRate: 180
-  bulletSpeed: 35
-  bulletLifespan: 20
-  maxTravelDistance: 100
-  pierce: 1
-  seesCamo: 0
-  cost: 100
-  allowedBlocks:
-  - {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
-  value: 0
-  sellPercentage: 70
-  damageDealt: 0
-  targetingOptions: 0000000001000000
-  targetingOptionNames:
-  - First Enemy
-  - Last Enemy
-  - Strongest Enemy
-  - Weakest Enemy
-  targetingIndex: 0
-  bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
-  shootPoint: {fileID: 0}
-  targetedEnemy: {fileID: 0}
-  targets: []
-  towerName: Liquid Shooter
 --- !u!114 &7075564763143479156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -133,6 +94,14 @@ MonoBehaviour:
   baseTowerModel: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
   upgradePathLevel: 0000000000000000
   upgradePathMaxLevel: 0200000002000000
+  costOneOne: 150
+  costOneTwo: 300
+  costTwoOne: 150
+  costTwoTwo: 300
+  nameOneOne: Faster Pump
+  nameOneTwo: Double Pump
+  nameTwoOne: Higher Potency
+  nameTwoTwo: Deadly Puddle
   modelZeroZero: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
   modelZeroOne: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
   modelZeroTwo: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
@@ -159,10 +128,49 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc44464e0dfbc4d49a21961814ee6d3f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxDistance: 5
+  maxDistance: 2
   liquids:
   - {fileID: 2622019978693544177, guid: 994e86822ef59ac488769d7e347748f0, type: 3}
   - {fileID: 2622019978693544177, guid: 60063876196e94d47989d5876c385a65, type: 3}
   - {fileID: 2622019978693544177, guid: 89bf8744f90216649bc48e8227876991, type: 3}
   - {fileID: 2622019978693544177, guid: 190acc38dc980294ebc894bc2c22fa87, type: 3}
   - {fileID: 2622019978693544177, guid: 8078bbe20d0a34a48a055fb58065cca9, type: 3}
+--- !u!114 &4557793439607848751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2010bdc5e3d02b4299226674b13ce38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 5
+  hitbox: 0.5
+  damage: 0
+  fireRate: 0
+  bulletSpeed: 0
+  bulletLifespan: 0
+  maxTravelDistance: 0
+  pierce: 0
+  seesCamo: 0
+  cost: 250
+  allowedBlocks:
+  - {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
+  value: 0
+  sellPercentage: 70
+  damageDealt: 0
+  targetingOptions: 0000000001000000
+  targetingOptionNames:
+  - First Enemy
+  - Last Enemy
+  - Strongest Enemy
+  - Weakest Enemy
+  targetingIndex: 0
+  bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
+  shootPoint: {fileID: 0}
+  targetedEnemy: {fileID: 0}
+  targets: []
+  towerName: Liquid Shooter

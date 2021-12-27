@@ -13,10 +13,14 @@ public class TowerUpgradeScript : MonoBehaviour
                                                                 new List<int>() { 100, 200 }, //upgrade path one cost
                                                                 new List<int>() { 100, 200 }  //upgrade path two cost
                                                                };
+    [SerializeField] private int costOneOne; [SerializeField] private int costOneTwo;
+    [SerializeField] private int costTwoOne; [SerializeField] private int costTwoTwo;
     public List<List<string>> upgradeNames = new List<List<string>>() {
                                                                        new List<string>() { "Higher Fire Rate", "Bullet Rain" }, //upgrade path one names
                                                                        new List<string>() { "Depleted Plutonium", "Armor Piercing" }  //upgrade path two names
                                                                       };
+    [SerializeField] private string nameOneOne;[SerializeField] private string nameOneTwo;
+    [SerializeField] private string nameTwoOne;[SerializeField] private string nameTwoTwo;
     public List<List<GameObject>> upgradeIndicators = new List<List<GameObject>>() {
                                                                                     new List<GameObject>() { null, null },
                                                                                     new List<GameObject>() { null, null }
@@ -37,9 +41,19 @@ public class TowerUpgradeScript : MonoBehaviour
     [SerializeField] private GameObject upgradePathOneOne; [SerializeField] private GameObject upgradePathOneTwo;
     [SerializeField] private GameObject upgradePathTwoOne; [SerializeField] private GameObject upgradePathTwoTwo;
     public GameObject currentActiveTowerModel;
-
-    private void Start()
+    public void InstantiateUpgrades()
     {
+        //Debug.Log("TowerUpgradeScript.InstantiateUpgrades: The happens");
+        //declare upgrade costs
+        upgradeCost[0][0] = costOneOne;
+        upgradeCost[0][1] = costOneTwo;
+        upgradeCost[1][0] = costTwoOne;
+        upgradeCost[1][1] = costTwoTwo;
+        //declare upgrade names
+        upgradeNames[0][0] = nameOneOne;
+        upgradeNames[0][1] = nameOneTwo;
+        upgradeNames[1][0] = nameTwoOne;
+        upgradeNames[1][1] = nameTwoTwo;
         //declare crosspath models
         crosspathModels[0][0] = modelZeroZero;
         crosspathModels[0][1] = modelZeroOne;
@@ -61,8 +75,6 @@ public class TowerUpgradeScript : MonoBehaviour
         GameObject newActiveTower = Instantiate(crosspathModels[upgradePathLevel[0]][upgradePathLevel[1]], currentActiveTowerModel.transform.position, Quaternion.identity, transform);
         Destroy(currentActiveTowerModel);
         currentActiveTowerModel = newActiveTower;
-        Debug.Log("TowerUpgradeScript.UpdateTower: Upgrade Level Path One is: " + upgradePathLevel[0]);
-        Debug.Log("TowerUpgradeScript.UpdateTower: Upgrade Level Path Two is: " + upgradePathLevel[1]);
         towerUpgrades[p][upgradePathLevel[p]].GetComponent<TowerUpgradeChanges>().upgradeTower(gameObject);
         GetComponent<TowerMenuScript>().towerRadius.transform.localScale = new Vector3(GetComponent<TowerStats>().radius, GetComponent<TowerMenuScript>().towerRadius.transform.localScale.y, GetComponent<TowerStats>().radius);
 

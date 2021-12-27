@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2801667900081685553}
   - component: {fileID: 8476583002071311145}
   - component: {fileID: 8171956491521492849}
-  - component: {fileID: -1806400539984437307}
+  - component: {fileID: 9129265191704359530}
   m_Layer: 0
   m_Name: Water
   m_TagString: Block
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &-1806400539984437307
+--- !u!114 &9129265191704359530
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,7 +107,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 2622019978693544177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfbf0c1dc290a64489f73f4f6a399ecd, type: 3}
+  m_Script: {fileID: 11500000, guid: be2a798ee4c36984293ffea8b35f2169, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blockNumber: 6
+  blockSize: 1
+  blockName: Water
+  liquidBullet: {fileID: 9051132128199530449, guid: 3a8643734dbbbcd4fb0831c479f9871c, type: 3}

@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class LiquidEffect : MonoBehaviour
 {
-    public GameObject enemy;
+    public string effectID;
+
     public GameObject tower;
     public float effectIntensity;
     public float effectDuration;
@@ -18,13 +19,13 @@ public class LiquidEffect : MonoBehaviour
     }
     private void DisableEffect()
     {
-        Destroy(this.gameObject);
+        GetComponent<EffectManager>().RemoveEffect(gameObject);
     }
     private void Update()
     {
-        ApplyEffect(effectIntensity, enemy, tower);
+        ApplyEffect(effectIntensity, tower);
     }
-    protected virtual void ApplyEffect(float intensity, GameObject enemy, GameObject tower)
+    protected virtual void ApplyEffect(float intensity, GameObject tower)
     {
 
     }

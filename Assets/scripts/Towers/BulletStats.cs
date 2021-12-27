@@ -55,7 +55,7 @@ public class BulletStats : MonoBehaviour
             if (tower.GetComponent<TowerStats>().hasEffect)
             {
                 GameObject currentEffect = Instantiate(tower.GetComponent<TowerStats>().bulletEffect, enemy.transform);
-                currentEffect.GetComponent<LiquidEffect>().enemy = enemy;
+                enemy.GetComponent<EffectManager>().AddEffect(currentEffect);
                 currentEffect.GetComponent<LiquidEffect>().tower = tower;
                 currentEffect.GetComponent<LiquidEffect>().effectIntensity = tower.GetComponent<TowerStats>().effectIntensity;
                 currentEffect.GetComponent<LiquidEffect>().effectDuration = tower.GetComponent<TowerStats>().effectDuration;

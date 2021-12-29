@@ -11,13 +11,7 @@ public class BulletStats : MonoBehaviour
     public GameObject tower;
     private Vector2 startingPosition;
     private List<Vector3> bulletLocations = new List<Vector3>();
-    private void OnTriggerEnter(Collider col)
-    {
-        if (col.gameObject.tag == "Enemy")
-        {
-            DamageEnemy(col.gameObject);
-        }
-    }
+
     private void Start()
     {
         startingPosition = new Vector2(this.transform.position.x, this.transform.position.z);
@@ -31,7 +25,7 @@ public class BulletStats : MonoBehaviour
         RaycastHit hit;
         LayerMask layerMask = LayerMask.GetMask("Enemy");
         float d = Vector3.Distance(bulletLocations[bulletLocations.Count - 2], bulletLocations[bulletLocations.Count - 1]);
-        if (Physics.Raycast(bulletLocations[bulletLocations.Count - 2], (bulletLocations[bulletLocations.Count - 1] - bulletLocations[bulletLocations.Count - 2]), out hit, d, layerMask))
+        if (Physics.SphereCast(bulletLocations[bulletLocations.Count - 2], transform.localScale.x / 2, (bulletLocations[bulletLocations.Count - 1] - bulletLocations[bulletLocations.Count - 2]), out hit, d + transform.localScale.x / 2, layerMask))
         {
             //Debug.Log("BulletStats.Update: The raycast hit an enemy");
             DamageEnemy(hit.collider.gameObject);

@@ -10,10 +10,12 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI healthBarText;
     public TextMeshProUGUI coinCount;
     public GameObject deathCanvas;
+    public GameObject victoryCanvas;
     // Start is called before the first frame update
     void Start()
     {
         deathCanvas.SetActive(false);
+        victoryCanvas.SetActive(false);
     }
 
     // Update is called once per frame

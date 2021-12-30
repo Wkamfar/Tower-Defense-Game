@@ -1,0 +1,178 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1678817109574290378
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2306747170983195593}
+  - component: {fileID: 7075564763143479156}
+  - component: {fileID: 918867734044799644}
+  - component: {fileID: 8455011646563030400}
+  - component: {fileID: 492499781502309119}
+  - component: {fileID: -9124362336117325770}
+  - component: {fileID: 8093468919777568748}
+  m_Layer: 0
+  m_Name: Solar Laser Holder
+  m_TagString: Tower
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2306747170983195593
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7075564763143479156
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bb47231a32bbc4ca061fbd0efaef6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &918867734044799644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02a1612f870e5cd448ce4e2a7b42ed82, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  towerMenu: {fileID: 0}
+  towerRadius: {fileID: 0}
+  targetDisplay: {fileID: 0}
+  upgradeOneDisplay: {fileID: 0}
+  upgradeTwoDisplay: {fileID: 0}
+  damageDealtDisplay: {fileID: 0}
+--- !u!114 &8455011646563030400
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6cddcafba9ee7c041bb3df7c538643d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &492499781502309119
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cc7b335620068941863825a46317bba, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  baseTowerModel: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  upgradePathLevel: 0000000000000000
+  upgradePathMaxLevel: 0200000002000000
+  costOneOne: 100
+  costOneTwo: 200
+  costTwoOne: 100
+  costTwoTwo: 200
+  nameOneOne: Higher Fire Rate
+  nameOneTwo: Bullet Rain
+  nameTwoOne: Depleted Plutonium
+  nameTwoTwo: Armor Piercing
+  modelZeroZero: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  modelZeroOne: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  modelZeroTwo: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  modelOneZero: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  modelOneOne: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  modelOneTwo: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  modelTwoZero: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  modelTwoOne: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  modelTwoTwo: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  upgradePathOneOne: {fileID: 4609958870734015659, guid: 186c275bb9014bb47ac24a2902ffd351, type: 3}
+  upgradePathOneTwo: {fileID: 4609958870734015659, guid: 8f07e248464485843bd50eb25ff0457f, type: 3}
+  upgradePathTwoOne: {fileID: 4609958870734015659, guid: b7b46a8a270d3b74fba786099e2c71e3, type: 3}
+  upgradePathTwoTwo: {fileID: 4609958870734015659, guid: dc43bb839c91e9f428b11cead3140553, type: 3}
+  currentActiveTowerModel: {fileID: 0}
+--- !u!114 &-9124362336117325770
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfa26bf92d5e1f548a3ab9ca97dc7134, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxDistance: 2
+  powerSources:
+  - {fileID: 2622019978693544177, guid: be72b9b05a9612c45ab41f9437ed0e4a, type: 3}
+  - {fileID: 2622019978693544177, guid: fc13de09eed32d94680407112ce4a0ed, type: 3}
+--- !u!114 &8093468919777568748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5772749118a9f745ad0370f1215d0f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: 10
+  hitbox: 0.5
+  damage: 0
+  fireRate: 0
+  bulletSpeed: 0
+  bulletLifespan: 0
+  maxTravelDistance: 0
+  pierce: 0
+  seesCamo: 0
+  cost: 0
+  allowedBlocks:
+  - {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
+  value: 0
+  sellPercentage: 70
+  damageDealt: 0
+  targetingOptions: 0000000001000000
+  targetingOptionNames:
+  - First Enemy
+  - Last Enemy
+  - Strongest Enemy
+  - Weakest Enemy
+  targetingIndex: 0
+  bullet: {fileID: 0}
+  shootPoint: {fileID: 0}
+  targetedEnemy: {fileID: 0}
+  targets: []
+  hasEffect: 0
+  bulletEffect: {fileID: 0}
+  effectDuration: 0
+  isPermanent: 0
+  effectIntensity: 0
+  towerName: Solar Laser

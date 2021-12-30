@@ -14,7 +14,9 @@ public class TowerSelectionScript : MonoBehaviour
         foreach (GameObject b in buttons)
         {
             GameObject tower = b.GetComponent<TowerButtonData>().tower;
+            TextMeshProUGUI nameTextBox = b.transform.GetChild(0).GetComponent<TextMeshProUGUI>();
             TextMeshProUGUI priceTextBox = b.transform.GetChild(1).GetComponent<TextMeshProUGUI>();
+            nameTextBox.text = tower.GetComponent<TowerStats>().towerName;
             priceTextBox.text = tower.GetComponent<TowerStats>().cost.ToString();
         }
     }

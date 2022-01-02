@@ -14,10 +14,8 @@ public class LavaEffect : LiquidEffect
         if (damageRate <= 0)
         {
             float effectDamage = Random.Range(minEffectDamage, maxEffectDamage + 1) * intensity;
-            GetComponent<EnemyAI>().TakeDamage(effectDamage);
-            tower.GetComponent<TowerStats>().IncreaseDamageDealt(effectDamage);
+            transform.GetComponentInParent<EnemyAI>().TakeDamage(effectDamage, tower);
         }
         damageRate = damageRate <= 0 ? 60 / Random.Range(minDamageRate, maxDamageRate + 1) : damageRate - Time.deltaTime;
     }
-
 }

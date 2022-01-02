@@ -91,7 +91,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc7b335620068941863825a46317bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseTowerModel: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
+  baseTowerModel: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
   upgradePathLevel: 0000000000000000
   upgradePathMaxLevel: 0200000002000000
   costOneOne: 150
@@ -102,19 +102,19 @@ MonoBehaviour:
   nameOneTwo: Double Pump
   nameTwoOne: Higher Potency
   nameTwoTwo: Deadly Puddle
-  modelZeroZero: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  modelZeroOne: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  modelZeroTwo: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  modelOneZero: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  modelOneOne: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  modelOneTwo: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  modelTwoZero: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  modelTwoOne: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  modelTwoTwo: {fileID: 5435715626267769603, guid: 3e7f0bfd77261324ab325e333a76126b, type: 3}
-  upgradePathOneOne: {fileID: 4609958870734015659, guid: 186c275bb9014bb47ac24a2902ffd351, type: 3}
-  upgradePathOneTwo: {fileID: 4609958870734015659, guid: 8f07e248464485843bd50eb25ff0457f, type: 3}
-  upgradePathTwoOne: {fileID: 4609958870734015659, guid: b7b46a8a270d3b74fba786099e2c71e3, type: 3}
-  upgradePathTwoTwo: {fileID: 4609958870734015659, guid: dc43bb839c91e9f428b11cead3140553, type: 3}
+  modelZeroZero: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  modelZeroOne: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  modelZeroTwo: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  modelOneZero: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  modelOneOne: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  modelOneTwo: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  modelTwoZero: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  modelTwoOne: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  modelTwoTwo: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  upgradePathOneOne: {fileID: 4609958870734015659, guid: dacbdeafa2d65b84f8919a530ac800e5, type: 3}
+  upgradePathOneTwo: {fileID: 4609958870734015659, guid: 19fa3284e6e615948a617e8810504b56, type: 3}
+  upgradePathTwoOne: {fileID: 4609958870734015659, guid: be5713e111492df478d7eadc850adaba, type: 3}
+  upgradePathTwoTwo: {fileID: 4609958870734015659, guid: 51f802cf1474d8247895a9eadcb784e2, type: 3}
   currentActiveTowerModel: {fileID: 0}
 --- !u!114 &4934417263685160134
 MonoBehaviour:
@@ -150,11 +150,11 @@ MonoBehaviour:
   radius: 10
   hitbox: 0.5
   damage: 0
-  fireRate: 0
-  bulletSpeed: 0
-  bulletLifespan: 0
-  maxTravelDistance: 0
-  pierce: 0
+  fireRate: 120
+  bulletSpeed: 40
+  bulletLifespan: 20
+  maxTravelDistance: 100
+  pierce: 1
   seesCamo: 0
   cost: 250
   allowedBlocks:
@@ -169,14 +169,14 @@ MonoBehaviour:
   - Strongest Enemy
   - Weakest Enemy
   targetingIndex: 0
-  bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
+  bullet: {fileID: 9051132128199530449, guid: dba240cdc9b0b434988c9d1ea41c5d51, type: 3}
   shootPoint: {fileID: 0}
   targetedEnemy: {fileID: 0}
   targets: []
-  hasEffect: 0
-  bulletEffect: {fileID: 0}
+  hasEffect: 1
+  bulletEffect: {fileID: 6720597304162702919, guid: 9fa28b2c7029a4f4eb746020d9899563, type: 3}
   effectDuration: 0
-  isPermanent: 0
-  effectIntensity: 0
+  isPermanent: 1
+  effectIntensity: 1
   towerName: Liquid Shooter
   connectedLiquid: {fileID: 0}

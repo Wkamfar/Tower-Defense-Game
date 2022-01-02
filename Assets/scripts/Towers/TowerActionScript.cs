@@ -55,8 +55,7 @@ public class TowerActionScript : MonoBehaviour
     void HitScanShoot()
     {
         shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
-        GetComponent<TowerStats>().targetedEnemy.GetComponent<EnemyAI>().TakeDamage(this.gameObject.GetComponent<TowerStats>().damage);
-        this.gameObject.GetComponent<TowerStats>().IncreaseDamageDealt(this.gameObject.GetComponent<TowerStats>().damage);
+        GetComponent<TowerStats>().targetedEnemy.GetComponent<EnemyAI>().TakeDamage(this.gameObject.GetComponent<TowerStats>().damage, gameObject);
     }
     void ProjectileShoot()
     {

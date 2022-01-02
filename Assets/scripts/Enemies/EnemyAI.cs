@@ -85,9 +85,11 @@ public class EnemyAI : MonoBehaviour
         float y = Mathf.Abs(this.transform.position.z - PathData.realPossiblePaths[currentPath][currentWaypoint].z);
         return Mathf.Sqrt(x * x + y * y);
     }
-    public void TakeDamage(float damage)
+    public void TakeDamage(float damage, GameObject tower)
     {
-        currentHp -= damage;
+        float dealtDamage = currentHp >= damage ? damage : currentHp;
+        tower.GetComponent<TowerStats>().IncreaseDamageDealt(dealtDamage);
+        currentHp = currentHp >= damage ? currentHp - damage : 0;
         DamageIndicator();
     }
     private void DamageIndicator()

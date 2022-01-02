@@ -44,8 +44,7 @@ public class BulletStats : MonoBehaviour
     {
         if (!enemy.GetComponent<EnemyAI>().isHit)
         {
-            enemy.GetComponent<EnemyAI>().TakeDamage(damage);
-            tower.GetComponent<TowerStats>().IncreaseDamageDealt(damage);
+            enemy.GetComponent<EnemyAI>().TakeDamage(damage, tower);
             if (tower.GetComponent<TowerStats>().hasEffect)
             {
                 GameObject currentEffect = Instantiate(tower.GetComponent<TowerStats>().bulletEffect, enemy.transform);

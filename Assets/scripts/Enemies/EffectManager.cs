@@ -8,25 +8,22 @@ public class EffectManager : MonoBehaviour
     public void AddEffect(GameObject effect)
     {
         activeEffects.Add(effect);
-        for (int i = 0; i < activeEffects.Count; ++i)
+        for (int i = 0; i < activeEffects.Count - 1; ++i)
         {
-            for (int j = i + 1; j < activeEffects.Count; ++j)
+            if (activeEffects[i].GetComponent<LiquidEffect>().effectID == effect.GetComponent<LiquidEffect>().effectID)
             {
-                if (activeEffects[i].GetComponent<LiquidEffect>().effectID == activeEffects[j].GetComponent<LiquidEffect>().effectID)
+                if (activeEffects[i].GetComponent<LiquidEffect>().isPermanent)
                 {
-                    if (activeEffects[i].GetComponent<LiquidEffect>().isPermanent)
-                    {
-                        RemoveEffect(activeEffects[j]);
-                    }
-                    else if (activeEffects[i].GetComponent<LiquidEffect>().effectDuration >= activeEffects[j].GetComponent<LiquidEffect>().effectDuration)
-                    {
-                        RemoveEffect(activeEffects[j]);
-                    }
-                    else
-                    {
-                        RemoveEffect(activeEffects[i]);
-                        break;
-                    }
+                    RemoveEffect(effect);
+                }
+                else if (activeEffects[i].GetComponent<LiquidEffect>().effectDuration >= effect.GetComponent<LiquidEffect>().effectDuration)
+                {
+                    RemoveEffect(effect);
+                }
+                else
+                {
+                    RemoveEffect(activeEffects[i]);
+                    break;
                 }
             }
         }

@@ -23,7 +23,7 @@ public class LiquidEffect : MonoBehaviour
     }
     private void Update()
     {
-        ApplyEffect(effectIntensity, tower);
+            ApplyEffect(effectIntensity, tower);
     }
     protected virtual void ApplyEffect(float intensity, GameObject tower)
     {

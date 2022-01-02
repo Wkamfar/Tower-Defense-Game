@@ -19,10 +19,10 @@ public class LandGenerator
     }
     int RandomTile()
     {
-        float[] tilePercentages = new float[] { (float)tileSpawnRates.grass / 100, (float)tileSpawnRates.crystal / 100, (float)tileSpawnRates.plutonium / 100, (float)tileSpawnRates.coal / 100, (float)tileSpawnRates.iron / 100, (float)tileSpawnRates.gold / 100 };
+        float[] tilePercentages = new float[] { (float)tileSpawnRates.grass, (float)tileSpawnRates.plutonium, (float)tileSpawnRates.crystal, (float)tileSpawnRates.coal, (float)tileSpawnRates.iron, (float)tileSpawnRates.gold};
         int[] tileNumbers = new int[] { (int)tiles.grass, (int)tiles.crystal, (int)tiles.plutonium, (int)tiles.coal, (int)tiles.iron, (int)tiles.gold };
-        float randomPercentage = Random.Range(0, 100);
-        for (int i = 0; i < tilePercentages.Length; i++)
+        float randomPercentage = Random.Range(0, 10000);
+        for (int i = 0; i < tilePercentages.Length; ++i)
         {
             randomPercentage -= tilePercentages[i];
             if (randomPercentage < 0)

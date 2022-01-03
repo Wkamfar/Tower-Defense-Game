@@ -31,7 +31,7 @@ public class EnemySpawner : MonoBehaviour
         //Debug.Log("EnemySpawner.Update: The amount of AI: " + AIData.totalNumberOfAI);
         if (currentWave >= waveCount)
         {
-            if (AIData.totalNumberOfAI == 0)
+            if (AIData.enemies.Count == 0)
             {
                 Debug.Log("You Win!");
             }

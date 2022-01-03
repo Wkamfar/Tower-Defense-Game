@@ -11,20 +11,20 @@ public class TowerActionScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        GetComponent<TowerStats>().targetedEnemy = this.gameObject.GetComponent<TowerTargeting>().targeting(this.GetComponent<TowerStats>().targetingOptions[this.GetComponent<TowerStats>().targetingIndex]);
-        if (HasEnemy())
+        GetComponent<TowerStats>().targetedLocation = GetComponent<TowerTargeting>().targeting(GetComponent<TowerStats>().targetingOptions[GetComponent<TowerStats>().targetingIndex]);
+        if (HasTarget())
         {
             TrackEnemy();
-            if (CanShoot())
+            if (CanShoot() && AIData.enemies.Count > 0)
             {
                 ProjectileShoot();
                 //HitScanShoot();
             }
         }
     }
-    bool HasEnemy()
+    bool HasTarget()
     {
-        if (this.gameObject.GetComponent<TowerTargeting>().GetComponent<TowerStats>().targets.Count > 0)
+        if (GetComponent<TowerStats>().targets.Count > 0 || GetComponent<TowerTargeting>().hasMarker)
         {
             return true;
         }
@@ -32,19 +32,19 @@ public class TowerActionScript : MonoBehaviour
     }
     void TrackEnemy() //add aiming ahead and predicting movement later for projectile bullets
     {
-        float xDifference = Mathf.Abs(GetComponent<TowerStats>().targetedEnemy.transform.position.x - this.gameObject.transform.position.x);
-        float yDifference = Mathf.Abs(GetComponent<TowerStats>().targetedEnemy.transform.position.z - this.gameObject.transform.position.z);
+        float xDifference = Mathf.Abs(GetComponent<TowerStats>().targetedLocation.x - this.gameObject.transform.position.x);
+        float yDifference = Mathf.Abs(GetComponent<TowerStats>().targetedLocation.z - this.gameObject.transform.position.z);
         float angle = Mathf.Atan(yDifference / xDifference);
         angle = angle / Mathf.PI * 180 + 90;
-        if (GetComponent<TowerStats>().targetedEnemy.transform.position.x < this.transform.position.x && GetComponent<TowerStats>().targetedEnemy.transform.position.z > this.transform.position.z)
+        if (GetComponent<TowerStats>().targetedLocation.x < this.transform.position.x && GetComponent<TowerStats>().targetedLocation.z > this.transform.position.z)
         {
             angle = Mathf.Abs(angle - 180);
         }
-        else if (GetComponent<TowerStats>().targetedEnemy.transform.position.x > this.transform.position.x && GetComponent<TowerStats>().targetedEnemy.transform.position.z < this.transform.position.z)
+        else if (GetComponent<TowerStats>().targetedLocation.x > this.transform.position.x && GetComponent<TowerStats>().targetedLocation.z < this.transform.position.z)
         {
             angle = Mathf.Abs(360 - angle);
         }
-        else if (GetComponent<TowerStats>().targetedEnemy.transform.position.x > this.transform.position.x && GetComponent<TowerStats>().targetedEnemy.transform.position.z > this.transform.position.z)
+        else if (GetComponent<TowerStats>().targetedLocation.x > this.transform.position.x && GetComponent<TowerStats>().targetedLocation.z > this.transform.position.z)
         {
             angle += 180;
         }
@@ -52,11 +52,11 @@ public class TowerActionScript : MonoBehaviour
         GetComponent<TowerUpgradeScript>().currentActiveTowerModel.transform.rotation = Quaternion.Euler(this.gameObject.transform.rotation.x, angle, this.gameObject.transform.rotation.z);
 
     }
-    void HitScanShoot()
+    /*(void HitScanShoot()
     {
         shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
         GetComponent<TowerStats>().targetedEnemy.GetComponent<EnemyAI>().TakeDamage(this.gameObject.GetComponent<TowerStats>().damage, gameObject);
-    }
+    }*/
     void ProjectileShoot()
     {
         shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
@@ -66,7 +66,7 @@ public class TowerActionScript : MonoBehaviour
         currentBullet.GetComponent<BulletStats>().despawnTimer = this.gameObject.GetComponent<TowerStats>().bulletLifespan;
         currentBullet.GetComponent<BulletStats>().maxDistance = this.gameObject.GetComponent<TowerStats>().maxTravelDistance;
         currentBullet.GetComponent<BulletStats>().pierce = this.gameObject.GetComponent<TowerStats>().pierce;
-        Vector3 direction = (GetComponent<TowerStats>().targetedEnemy.transform.position - this.gameObject.transform.position).normalized;
+        Vector3 direction = (GetComponent<TowerStats>().targetedLocation - this.gameObject.transform.position).normalized;
         currentBullet.GetComponent<Rigidbody>().AddForce(direction * this.gameObject.GetComponent<TowerStats>().bulletSpeed, ForceMode.Impulse);
     }
     bool CanShoot()

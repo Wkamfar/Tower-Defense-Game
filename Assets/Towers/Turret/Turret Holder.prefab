@@ -9,12 +9,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2306747170983195593}
-  - component: {fileID: 8706562176387132240}
   - component: {fileID: 918867734044799644}
   - component: {fileID: 8455011646563030400}
   - component: {fileID: 492499781502309119}
   - component: {fileID: 403831169694627971}
   - component: {fileID: 9137644954762459584}
+  - component: {fileID: 1882998130212390005}
   m_Layer: 0
   m_Name: Turret Holder
   m_TagString: Tower
@@ -37,50 +37,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8706562176387132240
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1678817109574290378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 55fea14d3170fb04c9c4250bdb92d3c1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  radius: 5
-  hitbox: 0.5
-  damage: 5
-  fireRate: 180
-  bulletSpeed: 35
-  bulletLifespan: 20
-  maxTravelDistance: 100
-  pierce: 1
-  seesCamo: 0
-  cost: 100
-  allowedBlocks:
-  - {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
-  value: 0
-  sellPercentage: 70
-  damageDealt: 0
-  targetingOptions: 0000000001000000
-  targetingOptionNames:
-  - First Enemy
-  - Last Enemy
-  - Strongest Enemy
-  - Weakest Enemy
-  targetingIndex: 0
-  bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
-  shootPoint: {fileID: 0}
-  targetedEnemy: {fileID: 0}
-  targets: []
-  hasEffect: 0
-  bulletEffect: {fileID: 0}
-  effectDuration: 0
-  isPermanent: 0
-  effectIntensity: 0
-  towerName: Turret
 --- !u!114 &918867734044799644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1feb41a1df0b7784d9e9bf43957a8872, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infiniteRange: 0
   radius: 5
   hitbox: 0.5
   damage: 5
@@ -175,16 +132,18 @@ MonoBehaviour:
   value: 0
   sellPercentage: 70
   damageDealt: 0
-  targetingOptions: 0000000001000000
+  targetingOptions: 000000000100000004000000
   targetingOptionNames:
   - First Enemy
   - Last Enemy
   - Strongest Enemy
   - Weakest Enemy
+  - Target Marker
+  - Follow Mouse
   targetingIndex: 0
   bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
   shootPoint: {fileID: 0}
-  targetedEnemy: {fileID: 0}
+  targetedLocation: {x: 0, y: 0, z: 0}
   targets: []
   hasEffect: 0
   bulletEffect: {fileID: 0}
@@ -204,3 +163,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aaf0253b83531664a9b452cecd612fdf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1882998130212390005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9bb47231a32bbc4ca061fbd0efaef6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hasMarker: 0
+  marker: {x: 0, y: 0, z: 0}

@@ -18,6 +18,7 @@ public class TowerUpgradeChanges : MonoBehaviour
     [SerializeField] private int sellPercentageChange;
     //Other stats
     [SerializeField] private bool seesCamo;
+    [SerializeField] private bool infiniteRange;
     [SerializeField] private List<int> targetingOptions = new List<int>() { 0, 1 }; // 0 = first enemy, 1 = last enemy, 2 = strongest enemy, 3 = weakest enemy
     [SerializeField] private GameObject bullet;
     [SerializeField] private GameObject shootPoint;
@@ -37,6 +38,7 @@ public class TowerUpgradeChanges : MonoBehaviour
         towerStats.sellPercentage = towerStats.sellPercentage + sellPercentageChange >= 0 ? towerStats.sellPercentage + sellPercentageChange : 0;
         //Other Stats
         towerStats.seesCamo = towerStats.seesCamo = false ? seesCamo : towerStats.seesCamo;
+        towerStats.infiniteRange = towerStats.infiniteRange = false ? infiniteRange : towerStats.infiniteRange;
         for (int i = 0; i < targetingOptions.Count; ++i)
         {
             bool alreadyUsed = false;

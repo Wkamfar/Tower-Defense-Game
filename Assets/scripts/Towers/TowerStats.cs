@@ -10,6 +10,7 @@ public class TowerStats : MonoBehaviour
 {
     //Add overheating, reloading, and everything else later
     //Add stat caps later
+    public bool infiniteRange;
     public float radius;
     public float hitbox;
     public float damage;
@@ -24,12 +25,12 @@ public class TowerStats : MonoBehaviour
     public int value;
     public int sellPercentage;
     public float damageDealt = 0;
-    public List<int> targetingOptions = new List<int>() { 0, 1 }; // 0 = first enemy, 1 = last enemy, 2 = strongest enemy, 3 = weakest enemy
-    public List<string> targetingOptionNames = new List<string>() { "First Enemy", "Last Enemy", "Strongest Enemy", "Weakest Enemy" };
+    public List<int> targetingOptions = new List<int>() { 0, 1 }; // 0 = first enemy, 1 = last enemy, 2 = strongest enemy, 3 = weakest enemy, 4 = Target Marker, 5 = Follow Mouse
+    public List<string> targetingOptionNames = new List<string>() { "First Enemy", "Last Enemy", "Strongest Enemy", "Weakest Enemy", "Target Marker", "Follow Mouse" };
     public int targetingIndex = 0;
     public GameObject bullet;
     public GameObject shootPoint;
-    public GameObject targetedEnemy;
+    public Vector3 targetedLocation;
     public List<GameObject> targets;
     public bool hasEffect;
     public GameObject bulletEffect;

@@ -13,6 +13,7 @@ public class PlayerActionScript : MonoBehaviour
     public GameObject mouseFollower;
     public GameObject towerModelDisplay;
     public GameObject towerDisplayRadius;
+    public GameObject towerSelectionManager;
 
     private void Update()
     {
@@ -43,6 +44,10 @@ public class PlayerActionScript : MonoBehaviour
             if (CanPlaceTower())
             {
                 SpawnTower(spawnPos);
+            }
+            if (!CanPlaceTower() && IsMouseOverUI())
+            {
+                towerSelectionManager.GetComponent<TowerSelectionScript>().DeselectTower();
             }
             //fix this in class
             Ray ray;

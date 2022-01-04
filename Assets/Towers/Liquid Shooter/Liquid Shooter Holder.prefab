@@ -11,10 +11,10 @@ GameObject:
   - component: {fileID: 2306747170983195593}
   - component: {fileID: 7075564763143479156}
   - component: {fileID: 918867734044799644}
-  - component: {fileID: 8455011646563030400}
   - component: {fileID: 492499781502309119}
   - component: {fileID: 4934417263685160134}
   - component: {fileID: 4557793439607848751}
+  - component: {fileID: -777829436675654957}
   m_Layer: 0
   m_Name: Liquid Shooter Holder
   m_TagString: Tower
@@ -53,7 +53,9 @@ MonoBehaviour:
   changeMarkerButton: {fileID: 0}
   marker: {fileID: 3673933850750014005, guid: d836e948e3fa008499d3c4097cc1b440, type: 3}
   currentMarker: {fileID: 0}
+  markerCanvas: {fileID: 0}
   choosingMarker: 0
+  mouseFollower: {fileID: 0}
 --- !u!114 &918867734044799644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,18 +74,6 @@ MonoBehaviour:
   upgradeOneDisplay: {fileID: 0}
   upgradeTwoDisplay: {fileID: 0}
   damageDealtDisplay: {fileID: 0}
---- !u!114 &8455011646563030400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1678817109574290378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cddcafba9ee7c041bb3df7c538643d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &492499781502309119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -188,3 +178,15 @@ MonoBehaviour:
   effectIntensity: 1
   towerName: Liquid Shooter
   connectedLiquid: {fileID: 0}
+--- !u!114 &-777829436675654957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e063f636cd1a7d047b20654913f55b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

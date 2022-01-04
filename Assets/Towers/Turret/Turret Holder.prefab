@@ -10,11 +10,11 @@ GameObject:
   m_Component:
   - component: {fileID: 2306747170983195593}
   - component: {fileID: 918867734044799644}
-  - component: {fileID: 8455011646563030400}
   - component: {fileID: 492499781502309119}
   - component: {fileID: 403831169694627971}
   - component: {fileID: 9137644954762459584}
   - component: {fileID: 1882998130212390005}
+  - component: {fileID: -6785355511493323781}
   m_Layer: 0
   m_Name: Turret Holder
   m_TagString: Tower
@@ -55,18 +55,6 @@ MonoBehaviour:
   upgradeOneDisplay: {fileID: 0}
   upgradeTwoDisplay: {fileID: 0}
   damageDealtDisplay: {fileID: 0}
---- !u!114 &8455011646563030400
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1678817109574290378}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6cddcafba9ee7c041bb3df7c538643d2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &492499781502309119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -182,3 +170,15 @@ MonoBehaviour:
   markerCanvas: {fileID: 0}
   choosingMarker: 0
   mouseFollower: {fileID: 0}
+--- !u!114 &-6785355511493323781
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e063f636cd1a7d047b20654913f55b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

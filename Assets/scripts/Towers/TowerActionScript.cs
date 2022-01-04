@@ -5,11 +5,9 @@ using UnityEngine;
 /// </summary>
 public class TowerActionScript : MonoBehaviour
 {
-
     private float shotTimer;
-    
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
         GetComponent<TowerStats>().targetedLocation = GetComponent<TowerTargeting>().targeting(GetComponent<TowerStats>().targetingOptions[GetComponent<TowerStats>().targetingIndex]);
         if (HasTarget())
@@ -17,8 +15,7 @@ public class TowerActionScript : MonoBehaviour
             TrackEnemy();
             if (CanShoot() && AIData.enemies.Count > 0)
             {
-                ProjectileShoot();
-                //HitScanShoot();
+                Shoot();
             }
         }
     }
@@ -30,7 +27,7 @@ public class TowerActionScript : MonoBehaviour
         }
         return false;
     }
-    void TrackEnemy() //add aiming ahead and predicting movement later for projectile bullets
+    protected virtual void TrackEnemy() //add aiming ahead and predicting movement later for projectile bullets
     {
         float xDifference = Mathf.Abs(GetComponent<TowerStats>().targetedLocation.x - this.gameObject.transform.position.x);
         float yDifference = Mathf.Abs(GetComponent<TowerStats>().targetedLocation.z - this.gameObject.transform.position.z);
@@ -50,16 +47,10 @@ public class TowerActionScript : MonoBehaviour
         }
         angle = Mathf.Abs(360 - angle);
         GetComponent<TowerUpgradeScript>().currentActiveTowerModel.transform.rotation = Quaternion.Euler(this.gameObject.transform.rotation.x, angle, this.gameObject.transform.rotation.z);
-
     }
-    /*(void HitScanShoot()
+    protected virtual void Shoot()
     {
-        shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
-        GetComponent<TowerStats>().targetedEnemy.GetComponent<EnemyAI>().TakeDamage(this.gameObject.GetComponent<TowerStats>().damage, gameObject);
-    }*/
-    void ProjectileShoot()
-    {
-        shotTimer = 60 / this.gameObject.GetComponent<TowerStats>().fireRate;
+        shotTimer = 60 / GetComponent<TowerStats>().fireRate;
         GameObject currentBullet = Instantiate(GetComponent<TowerStats>().bullet, GetComponent<TowerStats>().shootPoint.transform.position, Quaternion.identity);
         currentBullet.GetComponent<BulletStats>().damage = this.gameObject.GetComponent<TowerStats>().damage;
         currentBullet.GetComponent<BulletStats>().tower = this.gameObject;
@@ -69,7 +60,7 @@ public class TowerActionScript : MonoBehaviour
         Vector3 direction = (GetComponent<TowerStats>().targetedLocation - this.gameObject.transform.position).normalized;
         currentBullet.GetComponent<Rigidbody>().AddForce(direction * this.gameObject.GetComponent<TowerStats>().bulletSpeed, ForceMode.Impulse);
     }
-    bool CanShoot()
+    protected virtual bool CanShoot()
     {
         if (shotTimer > 0)
         {

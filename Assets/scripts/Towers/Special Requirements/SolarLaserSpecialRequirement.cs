@@ -88,8 +88,8 @@ public class SolarLaserSpecialRequirement : TowerSpecialRequirement
             if (blockRadius + TowerData.selectedTower.GetComponent<TowerStats>().hitbox < maxDistance)
             {
                 //Do this for crystal and plutonium too
-                /*GetComponent<LiquidShooterStats>().connectedLiquid = closestBlock;
-                GetComponent<TowerStats>().bullet = closestBlock.GetComponent<LiquidStats>().liquidBullet;
+                GetComponent<SolarLaserStats>().powerSource = closestBlock;
+                /*GetComponent<TowerStats>().bullet = closestBlock.GetComponent<LiquidStats>().liquidBullet;
                 GetComponent<TowerStats>().bullet.GetComponent<LiquidBulletStats>().SetStats(gameObject);*/
                 return true;
             }

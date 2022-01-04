@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2801667900081685553}
   - component: {fileID: 8476583002071311145}
   - component: {fileID: 8171956491521492849}
-  - component: {fileID: 3119054310443540167}
+  - component: {fileID: -2745942507421956719}
   m_Layer: 0
   m_Name: Crystal
   m_TagString: Block
@@ -98,7 +98,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &3119054310443540167
+--- !u!114 &-2745942507421956719
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -107,9 +107,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 2622019978693544177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dfbf0c1dc290a64489f73f4f6a399ecd, type: 3}
+  m_Script: {fileID: 11500000, guid: 8f277e63adbaddf4cad6e37cc75429aa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   blockNumber: 1
   blockSize: 1
   blockName: Crystal
+  towerName: Railgun
+  laser: {fileID: 0}

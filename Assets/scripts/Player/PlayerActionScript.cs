@@ -14,6 +14,7 @@ public class PlayerActionScript : MonoBehaviour
     public GameObject towerModelDisplay;
     public GameObject towerDisplayRadius;
     public GameObject towerSelectionManager;
+    public Canvas markerCanvas;
 
     private void Update()
     {
@@ -242,6 +243,7 @@ public class PlayerActionScript : MonoBehaviour
         GameObject target = currentTowerMenu.transform.GetChild(2).gameObject;
         GameObject targetLeft = target.transform.GetChild(0).gameObject;
         GameObject targetRight = target.transform.GetChild(1).gameObject;
+        GameObject chooseMarkerButton = target.transform.GetChild(2).gameObject;
         //Upgrade One
         GameObject upgradeOne = currentTowerMenu.transform.GetChild(3).gameObject;
         GameObject upgradeOneName = upgradeOne.transform.GetChild(0).gameObject;
@@ -285,5 +287,9 @@ public class PlayerActionScript : MonoBehaviour
 
         tower.GetComponent<TowerMenuScript>().damageDealtDisplay = damageDealtDisplay;
         damageDealtDisplay.GetComponent<TextMeshProUGUI>().text = 0.ToString();
+
+        tower.GetComponent<TowerTargeting>().changeMarkerButton = chooseMarkerButton;
+        chooseMarkerButton.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerTargeting>().ChooseNewMarker(); });
+        tower.GetComponent<TowerTargeting>().markerCanvas = markerCanvas;
     }
 }

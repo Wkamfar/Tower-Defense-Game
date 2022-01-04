@@ -49,6 +49,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9bb47231a32bbc4ca061fbd0efaef6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  hasMarker: 0
+  changeMarkerButton: {fileID: 0}
+  marker: {fileID: 3673933850750014005, guid: d836e948e3fa008499d3c4097cc1b440, type: 3}
+  currentMarker: {fileID: 0}
+  choosingMarker: 0
 --- !u!114 &918867734044799644
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -147,6 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2010bdc5e3d02b4299226674b13ce38, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  infiniteRange: 0
   radius: 10
   hitbox: 0.5
   damage: 0
@@ -168,12 +174,12 @@ MonoBehaviour:
   - Last Enemy
   - Strongest Enemy
   - Weakest Enemy
-  - Target Marker
+  - 
   - Follow Mouse
   targetingIndex: 0
   bullet: {fileID: 9051132128199530449, guid: dba240cdc9b0b434988c9d1ea41c5d51, type: 3}
   shootPoint: {fileID: 0}
-  targetedEnemy: {fileID: 0}
+  targetedLocation: {x: 0, y: 0, z: 0}
   targets: []
   hasEffect: 1
   bulletEffect: {fileID: 6720597304162702919, guid: 9fa28b2c7029a4f4eb746020d9899563, type: 3}

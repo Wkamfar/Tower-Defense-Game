@@ -10,7 +10,11 @@ public class TowerTargeting : MonoBehaviour
 {
 
     public bool hasMarker;
-    public Vector3 marker;
+    public GameObject changeMarkerButton;
+    public GameObject marker;
+    public GameObject currentMarker;
+    public Canvas markerCanvas;
+    public bool choosingMarker;
     private List<GameObject> targets = new List<GameObject>();
     private void Update()
     {
@@ -19,6 +23,8 @@ public class TowerTargeting : MonoBehaviour
     public Vector3 targeting(int mode)
     {
         hasMarker = false;
+        changeMarkerButton.SetActive(false);
+        if (currentMarker != null) { currentMarker.SetActive(false); }
         if (mode == 0)
         {
             return FirstEnemy();
@@ -84,13 +90,24 @@ public class TowerTargeting : MonoBehaviour
     }
     public Vector3 TargetMarker() 
     {
-        hasMarker = true; //This is more complicated than I thought, do this later // You need to add a placable UI marker that appears with the menu // You need to add a button that hides the UI and allows you to place the target for the tower, and with that a way to exit back to the menu
-        if (GetComponent<TowerMenuScript>().towerMenu.activeInHierarchy && Input.GetKeyDown(KeyCode.Mouse0))
+        changeMarkerButton.SetActive(true);
+        currentMarker.SetActive(true);
+        hasMarker = true;
+        if (currentMarker == null)
         {
-            Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            marker = new Vector3(mousePos.x, transform.position.y, mousePos.z);
+            Vector3 spawnPos = Camera.main.WorldToScreenPoint(transform.position); //make it smarter so that it aims at path or enemy when placed or something like that
+            currentMarker = Instantiate(marker, spawnPos, Quaternion.identity, markerCanvas.transform);
         }
-        return marker;
+        Vector3 markerPos = Camera.main.ScreenToWorldPoint(currentMarker.transform.position);
+        return new Vector3(markerPos.x, transform.position.y, markerPos.z);
+    }
+    public void ChooseNewMarker()
+    {
+        Debug.Log("TowerTargeting.ChooseNewMarker: This happened");
+    }
+    public void DisableChooseMarker()
+    {
+
     }
     public Vector3 FollowMouse() 
     {

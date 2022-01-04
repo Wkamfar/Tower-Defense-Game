@@ -132,13 +132,13 @@ MonoBehaviour:
   value: 0
   sellPercentage: 70
   damageDealt: 0
-  targetingOptions: 000000000100000004000000
+  targetingOptions: 000000000100000005000000
   targetingOptionNames:
   - First Enemy
   - Last Enemy
   - Strongest Enemy
   - Weakest Enemy
-  - Target Marker
+  - 
   - Follow Mouse
   targetingIndex: 0
   bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
@@ -176,4 +176,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   hasMarker: 0
-  marker: {x: 0, y: 0, z: 0}
+  changeMarkerButton: {fileID: 0}
+  marker: {fileID: 3673933850750014005, guid: d836e948e3fa008499d3c4097cc1b440, type: 3}
+  currentMarker: {fileID: 0}
+  markerCanvas: {fileID: 0}
+  choosingMarker: 0

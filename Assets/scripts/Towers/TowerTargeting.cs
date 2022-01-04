@@ -15,10 +15,19 @@ public class TowerTargeting : MonoBehaviour
     public GameObject currentMarker;
     public Canvas markerCanvas;
     public bool choosingMarker;
+    public GameObject mouseFollower;
     private List<GameObject> targets = new List<GameObject>();
     private void Update()
     {
         targets = GetComponent<TowerStats>().targets;
+        if (choosingMarker)
+        {
+            mouseFollower.transform.position = Input.mousePosition;
+        }
+        if (choosingMarker && Input.GetKeyDown(KeyCode.Mouse0) && IsInMap())
+        {
+            PlaceChooseMarker();
+        }
     }
     public Vector3 targeting(int mode)
     {
@@ -91,23 +100,31 @@ public class TowerTargeting : MonoBehaviour
     public Vector3 TargetMarker() 
     {
         changeMarkerButton.SetActive(true);
-        currentMarker.SetActive(true);
         hasMarker = true;
         if (currentMarker == null)
         {
             Vector3 spawnPos = Camera.main.WorldToScreenPoint(transform.position); //make it smarter so that it aims at path or enemy when placed or something like that
             currentMarker = Instantiate(marker, spawnPos, Quaternion.identity, markerCanvas.transform);
         }
+        if (GetComponent<TowerMenuScript>().towerMenu.activeInHierarchy || choosingMarker)
+        {
+            currentMarker.SetActive(true);
+        }        
         Vector3 markerPos = Camera.main.ScreenToWorldPoint(currentMarker.transform.position);
         return new Vector3(markerPos.x, transform.position.y, markerPos.z);
     }
     public void ChooseNewMarker()
     {
-        Debug.Log("TowerTargeting.ChooseNewMarker: This happened");
+        choosingMarker = true;
+        GetComponent<TowerMenuScript>().towerMenu.SetActive(false);
+        mouseFollower = Instantiate(marker, markerCanvas.transform);
     }
-    public void DisableChooseMarker()
+    public void PlaceChooseMarker()
     {
-
+        choosingMarker = false;
+        GetComponent<TowerMenuScript>().towerMenu.SetActive(true);
+        currentMarker.transform.position = Input.mousePosition;
+        Destroy(mouseFollower);
     }
     public Vector3 FollowMouse() 
     {
@@ -118,5 +135,17 @@ public class TowerTargeting : MonoBehaviour
     private void DeleteDeadObject(int i)
     {
         targets.Remove(targets[i]);
+    }
+    private bool IsInMap()
+    {
+        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        float xPoint = (mousePos.x - MapData.offset[0]) / MapData.offset[2];
+        float yPoint = (mousePos.z - MapData.offset[1]) / -MapData.offset[2];
+        //Debug.Log("PlayerActionScript.IsInMap: The xPoint is: " + xPoint + ", and the yPoint is: " + yPoint);
+        if (yPoint < MapData.grid.Count - 1 && yPoint >= 0 && xPoint < MapData.grid[0].Count - 1 && xPoint >= 0)
+        {
+            return true;
+        }
+        return false;
     }
 }

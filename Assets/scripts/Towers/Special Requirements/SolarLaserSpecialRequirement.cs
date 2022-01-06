@@ -89,6 +89,9 @@ public class SolarLaserSpecialRequirement : TowerSpecialRequirement
             {
                 //Do this for crystal and plutonium too
                 GetComponent<SolarLaserStats>().powerSource = closestBlock;
+                GetComponent<LaserShoot>().beamMaterial = closestBlock.GetComponent<powerSourceStats>().laser;
+                GetComponent<LaserShoot>().beamMaterial.GetComponent<LaserBeamStats>().SetStats(gameObject);
+                GetComponent<TowerStats>().bullet = closestBlock.GetComponent<powerSourceStats>().laser;
                 /*GetComponent<TowerStats>().bullet = closestBlock.GetComponent<LiquidStats>().liquidBullet;
                 GetComponent<TowerStats>().bullet.GetComponent<LiquidBulletStats>().SetStats(gameObject);*/
                 return true;

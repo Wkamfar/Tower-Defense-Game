@@ -23,7 +23,6 @@ public class LaserScript : MonoBehaviour
             angle = 360 - angle;
         }
         laser.transform.rotation = Quaternion.Euler(0, angle, 0);
-        //Debug.Log("LaserScript.ActivateLaser: The laser angle is: " + angle);
     }
     public void DeactivateLaser()
     {

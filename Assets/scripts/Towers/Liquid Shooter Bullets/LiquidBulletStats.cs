@@ -9,7 +9,7 @@ public class LiquidBulletStats : MonoBehaviour
     public float bulletSpeed;
     public float bulletLifespan;
     public float maxTravelDistance;
-    public float pierce;
+    public int pierce;
     public bool seesCamo;
     public bool hasEffect;
     public bool isPermanent;

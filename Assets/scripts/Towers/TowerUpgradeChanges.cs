@@ -14,7 +14,7 @@ public class TowerUpgradeChanges : MonoBehaviour
     [SerializeField] private float bulletSpeedChange;
     [SerializeField] private float bulletLifespanChange;
     [SerializeField] private float maxTravelDistanceChange;
-    [SerializeField] private float pierceChange;
+    [SerializeField] private int pierceChange;
     [SerializeField] private int sellPercentageChange;
     //Other stats
     [SerializeField] private bool seesCamo;

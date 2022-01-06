@@ -8,7 +8,7 @@ using UnityEngine;
 /// </summary>
 public class TowerTargeting : MonoBehaviour
 {
-
+    public float smoothnessFactor = 0.1f;
     public bool hasMarker;
     public GameObject changeMarkerButton;
     public GameObject marker;
@@ -20,6 +20,22 @@ public class TowerTargeting : MonoBehaviour
     private void Update()
     {
         targets = GetComponent<TowerStats>().targets;
+        for (int i = 0; i < targets.Count; ++i)
+        {
+            bool isAlive = false;
+            for (int j = 0;  j < AIData.enemies.Count; ++j)
+            {
+                if (targets[i] == AIData.enemies[j])
+                {
+                    isAlive = true;
+                    break;
+                }
+            }
+            if (!isAlive)
+            {
+                DeleteDeadObject(i);
+            }
+        }
         if (choosingMarker)
         {
             mouseFollower.transform.position = Input.mousePosition;
@@ -79,13 +95,52 @@ public class TowerTargeting : MonoBehaviour
     }//Do these two later
     public Vector3 FirstEnemy()
     {
-        while (targets.Count > 0 && (!targets[0] || targets[0].GetComponent<EnemyAI>().IsDead))
-        {
-            DeleteDeadObject(0);
-        }
         if (targets.Count > 0)
         {
-            return targets[0].transform.position;
+            GameObject firstEnemy = targets[0];
+            float closestDistance = PathData.realPossiblePaths[targets[0].GetComponent<EnemyAI>().currentPath].Count - targets[0].GetComponent<EnemyAI>().currentWaypoint;
+            float closestWaypointDistance = 0;
+            if (targets[0].GetComponent<EnemyAI>().currentWaypoint < PathData.realPossiblePaths[targets[0].GetComponent<EnemyAI>().currentPath].Count)
+            {
+                closestWaypointDistance = Vector3.Distance(PathData.realPossiblePaths[targets[0].GetComponent<EnemyAI>().currentPath][targets[0].GetComponent<EnemyAI>().currentWaypoint], targets[0].transform.position);
+            }
+            else
+            {
+                closestWaypointDistance = 0;
+            }
+            for (int i = 0; i < targets.Count; ++i)
+            {
+                GameObject currentEnemy = targets[i];
+                float currentDistance = PathData.realPossiblePaths[targets[i].GetComponent<EnemyAI>().currentPath].Count - targets[i].GetComponent<EnemyAI>().currentWaypoint;
+                float currentWaypointDistance = 0;
+                if (targets[i].GetComponent<EnemyAI>().currentWaypoint < PathData.realPossiblePaths[targets[i].GetComponent<EnemyAI>().currentPath].Count)
+                {
+                    currentWaypointDistance = Vector3.Distance(PathData.realPossiblePaths[targets[i].GetComponent<EnemyAI>().currentPath][targets[i].GetComponent<EnemyAI>().currentWaypoint], targets[i].transform.position);
+                }
+                else
+                {
+                    currentWaypointDistance = 0;
+                }
+                if (currentDistance < closestDistance)
+                {
+                    if (Vector3.Distance(firstEnemy.transform.position, currentEnemy.transform.position) >= smoothnessFactor)
+                    {
+                        firstEnemy = currentEnemy;
+                        closestDistance = currentDistance;
+                        closestWaypointDistance = currentWaypointDistance;
+                    }
+                }
+                else if (currentDistance == closestDistance && currentWaypointDistance < closestWaypointDistance)
+                {
+                    if (Vector3.Distance(firstEnemy.transform.position, currentEnemy.transform.position) >= smoothnessFactor)
+                    {
+                        firstEnemy = currentEnemy;
+                        closestDistance = currentDistance;
+                        closestWaypointDistance = currentWaypointDistance;
+                    }
+                }
+            }
+            return firstEnemy.transform.position;
         }
         return new Vector3();
     }
@@ -93,7 +148,50 @@ public class TowerTargeting : MonoBehaviour
     {
         if (targets.Count > 0)
         {
-            return targets[targets.Count - 1].transform.position;
+            GameObject lastEnemy = targets[targets.Count - 1];
+            float furthestDistance = PathData.realPossiblePaths[targets[targets.Count - 1].GetComponent<EnemyAI>().currentPath].Count - targets[targets.Count - 1].GetComponent<EnemyAI>().currentWaypoint;
+            float furthestWaypointDistance = 0;
+            if (targets[0].GetComponent<EnemyAI>().currentWaypoint < PathData.realPossiblePaths[targets[targets.Count - 1].GetComponent<EnemyAI>().currentPath].Count)
+            {
+                furthestWaypointDistance = Vector3.Distance(PathData.realPossiblePaths[targets[targets.Count - 1].GetComponent<EnemyAI>().currentPath][targets[targets.Count - 1].GetComponent<EnemyAI>().currentWaypoint], targets[targets.Count - 1].transform.position);
+            }
+            else
+            {
+                furthestWaypointDistance = 0;
+            }
+            for (int i = 0; i < targets.Count; ++i)
+            {
+                GameObject currentEnemy = targets[i];
+                float currentDistance = PathData.realPossiblePaths[targets[i].GetComponent<EnemyAI>().currentPath].Count - targets[i].GetComponent<EnemyAI>().currentWaypoint;
+                float currentWaypointDistance = 0;
+                if (targets[i].GetComponent<EnemyAI>().currentWaypoint < PathData.realPossiblePaths[targets[i].GetComponent<EnemyAI>().currentPath].Count)
+                {
+                    currentWaypointDistance = Vector3.Distance(PathData.realPossiblePaths[targets[i].GetComponent<EnemyAI>().currentPath][targets[i].GetComponent<EnemyAI>().currentWaypoint], targets[i].transform.position);
+                }
+                else
+                {
+                    currentWaypointDistance = 0;
+                }
+                if (currentDistance > furthestDistance)
+                {
+                    if (Vector3.Distance(lastEnemy.transform.position, currentEnemy.transform.position) >= smoothnessFactor)
+                    {
+                        lastEnemy = currentEnemy;
+                        furthestDistance = currentDistance;
+                        furthestWaypointDistance = currentWaypointDistance;
+                    }
+                }
+                else if (currentDistance == furthestDistance && currentWaypointDistance > furthestWaypointDistance)
+                {
+                    if (Vector3.Distance(lastEnemy.transform.position, currentEnemy.transform.position) >= smoothnessFactor)
+                    {
+                        lastEnemy = currentEnemy;
+                        furthestDistance = currentDistance;
+                        furthestWaypointDistance = currentWaypointDistance;
+                    }
+                }
+            }
+            return lastEnemy.transform.position;
         }
         return new Vector3();
     }

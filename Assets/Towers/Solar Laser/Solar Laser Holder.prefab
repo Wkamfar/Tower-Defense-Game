@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9bb47231a32bbc4ca061fbd0efaef6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothnessFactor: 0.5
   hasMarker: 0
   changeMarkerButton: {fileID: 0}
   marker: {fileID: 3673933850750014005, guid: d836e948e3fa008499d3c4097cc1b440, type: 3}
@@ -139,14 +140,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f5772749118a9f745ad0370f1215d0f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  infiniteRange: 0
+  infiniteRange: 1
   radius: 10
   hitbox: 0.5
   damage: 0
-  fireRate: 0
+  fireRate: 30
   bulletSpeed: 0
   bulletLifespan: 0
-  maxTravelDistance: 0
+  maxTravelDistance: 100
   pierce: 0
   seesCamo: 0
   cost: 0
@@ -155,7 +156,7 @@ MonoBehaviour:
   value: 0
   sellPercentage: 70
   damageDealt: 0
-  targetingOptions: 0000000001000000
+  targetingOptions: 000000000100000005000000
   targetingOptionNames:
   - First Enemy
   - Last Enemy
@@ -187,3 +188,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea3eec8fdb988643aa02b27fca6db71, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  firing: 0
+  isContinuous: 0
+  beamDuration: 0
+  chargeTime: 2
+  beamMaterial: {fileID: 0}
+  preBeamMaterial: {fileID: 1818555242721915560, guid: 2c7499c45044cf54c8404b6f859aef84, type: 3}
+  beamEndMaterial: {fileID: 0}
+  beam: {fileID: 0}
+  preBeam: {fileID: 0}
+  beamEnd: {fileID: 0}
+  beamEndDamageMultiplier: 0
+  beamWidth: 0
+  preBeamWidth: 0.1
+  preBeamPierce: 1
+  radCount: 0

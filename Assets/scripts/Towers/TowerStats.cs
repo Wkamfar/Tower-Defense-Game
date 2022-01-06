@@ -18,7 +18,7 @@ public class TowerStats : MonoBehaviour
     public float bulletSpeed;
     public float bulletLifespan;
     public float maxTravelDistance;
-    public float pierce;
+    public int pierce;
     public bool seesCamo;
     public int cost;
     public List<GameObject> allowedBlocks;
@@ -56,7 +56,7 @@ public class TowerStats : MonoBehaviour
     public void IncreaseDamageDealt(float amount)
     {
         damageDealt += amount;
-        this.gameObject.GetComponent<TowerMenuScript>().damageDealtDisplay.GetComponent<TextMeshProUGUI>().text = damageDealt.ToString();
+        this.gameObject.GetComponent<TowerMenuScript>().damageDealtDisplay.GetComponent<TextMeshProUGUI>().text = Mathf.Round(damageDealt).ToString();
     }
     public virtual string GetTowerName()
     {

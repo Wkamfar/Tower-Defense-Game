@@ -16,14 +16,17 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
     public GameObject preBeam;
     public GameObject beamEnd;
     public float beamEndDamageMultiplier;
+    public float visibleBeamWidth;
     public float beamWidth;
     public float preBeamWidth;
     public int preBeamPierce = 1;
     public int radCount; //Gives a radiation count that will do large amounts of damage to enemies
+    public float laserFadeDuration;
     private float shotTimer;
     private float currentChargeTime;
     private float beamTimer;
     private float damageTimer;
+    private List<GameObject> fadingBeams = new List<GameObject>();
     // Update is called once per frame
     private void Start()
     {
@@ -58,6 +61,10 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
             {
                 OneShotFire();
             }
+        }
+        if (AIData.enemies.Count == 0)
+        {
+            ResetTower();
         }
     }
     protected override bool HasTarget()
@@ -115,13 +122,13 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
             {
                 preBeam = Instantiate(preBeamMaterial); // have the prebeam do a little damage
             }
-            UseLaser(GetComponent<TowerStats>().shootPoint.transform.position, GetComponent<TowerStats>().targetedLocation, preBeam, preBeamWidth, preBeamPierce);
+            UseLaser(GetComponent<TowerStats>().shootPoint.transform.position, GetComponent<TowerStats>().targetedLocation, preBeam, preBeamWidth, preBeamWidth, preBeamPierce);
             currentChargeTime -= Time.deltaTime;
             return false;
         }
         return true;
     }
-    public void UseLaser(Vector3 pointOne, Vector3 pointTwo, GameObject laser, float width, int pierce)
+    public void UseLaser(Vector3 pointOne, Vector3 pointTwo, GameObject laser, float visibleWidth, float width, int pierce)
     {
         Vector3 targetPos = FindLaserEndPoint(pointOne, pointTwo, width, pierce);
         float length = Vector3.Distance(pointOne, targetPos);
@@ -132,7 +139,7 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
         float x = pointOne.x - targetPos.x;
         float y = pointOne.z - targetPos.z;
         float d = Mathf.Sqrt(x * x + y * y);
-        laser.transform.localScale = new Vector3(length, width, width);
+        laser.transform.localScale = new Vector3(length, visibleWidth, visibleWidth);
         float angle = 180 - Mathf.Abs(Mathf.Asin(x / d) * 180 / Mathf.PI - 90);
         if (y < 0)
         {
@@ -182,21 +189,38 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
         beamTimer -= Time.deltaTime;
         if (beamTimer > 0)
         {
-            UseLaser(GetComponent<TowerStats>().shootPoint.transform.position, GetComponent<TowerStats>().targetedLocation, beam, beamWidth, GetComponent<TowerStats>().pierce);
+            UseLaser(GetComponent<TowerStats>().shootPoint.transform.position, GetComponent<TowerStats>().targetedLocation, beam, visibleBeamWidth, beamWidth, GetComponent<TowerStats>().pierce);
             DealDamageWithRaycasts(GetComponent<TowerStats>().damage, laserDamageRate, GetComponent<TowerStats>().shootPoint.transform.position, GetComponent<TowerStats>().targetedLocation, beamWidth, GetComponent<TowerStats>().pierce);
         }
         else
         {
-            Destroy(beam);
-            Destroy(beamEnd);
+            FadeLaser();
             beamTimer = beamDuration;
             firing = false;
         }
     }
     void OneShotFire() // work on this later
     {
-        UseLaser(GetComponent<TowerStats>().shootPoint.transform.position, GetComponent<TowerStats>().targetedLocation, preBeam, preBeamWidth, preBeamPierce);
+        UseLaser(GetComponent<TowerStats>().shootPoint.transform.position, GetComponent<TowerStats>().targetedLocation, beam, visibleBeamWidth, beamWidth, GetComponent<TowerStats>().pierce); // Destroy beam and play an animation
+        DealDamageWithRaycasts(GetComponent<TowerStats>().damage, GetComponent<TowerStats>().shootPoint.transform.position, GetComponent<TowerStats>().targetedLocation, beamWidth, GetComponent<TowerStats>().pierce);
+        FadeLaser();
         firing = false;
+    }
+    void FadeLaser()
+    {
+        GameObject currentFadingBeam = Instantiate(beam, beam.transform.position, beam.transform.rotation);
+        fadingBeams.Add(currentFadingBeam);
+        Destroy(beam);
+        Destroy(beamEnd);
+        Invoke("RemoveLaser", laserFadeDuration); // laser animation for when laser gets destroyed
+    }
+    void RemoveLaser()
+    {
+        if (fadingBeams.Count > 0)
+        {
+            int n = fadingBeams.Count - 1;
+            Destroy(fadingBeams[n]);
+        }        
     }
     void DealDamageWithRaycasts(float damage, float damageRate, Vector3 pointOne, Vector3 pointTwo, float width, int pierce)
     {
@@ -229,10 +253,61 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
             }
             foreach (GameObject e in enemies)
             {
-                e.GetComponent<EnemyAI>().TakeDamage(damage, gameObject);
+                e.GetComponent<EnemyAI>().TakeDamage((damage + damage * e.GetComponent<RadiationManager>().radCount / 100), gameObject);
+                e.GetComponent<RadiationManager>().IncreaseRadCount(gameObject);
             }
             damageTimer = 60 / damageRate;
         }
         damageTimer = damageTimer > 0 ? damageTimer - Time.deltaTime : 0;
+    }
+    void DealDamageWithRaycasts(float damage, Vector3 pointOne, Vector3 pointTwo, float width, int pierce)
+    {
+        float maxDistance = GetComponent<TowerStats>().maxTravelDistance;
+        LayerMask layerMask = LayerMask.GetMask("Enemy");
+        Vector3 targetPos = FindLaserEndPoint(pointOne, pointTwo, width, pierce);
+        RaycastHit[] hits = Physics.SphereCastAll(pointOne, width, targetPos - pointOne, maxDistance, layerMask);
+        List<GameObject> enemies = new List<GameObject>();
+        if (hits.Length > 0)
+        {
+            for (int i = 0; i < hits.Length - 1; ++i)
+            {
+                for (int j = 0; j < hits.Length - i - 1; ++j)
+                {
+                    if (Vector3.Distance(pointOne, hits[j].transform.position) > Vector3.Distance(pointOne, hits[j + 1].transform.position))
+                    {
+                        RaycastHit temp = hits[j];
+                        hits[j] = hits[j + 1];
+                        hits[j + 1] = temp;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < pierce && i < hits.Length; ++i)
+        {
+            enemies.Add(hits[i].collider.gameObject);
+        }
+        foreach (GameObject e in enemies)
+        {
+            e.GetComponent<EnemyAI>().TakeDamage((damage + damage * e.GetComponent<RadiationManager>().radCount / 100), gameObject);
+            e.GetComponent<RadiationManager>().IncreaseRadCount(gameObject);
+        }
+    }
+    void ResetTower()
+    {
+        CancelInvoke();
+        if (beam != null)
+            Destroy(beam);
+        if (beamEnd != null)
+            Destroy(beamEnd);
+        if (preBeam != null)
+            Destroy(preBeam);
+        for (int i = 0; i < fadingBeams.Count; ++i)
+        {
+            Destroy(fadingBeams[i]);
+        }
+        shotTimer = 60 / GetComponent<TowerStats>().fireRate;
+        currentChargeTime = chargeTime;
+        beamTimer = beamDuration;
+        firing = false;
     }
 }

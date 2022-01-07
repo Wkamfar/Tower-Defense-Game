@@ -11,8 +11,10 @@ public class LaserBeamStats : MonoBehaviour
     [SerializeField] float chargeTime;
     [SerializeField] GameObject beamEndMaterial; //Add this later
     [SerializeField] float beamEndDamageMultiplier;
+    [SerializeField] float visibleBeamWidth;
     [SerializeField] float beamWidth;
-    [SerializeField] int radCount; 
+    [SerializeField] int radCount;
+    [SerializeField] float laserFadeDuration;
     //Tower Stats
     [SerializeField] float damage;
     [SerializeField] float fireRate;
@@ -21,15 +23,17 @@ public class LaserBeamStats : MonoBehaviour
     [SerializeField] bool seesCamo;
     public void SetStats(GameObject tower)
     {
+        //Laser Stats
         tower.GetComponent<LaserShoot>().isContinuous = isContinuous;
         tower.GetComponent<LaserShoot>().beamDuration = beamDuration;
         tower.GetComponent<LaserShoot>().laserDamageRate = laserDamageRate;
         tower.GetComponent<LaserShoot>().chargeTime = chargeTime;
         tower.GetComponent<LaserShoot>().beamEndMaterial = beamEndMaterial;
         tower.GetComponent<LaserShoot>().beamEndDamageMultiplier = beamEndDamageMultiplier;
+        tower.GetComponent<LaserShoot>().visibleBeamWidth = visibleBeamWidth;
         tower.GetComponent<LaserShoot>().beamWidth = beamWidth;
         tower.GetComponent<LaserShoot>().radCount = radCount;
-
+        tower.GetComponent<LaserShoot>().laserFadeDuration = laserFadeDuration;
         //Tower Stats
         tower.GetComponent<TowerStats>().damage = damage;
         tower.GetComponent<TowerStats>().fireRate = fireRate;

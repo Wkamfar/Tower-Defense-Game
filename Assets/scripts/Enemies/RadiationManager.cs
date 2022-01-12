@@ -15,19 +15,22 @@ public class RadiationManager : MonoBehaviour
     {
         if (radCount > 0)
         {
-            if (radDecayTimer !> 0)
+            if (radDecayTimer <= 0)
             {
                 //Debug.Log("RadiationManager.Update: The size of towerRadCounts is: " + towerRadCounts.Count);
-                if (towerRadCounts[towerRadCounts.Count - 1] > 0)
+                if (towerRadCounts.Count > 0)
                 {
-                    GetComponent<EnemyAI>().TakeDamage(radBaseDamage + radCount / 1000, towers[towers.Count - 1]);
-                    --towerRadCounts[towerRadCounts.Count - 1];
-                    --radCount;
-                }
-                else
-                {
-                    towers.RemoveAt(towers.Count - 1);
-                    towerRadCounts.RemoveAt(towerRadCounts.Count - 1);
+                    if (towerRadCounts[towerRadCounts.Count - 1] > 0)
+                    {
+                        GetComponent<EnemyAI>().TakeDamage(radBaseDamage + radCount / 1000, towers[towers.Count - 1]);
+                        --towerRadCounts[towerRadCounts.Count - 1];
+                        --radCount;
+                    }
+                    else
+                    {
+                        towers.RemoveAt(towers.Count - 1);
+                        towerRadCounts.RemoveAt(towerRadCounts.Count - 1);
+                    }
                 }
             }
             radDecayTimer = radDecayTimer > 0 ? radDecayTimer -= Time.deltaTime : 60 / (radDecayRate + radDecayRate * (radCount / maxRadCount));
@@ -41,9 +44,9 @@ public class RadiationManager : MonoBehaviour
             towers.Add(tower);
             towerRadCounts.Add(tower.GetComponent<LaserShoot>().radCount);
         }
-        else if (radCount < 100 && radCount + tower.GetComponent<LaserShoot>().radCount !< maxRadCount)
+        else if (radCount < 100 && radCount + tower.GetComponent<LaserShoot>().radCount >= maxRadCount)
         {
-            //Debug.Log("RadiationManager.IncreaseRadCount: radCount < 100 && radCount + tower.GetComponent<LaserShoot>().radCount !< 100");
+            //Debug.Log("RadiationManager.IncreaseRadCount: radCount < 100 && radCount + tower.GetComponent<LaserShoot>().radCount >= 100");
             int netRad = maxRadCount - (radCount + tower.GetComponent<LaserShoot>().radCount);
             towers.Add(tower);
             towerRadCounts.Add(netRad);

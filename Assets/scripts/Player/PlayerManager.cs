@@ -11,6 +11,7 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI coinCount;
     public GameObject deathCanvas;
     public GameObject victoryCanvas;
+    public GameObject enemySpawner;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,6 +26,10 @@ public class PlayerManager : MonoBehaviour
         {
             KillPlayer();
         }
+        if (enemySpawner.GetComponent<EnemySpawner>().win)
+        {
+            Win();
+        }
         healthBar.GetComponent<Slider>().value = PlayerData.playerCurrentHp / PlayerData.playerMaxHp;
         healthBarText.text = PlayerData.playerCurrentHp.ToString();
         coinCount.text = PlayerData.playerMoney.ToString();
@@ -32,5 +37,9 @@ public class PlayerManager : MonoBehaviour
     public void KillPlayer()
     {
         deathCanvas.SetActive(true);
+    }
+    public void Win()
+    {
+        victoryCanvas.SetActive(true);
     }
 }

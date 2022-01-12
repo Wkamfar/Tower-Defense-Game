@@ -4,9 +4,9 @@ using UnityEngine;
 
 public static class PlayerData
 {
-    public static float playerMaxHp = 150;
-    public static float playerCurrentHp = 150;
-    public static int playerMoney = 1000;
+    public static float playerMaxHp = 10000;
+    public static float playerCurrentHp = 10000;
+    public static int playerMoney = 100000;
     public static void ChangeHealth(int amount)
     {
         playerCurrentHp += amount;

@@ -152,11 +152,17 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
 
         RaycastHit hit;
         float maxDistance = GetComponent<TowerStats>().maxTravelDistance;
-        LayerMask layerMask = LayerMask.GetMask("Enemy");
+        LayerMask layerMask = LayerMask.GetMask("Shield");
         float m = maxDistance / Vector3.Distance(pointOne, pointTwo);
         float x = (pointTwo.x - pointOne.x) * m;
         float z = (pointTwo.z - pointOne.z) * m;
         Vector3 furthestPoint = new Vector3(pointOne.x + x, transform.position.y, pointOne.z + z);
+        if (Physics.SphereCast(pointOne, width, pointTwo - pointOne, out hit, maxDistance, layerMask))
+        {
+            furthestPoint = hit.point;
+            maxDistance = Vector3.Distance(furthestPoint, pointOne);
+        }
+        layerMask = LayerMask.GetMask("Enemy");
         if (Physics.SphereCast(pointOne, width, pointTwo - pointOne, out hit, maxDistance, layerMask))
         {
             RaycastHit[] hits = Physics.SphereCastAll(pointOne, width, pointTwo - pointOne, maxDistance, layerMask);
@@ -227,9 +233,9 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
         
         if (damageTimer <= 0)
         {
-            float maxDistance = GetComponent<TowerStats>().maxTravelDistance;
             LayerMask layerMask = LayerMask.GetMask("Enemy");
             Vector3 targetPos = FindLaserEndPoint(pointOne, pointTwo, width, pierce);
+            float maxDistance = Vector3.Distance(targetPos, pointOne);
             RaycastHit[] hits = Physics.SphereCastAll(pointOne, width, targetPos - pointOne, maxDistance, layerMask);
             List<GameObject> enemies = new List<GameObject>();
             if (hits.Length > 0)
@@ -251,6 +257,15 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
             {
                 enemies.Add(hits[i].collider.gameObject);
             }
+            if (enemies.Count < pierce)
+            {
+                layerMask = LayerMask.GetMask("Shield");
+                RaycastHit hit;
+                if (Physics.SphereCast(pointOne, width, targetPos - pointOne, out hit, maxDistance, layerMask))
+                {
+                    hit.collider.GetComponentInParent<ShielderScript>().TakeShieldDamage(damage, gameObject);
+                }
+            }
             foreach (GameObject e in enemies)
             {
                 e.GetComponent<EnemyAI>().TakeDamage((damage + damage * e.GetComponent<RadiationManager>().radCount / 100), gameObject);
@@ -262,9 +277,9 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
     }
     void DealDamageWithRaycasts(float damage, Vector3 pointOne, Vector3 pointTwo, float width, int pierce)
     {
-        float maxDistance = GetComponent<TowerStats>().maxTravelDistance;
         LayerMask layerMask = LayerMask.GetMask("Enemy");
         Vector3 targetPos = FindLaserEndPoint(pointOne, pointTwo, width, pierce);
+        float maxDistance = Vector3.Distance(targetPos, pointOne);
         RaycastHit[] hits = Physics.SphereCastAll(pointOne, width, targetPos - pointOne, maxDistance, layerMask);
         List<GameObject> enemies = new List<GameObject>();
         if (hits.Length > 0)
@@ -285,6 +300,15 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
         for (int i = 0; i < pierce && i < hits.Length; ++i)
         {
             enemies.Add(hits[i].collider.gameObject);
+        }
+        if (enemies.Count < pierce)
+        {
+            layerMask = LayerMask.GetMask("Shield");
+            RaycastHit hit;
+            if (Physics.SphereCast(pointOne, width, targetPos - pointOne, out hit, maxDistance, layerMask))
+            {
+                hit.collider.GetComponentInParent<ShielderScript>().TakeShieldDamage(damage, gameObject);
+            }
         }
         foreach (GameObject e in enemies)
         {

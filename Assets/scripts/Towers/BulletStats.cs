@@ -23,8 +23,13 @@ public class BulletStats : MonoBehaviour
         //Work on this later
         bulletLocations.Add(transform.position);
         RaycastHit hit;
-        LayerMask layerMask = LayerMask.GetMask("Enemy");
+        LayerMask layerMask = LayerMask.GetMask("Shield");
         float d = Vector3.Distance(bulletLocations[bulletLocations.Count - 2], bulletLocations[bulletLocations.Count - 1]);
+        if (Physics.SphereCast(bulletLocations[bulletLocations.Count - 2], transform.localScale.x / 2, (bulletLocations[bulletLocations.Count - 1] - bulletLocations[bulletLocations.Count - 2]), out hit, d + transform.localScale.x / 2, layerMask))
+        {
+            DamageShield(hit.collider.gameObject);
+        }
+        layerMask = LayerMask.GetMask("Enemy");
         if (Physics.SphereCast(bulletLocations[bulletLocations.Count - 2], transform.localScale.x / 2, (bulletLocations[bulletLocations.Count - 1] - bulletLocations[bulletLocations.Count - 2]), out hit, d + transform.localScale.x / 2, layerMask))
         {
             //Debug.Log("BulletStats.Update: The raycast hit an enemy");
@@ -42,7 +47,7 @@ public class BulletStats : MonoBehaviour
     }
     private void DamageEnemy(GameObject enemy)
     {
-        if (!enemy.GetComponent<EnemyAI>().isHit)
+        if (!enemy.GetComponent<EnemyAI>().IsDead && !enemy.GetComponent<EnemyAI>().isHit)
         {
             enemy.GetComponent<EnemyAI>().TakeDamage(damage, tower);
             if (tower.GetComponent<TowerStats>().hasEffect)
@@ -60,5 +65,10 @@ public class BulletStats : MonoBehaviour
                 DestroyBullet();
             }
         }
+    }
+    private void DamageShield(GameObject shield)
+    {
+        shield.GetComponentInParent<ShielderScript>().TakeShieldDamage(damage, tower);
+        DestroyBullet();
     }
 }

@@ -7,7 +7,8 @@ public class EnemyAI : MonoBehaviour
 {
     // Make an explosion effect on the death of enemies
     [SerializeField] private float maxHp;
-    [SerializeField] private int bounty;
+    [SerializeField] private float bountyPercentage;
+    private int bounty;
     [SerializeField] private int damage;
     [SerializeField] private float movementSpeed = 10f;
     [SerializeField] private int level;
@@ -22,6 +23,7 @@ public class EnemyAI : MonoBehaviour
     private GameObject AI;
     public GameObject deathEffect;
     public bool IsDead;
+    public bool isCamo;
     private void GetRandomPath()
     {
         if (currentPath == -1)
@@ -32,6 +34,7 @@ public class EnemyAI : MonoBehaviour
     private void Start()
     {
         //++AIData.totalNumberOfAI;
+        bounty = (int)(cost * bountyPercentage / 100);
         AIData.enemies.Add(gameObject);
         currentHp = maxHp;
         GetRandomPath();
@@ -61,9 +64,13 @@ public class EnemyAI : MonoBehaviour
         }
         //Debug.Log("EnemyAI.Move: This happened");
         float distance = GetDistance();
-        this.transform.position = Vector3.MoveTowards(this.transform.position, PathData.realPossiblePaths[currentPath][currentWaypoint], Time.deltaTime * movementSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, PathData.realPossiblePaths[currentPath][currentWaypoint], Time.deltaTime * movementSpeed);
         if (distance <= minDistance)
         {
+            Debug.Log("{");
+            Debug.Log("EnemyAI.Move: currentWaypoint is: " + currentWaypoint);
+            Debug.Log("EnemyAI.Move: waypoint was reached at " + Time.fixedTime);
+            Debug.Log("}");
             currentWaypoint++;
         }
         

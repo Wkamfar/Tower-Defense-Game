@@ -246,4 +246,9 @@ public class TowerTargeting : MonoBehaviour
         }
         return false;
     }
+    /*Vector3 PredictiveAim(GameObject enemy)
+    {
+    //1 bulletSpeed = 1 m/s
+    //1 enemySpeed straight = 1 m/s
+    }*/
 }

@@ -56,8 +56,8 @@ public class ProjectileShoot : TowerActionScript
         currentBullet.GetComponent<BulletStats>().despawnTimer = this.gameObject.GetComponent<TowerStats>().bulletLifespan;
         currentBullet.GetComponent<BulletStats>().maxDistance = this.gameObject.GetComponent<TowerStats>().maxTravelDistance;
         currentBullet.GetComponent<BulletStats>().pierce = this.gameObject.GetComponent<TowerStats>().pierce;
-        Vector3 direction = (GetComponent<TowerStats>().targetedLocation - this.gameObject.transform.position).normalized;
-        currentBullet.GetComponent<Rigidbody>().AddForce(direction * this.gameObject.GetComponent<TowerStats>().bulletSpeed, ForceMode.Impulse);
+        Vector3 direction = (GetComponent<TowerStats>().targetedLocation - gameObject.transform.position).normalized;
+        currentBullet.GetComponent<Rigidbody>().AddForce(direction * GetComponent<TowerStats>().bulletSpeed, ForceMode.Impulse);
     }
     protected override bool CanShoot()
     {

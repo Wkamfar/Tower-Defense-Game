@@ -5,7 +5,6 @@ using TMPro;
 public class EnemySpawner : MonoBehaviour
 {
     public List<GameObject> enemyTypes;
-    public List<int> cost;
     [SerializeField] private float START_WAVE_TIMER;
     [SerializeField] private int waveCount;
     [SerializeField] private int baseMoney;
@@ -15,6 +14,7 @@ public class EnemySpawner : MonoBehaviour
     public GameObject enemy;
     private Queue<GameObject> enemiesToSpawn; // Queue<(GameObject, float)>
     private float enemySpawnTimer = 0;
+    public bool win;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,7 +33,8 @@ public class EnemySpawner : MonoBehaviour
         {
             if (AIData.enemies.Count == 0)
             {
-                Debug.Log("You Win!");
+                win = true;
+                //Debug.Log("You Win!");
             }
             return;
         }
@@ -73,10 +74,10 @@ public class EnemySpawner : MonoBehaviour
             canBuy = false;
             for (int i = 0; i < enemyTypes.Count; ++i)
             {
-                if (cost[i] <= AIData.currentMoney)
+                if (enemyTypes[i].GetComponent<EnemyAI>().cost <= AIData.currentMoney)
                 {
                     canBuy = true;
-                    AIData.ChangeMoney(-cost[i]);
+                    AIData.ChangeMoney(-enemyTypes[i].GetComponent<EnemyAI>().cost);
                     enemiesToSpawn.Enqueue(enemyTypes[i]);
                 }
             }

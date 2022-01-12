@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 80098741}
   - component: {fileID: 80098740}
   m_Layer: 0
-  m_Name: Death Text
+  m_Name: Victory Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: You Died
+  m_text: You Win
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -2121,7 +2121,7 @@ GameObject:
   - component: {fileID: 913955321}
   - component: {fileID: 913955320}
   m_Layer: 0
-  m_Name: Death Canvas Background
+  m_Name: Victory Canvas Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2456,6 +2456,7 @@ MonoBehaviour:
   coinCount: {fileID: 1571917393}
   deathCanvas: {fileID: 1916239365}
   victoryCanvas: {fileID: 470688762}
+  enemySpawner: {fileID: 1772883039}
 --- !u!4 &1011581303
 Transform:
   m_ObjectHideFlags: 0
@@ -4732,7 +4733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1772883040
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4748,12 +4749,13 @@ MonoBehaviour:
   enemyTypes:
   - {fileID: 5392840229282219629, guid: 0c59558755d676c42b3f3c23f6ab2729, type: 3}
   - {fileID: 5392840229282219629, guid: f1ddb8beb2558954e85845577d7a3622, type: 3}
-  cost: 0a00000064000000
+  - {fileID: 5392840229282219629, guid: b1519d2c1070ba64f9586d944e1b00ab, type: 3}
   START_WAVE_TIMER: 5
   waveCount: 3
   baseMoney: 500
   roundDisplay: {fileID: 426917345}
   enemy: {fileID: 5392840229282219629, guid: f1ddb8beb2558954e85845577d7a3622, type: 3}
+  win: 0
 --- !u!4 &1772883041
 Transform:
   m_ObjectHideFlags: 0

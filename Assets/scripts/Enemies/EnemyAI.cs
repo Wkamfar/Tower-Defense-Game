@@ -10,7 +10,7 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float bountyPercentage;
     private int bounty;
     [SerializeField] private int damage;
-    [SerializeField] private float movementSpeed = 10f;
+    public float movementSpeed = 10f;
     [SerializeField] private int level;
     [SerializeField] private float indicatorDisableTime = 0.25f;
     public bool isHit;
@@ -38,7 +38,10 @@ public class EnemyAI : MonoBehaviour
         AIData.enemies.Add(gameObject);
         currentHp = maxHp;
         GetRandomPath();
-        AI = this.gameObject;
+        AI = gameObject;
+        Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
+        Vector3 direction = (PathData.realPossiblePaths[currentPath][currentWaypoint] - transform.position).normalized;
+        rigidbody.AddForce(direction * movementSpeed, ForceMode.Impulse);
     }
     private void Update()
     {
@@ -64,14 +67,14 @@ public class EnemyAI : MonoBehaviour
         }
         //Debug.Log("EnemyAI.Move: This happened");
         float distance = GetDistance();
-        transform.position = Vector3.MoveTowards(transform.position, PathData.realPossiblePaths[currentPath][currentWaypoint], Time.deltaTime * movementSpeed);
+        //transform.position = Vector3.MoveTowards(transform.position, PathData.realPossiblePaths[currentPath][currentWaypoint], Time.deltaTime * movementSpeed);
         if (distance <= minDistance)
         {
-            Debug.Log("{");
-            Debug.Log("EnemyAI.Move: currentWaypoint is: " + currentWaypoint);
-            Debug.Log("EnemyAI.Move: waypoint was reached at " + Time.fixedTime);
-            Debug.Log("}");
+            Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
+            rigidbody.velocity = new Vector3(0, 0, 0);           
             currentWaypoint++;
+            Vector3 direction = (PathData.realPossiblePaths[currentPath][currentWaypoint] - transform.position).normalized;
+            rigidbody.AddForce(direction * movementSpeed, ForceMode.Impulse);
         }
         
     }

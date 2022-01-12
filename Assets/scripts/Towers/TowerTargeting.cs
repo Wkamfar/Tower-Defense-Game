@@ -246,9 +246,14 @@ public class TowerTargeting : MonoBehaviour
         }
         return false;
     }
-    /*Vector3 PredictiveAim(GameObject enemy)
-    {
     //1 bulletSpeed = 1 m/s
     //1 enemySpeed straight = 1 m/s
-    }*/
+    Vector3 PredictiveAim(GameObject enemy)
+    {
+        float bs = GetComponent<TowerStats>().bulletSpeed;
+        float ms = enemy.GetComponent<EnemyAI>().movementSpeed;
+        float cp = enemy.GetComponent<EnemyAI>().currentPath;
+        float cw = enemy.GetComponent<EnemyAI>().currentWaypoint;
+        return enemy.transform.position;
+    }
 }

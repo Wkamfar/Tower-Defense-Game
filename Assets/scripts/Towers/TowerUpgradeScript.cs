@@ -75,6 +75,7 @@ public class TowerUpgradeScript : MonoBehaviour
         GameObject newActiveTower = Instantiate(crosspathModels[upgradePathLevel[0]][upgradePathLevel[1]], currentActiveTowerModel.transform.position, Quaternion.identity, transform);
         Destroy(currentActiveTowerModel);
         currentActiveTowerModel = newActiveTower;
+        GetComponent<TowerStats>().shootPoint = currentActiveTowerModel.transform.GetChild(0).gameObject;
         towerUpgrades[p][upgradePathLevel[p]].GetComponent<TowerUpgradeChanges>().upgradeTower(gameObject);
         GetComponent<TowerMenuScript>().towerRadius.transform.localScale = new Vector3(GetComponent<TowerStats>().radius, GetComponent<TowerMenuScript>().towerRadius.transform.localScale.y, GetComponent<TowerStats>().radius);
 

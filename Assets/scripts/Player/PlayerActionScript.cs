@@ -15,9 +15,19 @@ public class PlayerActionScript : MonoBehaviour
     public GameObject towerDisplayRadius;
     public GameObject towerSelectionManager;
     public Canvas markerCanvas;
-
+    public GameObject pauseMenu;
+    public GameObject enemySpawner;
+    public List<int> timeModifiers = new List<int>() { 1, 2, 4 };
+    public int modifierIndex = 0;
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            if (!pauseMenu.activeInHierarchy)
+                PauseGame();
+            else
+                UnpauseGame();
+        }
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector3 spawnPos = new Vector3(mousePos.x, height, mousePos.z);
         if (TowerData.hasSelectedTower && !IsMouseOverUI())
@@ -291,5 +301,38 @@ public class PlayerActionScript : MonoBehaviour
         tower.GetComponent<TowerTargeting>().changeMarkerButton = chooseMarkerButton;
         chooseMarkerButton.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerTargeting>().ChooseNewMarker(); });
         tower.GetComponent<TowerTargeting>().markerCanvas = markerCanvas;
+    }
+
+    //Menu Buttons
+    public void PauseGame()
+    {
+        pauseMenu.SetActive(true);
+        Time.timeScale = 0;       
+    }
+    public void UnpauseGame()
+    {
+        Time.timeScale = timeModifiers[modifierIndex];
+        pauseMenu.SetActive(false);
+    }
+    public void ManualStartNextWave() // either make it so that it starts the next round whenever it is pressed, whenever it is pressed after a round is finished or some other condition when it is pressed
+    {
+        if (enemySpawner.GetComponent<EnemySpawner>().enemiesToSpawn.Count == 0 && AIData.enemies.Count == 0)
+        {
+            enemySpawner.GetComponent<EnemySpawner>().StartNextWave();
+        }
+    }
+    public void ChangeGameSpeed()
+    {
+        modifierIndex = (modifierIndex + 1) % timeModifiers.Count;
+        //Debug.Log("PlayerActionScript.ChangeGameSpeed: Current game speed modifier is: " + timeModifiers[modifierIndex]);
+        Time.timeScale = timeModifiers[modifierIndex];
+    }
+    public void ToggleAutostart()
+    {
+        if (!enemySpawner.GetComponent<EnemySpawner>().autostart)
+            enemySpawner.GetComponent<EnemySpawner>().autostart = true;
+        else
+            enemySpawner.GetComponent<EnemySpawner>().autostart = false;
+        //Debug.Log("PlayerActionScript.ToggleAutostart: Autostart is: " + enemySpawner.GetComponent<EnemySpawner>().autostart);
     }
 }

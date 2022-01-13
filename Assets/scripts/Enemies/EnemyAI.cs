@@ -39,9 +39,6 @@ public class EnemyAI : MonoBehaviour
         currentHp = maxHp;
         GetRandomPath();
         AI = gameObject;
-        Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
-        Vector3 direction = (PathData.realPossiblePaths[currentPath][currentWaypoint] - transform.position).normalized;
-        rigidbody.AddForce(direction * movementSpeed, ForceMode.Impulse);
     }
     private void Update()
     {
@@ -55,26 +52,26 @@ public class EnemyAI : MonoBehaviour
     }
     private void Move()
     {
-        if (currentWaypoint >= PathData.realPossiblePaths[currentPath].Count && !IsDead)
-        {
-            bounty = 0;
-            PlayerData.ChangeHealth(-damage);
-            KillAI();
-        }
         if (IsDead)
         {
             return;
         }
         //Debug.Log("EnemyAI.Move: This happened");
         float distance = GetDistance();
-        //transform.position = Vector3.MoveTowards(transform.position, PathData.realPossiblePaths[currentPath][currentWaypoint], Time.deltaTime * movementSpeed);
+        transform.position = Vector3.MoveTowards(transform.position, PathData.realPossiblePaths[currentPath][currentWaypoint], Time.deltaTime * movementSpeed);
         if (distance <= minDistance)
         {
             Rigidbody rigidbody = gameObject.GetComponent<Rigidbody>();
             rigidbody.velocity = new Vector3(0, 0, 0);           
             currentWaypoint++;
-            Vector3 direction = (PathData.realPossiblePaths[currentPath][currentWaypoint] - transform.position).normalized;
-            rigidbody.AddForce(direction * movementSpeed, ForceMode.Impulse);
+            if (currentWaypoint >= PathData.realPossiblePaths[currentPath].Count && !IsDead)
+            {
+                bounty = 0;
+                PlayerData.ChangeHealth(-damage);
+                KillAI();
+                Vector3 direction = (new Vector3(1, 0, 0)).normalized;
+                rigidbody.AddForce(direction * movementSpeed, ForceMode.Impulse);
+            }
         }
         
     }

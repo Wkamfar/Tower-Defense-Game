@@ -12,9 +12,11 @@ public class EnemySpawner : MonoBehaviour
     private int currentWave;
     private float startWaveTimer;
     public GameObject enemy;
-    private Queue<GameObject> enemiesToSpawn; // Queue<(GameObject, float)>
+    public Queue<GameObject> enemiesToSpawn; // Queue<(GameObject, float)>
     private float enemySpawnTimer = 0;
     public bool win;
+    public bool autostart;
+    private bool haltStart;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,8 +40,13 @@ public class EnemySpawner : MonoBehaviour
             }
             return;
         }
-        if (enemiesToSpawn.Count == 0)
+        if (enemiesToSpawn.Count == 0 && AIData.enemies.Count == 0 && autostart && !haltStart)
         {
+            StartNextWave();  
+        }
+        if (enemiesToSpawn.Count == 0 && AIData.enemies.Count == 0 && !autostart)
+        {
+            haltStart = true;
             startWaveTimer -= Time.deltaTime;
         }
         if (startWaveTimer <= 0)
@@ -62,8 +69,9 @@ public class EnemySpawner : MonoBehaviour
     {
         GameObject currentEnemy = Instantiate(_enemy, MapData.PointToRealWorld(MapData.startingPoint), Quaternion.identity);
     }
-    private void StartNextWave()
+    public void StartNextWave()
     {
+        haltStart = false;
         currentWave++;
         roundDisplay.text = currentWave.ToString() + " / " + waveCount.ToString();
         startWaveTimer = START_WAVE_TIMER;

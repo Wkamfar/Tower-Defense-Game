@@ -97,7 +97,10 @@ public class EnemyAI : MonoBehaviour
     public void TakeDamage(float damage, GameObject tower)
     {
         float dealtDamage = currentHp >= damage ? damage : currentHp;
-        tower.GetComponent<TowerStats>().IncreaseDamageDealt(dealtDamage);
+        if (tower != null)
+        {
+            tower.GetComponent<TowerStats>().IncreaseDamageDealt(dealtDamage);
+        }
         currentHp = currentHp >= damage ? currentHp - damage : 0;
         DamageIndicator();
     }

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 9137644954762459584}
   - component: {fileID: 1882998130212390005}
   - component: {fileID: -6785355511493323781}
+  - component: {fileID: 4334008974916993036}
   m_Layer: 8
   m_Name: Turret Holder
   m_TagString: Tower
@@ -183,3 +184,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e063f636cd1a7d047b20654913f55b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullets: []
+--- !u!114 &4334008974916993036
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e1e03e774ad3b4a82eb4b556ae43c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  specialItem: {fileID: 0}
+  specialItemCost: 0
+  specialItemName: 
+  maxItemCount: 4
+  currentItemCount: 0
+  placingItem: 0
+  itemCountIndicator: {fileID: 4512193807677081661, guid: 51bfed23b76c66642a584f94a36cbd59, type: 3}
+  indicatorLocation: {fileID: 0}
+  itemCountIndicators: []
+  selectedColor: {r: 0, g: 0.33333334, b: 0.33333334, a: 0.78431374}
+  normalColor: {r: 0.11764706, g: 0.11764706, b: 0.11764706, a: 0.78431374}

@@ -17,6 +17,7 @@ public class EnemySpawner : MonoBehaviour
     public bool win;
     public bool autostart;
     private bool haltStart;
+    public bool startGame;
     // Start is called before the first frame update
     void Start()
     {
@@ -53,7 +54,7 @@ public class EnemySpawner : MonoBehaviour
         {
             StartNextWave();
         }
-        if (MapData.isMapSpawned && enemiesToSpawn.Count > 0 && enemySpawnTimer <= 0)
+        if (MapData.isMapSpawned && enemiesToSpawn.Count > 0 && enemySpawnTimer <= 0 && startGame)
         {
             GameObject unit = enemiesToSpawn.Dequeue();
             Spawn(unit);

@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: -9124362336117325770}
   - component: {fileID: 8093468919777568748}
   - component: {fileID: 160695790509159199}
+  - component: {fileID: -6443293715525067750}
   m_Layer: 0
   m_Name: Solar Laser Holder
   m_TagString: Tower
@@ -143,12 +144,12 @@ MonoBehaviour:
   infiniteRange: 1
   radius: 3
   hitbox: 0.5
-  damage: 0
-  fireRate: 30
+  damage: 0.5
+  fireRate: 60
   bulletSpeed: 0
   bulletLifespan: 0
   maxTravelDistance: 100
-  pierce: 0
+  pierce: 100
   seesCamo: 0
   cost: 750
   allowedBlocks:
@@ -165,7 +166,7 @@ MonoBehaviour:
   - 
   - Follow Mouse
   targetingIndex: 0
-  bullet: {fileID: 0}
+  bullet: {fileID: 1818555242721915560, guid: 12e267274660dac429c8fb814efcdf31, type: 3}
   shootPoint: {fileID: 0}
   targetedLocation: {x: 0, y: 0, z: 0}
   targets: []
@@ -189,20 +190,43 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firing: 0
-  isContinuous: 0
-  beamDuration: 0
-  laserDamageRate: 0
+  isContinuous: 1
+  beamDuration: 10
+  laserDamageRate: 600
   chargeTime: 2
-  beamMaterial: {fileID: 0}
+  beamMaterial: {fileID: 1818555242721915560, guid: 12e267274660dac429c8fb814efcdf31, type: 3}
   preBeamMaterial: {fileID: 1818555242721915560, guid: 2c7499c45044cf54c8404b6f859aef84, type: 3}
-  beamEndMaterial: {fileID: 0}
+  beamEndMaterial: {fileID: 6877639531069844271, guid: e27f441a8e11ad74f96eee50859032d6, type: 3}
   beam: {fileID: 0}
   preBeam: {fileID: 0}
   beamEnd: {fileID: 0}
-  beamEndDamageMultiplier: 0
-  visibleBeamWidth: 0
-  beamWidth: 0
+  beamEndDamageMultiplier: 1
+  visibleBeamWidth: 0.5
+  beamWidth: 1
   preBeamWidth: 0.1
   preBeamPierce: 1
-  radCount: 0
+  radCount: 1
   laserFadeDuration: 0
+--- !u!114 &-6443293715525067750
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e1e03e774ad3b4a82eb4b556ae43c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  specialItem: {fileID: 0}
+  specialItemCost: 0
+  specialItemName: 
+  maxItemCount: 0
+  currentItemCount: 0
+  placingItem: 0
+  itemCountIndicator: {fileID: 4512193807677081661, guid: 51bfed23b76c66642a584f94a36cbd59, type: 3}
+  indicatorLocation: {fileID: 0}
+  itemCountIndicators: []
+  selectedColor: {r: 0, g: 0.33333334, b: 0.33333334, a: 0.78431374}
+  normalColor: {r: 0.11764706, g: 0.11764706, b: 0.11764706, a: 0.78431374}

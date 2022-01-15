@@ -40,11 +40,16 @@ public class TowerMenuScript : MonoBehaviour
     }
     public void CloseTowerMenu()
     {
-        towerMenu.SetActive(false);
-        towerRadius.GetComponent<Renderer>().enabled = false;
+        if (!GetComponent<TowerSpecialItemScript>().placingItem)
+        {
+            GetComponent<TowerSpecialItemScript>().DeactivateSpecialItemPlacement();
+            towerMenu.SetActive(false);
+            towerRadius.GetComponent<Renderer>().enabled = false;
+        }
     }
     public void Sell()
     {
+        GetComponent<TowerActionScript>().OnDestroyTower();
         PlayerData.ChangeMoney(this.gameObject.GetComponent<TowerStats>().SellValue());
         TowerData.towers.Remove(this.gameObject);
         Destroy(towerMenu);

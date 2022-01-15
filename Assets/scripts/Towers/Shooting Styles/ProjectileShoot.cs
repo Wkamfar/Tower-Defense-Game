@@ -5,6 +5,7 @@ using UnityEngine;
 public class ProjectileShoot : TowerActionScript
 {
     private float shotTimer;
+    public List<GameObject> bullets = new List<GameObject>();
     // Update is called once per frame
     protected override void Update()
     {
@@ -51,6 +52,7 @@ public class ProjectileShoot : TowerActionScript
     {
         shotTimer = 60 / GetComponent<TowerStats>().fireRate;
         GameObject currentBullet = Instantiate(GetComponent<TowerStats>().bullet, GetComponent<TowerStats>().shootPoint.transform.position, Quaternion.identity);
+        bullets.Add(currentBullet);
         currentBullet.GetComponent<BulletStats>().damage = this.gameObject.GetComponent<TowerStats>().damage;
         currentBullet.GetComponent<BulletStats>().tower = this.gameObject;
         currentBullet.GetComponent<BulletStats>().despawnTimer = this.gameObject.GetComponent<TowerStats>().bulletLifespan;
@@ -67,5 +69,12 @@ public class ProjectileShoot : TowerActionScript
             return false;
         }
         return true;
+    }
+    public override void OnDestroyTower()
+    {
+        for (int i = 0; i < bullets.Count; ++i)
+        {
+            Destroy(bullets[i]);
+        }
     }
 }

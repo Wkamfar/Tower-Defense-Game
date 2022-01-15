@@ -43,6 +43,7 @@ public class BulletStats : MonoBehaviour
     }
     private void DestroyBullet()
     {
+        tower.GetComponent<ProjectileShoot>().bullets.Remove(gameObject);
         Destroy(this.gameObject);
     }
     private void DamageEnemy(GameObject enemy)

@@ -334,4 +334,8 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
         beamTimer = beamDuration;
         firing = false;
     }
+    public override void OnDestroyTower()
+    {
+        ResetTower();
+    }
 }

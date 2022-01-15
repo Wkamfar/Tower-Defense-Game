@@ -268,6 +268,11 @@ public class PlayerActionScript : MonoBehaviour
         GameObject upgradeTwoIndicatorTwo = upgradeTwo.transform.GetChild(3).gameObject;
         //Sell
         GameObject sell = currentTowerMenu.transform.GetChild(5).gameObject;
+        //Special Item
+        GameObject buySpecialItem = currentTowerMenu.transform.GetChild(6).gameObject;
+        TextMeshProUGUI specialItemName = buySpecialItem.transform.GetChild(0).gameObject.GetComponent<TextMeshProUGUI>();
+        TextMeshProUGUI specialItemCost = buySpecialItem.transform.GetChild(1).gameObject.GetComponent<TextMeshProUGUI>();
+        GameObject specialItemCountIndicator = buySpecialItem.transform.GetChild(2).gameObject;
 
         towerName.GetComponent<TextMeshProUGUI>().text = TowerData.selectedTower.GetComponent<TowerStats>().GetTowerName();
 
@@ -301,6 +306,13 @@ public class PlayerActionScript : MonoBehaviour
         tower.GetComponent<TowerTargeting>().changeMarkerButton = chooseMarkerButton;
         chooseMarkerButton.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerTargeting>().ChooseNewMarker(); });
         tower.GetComponent<TowerTargeting>().markerCanvas = markerCanvas;
+
+        tower.GetComponent<TowerSpecialItemScript>().indicatorLocation = specialItemCountIndicator;
+        tower.GetComponent<TowerSpecialItemScript>().SetButtonIndicators();
+        specialItemName.text = tower.GetComponent<TowerSpecialItemScript>().specialItemName;
+        specialItemCost.text = tower.GetComponent<TowerSpecialItemScript>().specialItemCost.ToString();
+        buySpecialItem.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerSpecialItemScript>().ActivateSpecialItemPlacement(); });
+        tower.GetComponent<TowerSpecialItemScript>().itemBuyButton = buySpecialItem;
     }
 
     //Menu Buttons
@@ -316,7 +328,11 @@ public class PlayerActionScript : MonoBehaviour
     }
     public void ManualStartNextWave() // either make it so that it starts the next round whenever it is pressed, whenever it is pressed after a round is finished or some other condition when it is pressed
     {
-        if (enemySpawner.GetComponent<EnemySpawner>().enemiesToSpawn.Count == 0 && AIData.enemies.Count == 0)
+        if (!enemySpawner.GetComponent<EnemySpawner>().startGame)
+        {
+            enemySpawner.GetComponent<EnemySpawner>().startGame = true;
+        }
+        else if (enemySpawner.GetComponent<EnemySpawner>().enemiesToSpawn.Count == 0 && AIData.enemies.Count == 0)
         {
             enemySpawner.GetComponent<EnemySpawner>().StartNextWave();
         }

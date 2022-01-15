@@ -22,4 +22,8 @@ public class TowerActionScript : MonoBehaviour
     {
         return false;
     }
+    public virtual void OnDestroyTower()
+    {
+
+    }
 }

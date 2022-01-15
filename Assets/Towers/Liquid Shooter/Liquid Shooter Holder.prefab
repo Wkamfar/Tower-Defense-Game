@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 4934417263685160134}
   - component: {fileID: 4557793439607848751}
   - component: {fileID: -777829436675654957}
+  - component: {fileID: -5361766741393990191}
   m_Layer: 0
   m_Name: Liquid Shooter Holder
   m_TagString: Tower
@@ -49,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9bb47231a32bbc4ca061fbd0efaef6d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  smoothnessFactor: 0.1
   hasMarker: 0
   changeMarkerButton: {fileID: 0}
   marker: {fileID: 3673933850750014005, guid: d836e948e3fa008499d3c4097cc1b440, type: 3}
@@ -86,7 +88,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5cc7b335620068941863825a46317bba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  baseTowerModel: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  baseTowerModel: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
   upgradePathLevel: 0000000000000000
   upgradePathMaxLevel: 0200000002000000
   costOneOne: 150
@@ -97,15 +99,15 @@ MonoBehaviour:
   nameOneTwo: Double Pump
   nameTwoOne: Higher Potency
   nameTwoTwo: Deadly Puddle
-  modelZeroZero: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
-  modelZeroOne: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
-  modelZeroTwo: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
-  modelOneZero: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
-  modelOneOne: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
-  modelOneTwo: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
-  modelTwoZero: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
-  modelTwoOne: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
-  modelTwoTwo: {fileID: 5435715626267769603, guid: ab83a3aa32cb85343a6efe1b82ce8b27, type: 3}
+  modelZeroZero: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
+  modelZeroOne: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
+  modelZeroTwo: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
+  modelOneZero: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
+  modelOneOne: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
+  modelOneTwo: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
+  modelTwoZero: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
+  modelTwoOne: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
+  modelTwoTwo: {fileID: 5987199261252680333, guid: fa6d9470a0304f74a84f18c18dacc730, type: 3}
   upgradePathOneOne: {fileID: 4609958870734015659, guid: dacbdeafa2d65b84f8919a530ac800e5, type: 3}
   upgradePathOneTwo: {fileID: 4609958870734015659, guid: 19fa3284e6e615948a617e8810504b56, type: 3}
   upgradePathTwoOne: {fileID: 4609958870734015659, guid: be5713e111492df478d7eadc850adaba, type: 3}
@@ -190,3 +192,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e063f636cd1a7d047b20654913f55b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  bullets: []
+--- !u!114 &-5361766741393990191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1678817109574290378}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9e1e03e774ad3b4a82eb4b556ae43c2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  specialItem: {fileID: 0}
+  specialItemCost: 0
+  specialItemName: 
+  maxItemCount: 0
+  currentItemCount: 0
+  placingItem: 0
+  itemCountIndicator: {fileID: 4512193807677081661, guid: 51bfed23b76c66642a584f94a36cbd59, type: 3}
+  indicatorLocation: {fileID: 0}
+  itemCountIndicators: []
+  selectedColor: {r: 0, g: 0.33333334, b: 0.33333334, a: 0.78431374}
+  normalColor: {r: 0.11764706, g: 0.11764706, b: 0.11764706, a: 0.78431374}

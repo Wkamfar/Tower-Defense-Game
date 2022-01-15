@@ -201,7 +201,8 @@ public class TowerTargeting : MonoBehaviour
         hasMarker = true;
         if (currentMarker == null)
         {
-            Vector3 spawnPos = Camera.main.WorldToScreenPoint(transform.position); //make it smarter so that it aims at path or enemy when placed or something like that
+            Vector3 realWorldSpawnPos = new Vector3(transform.position.x - 0.01f, transform.position.y, transform.position.z);
+            Vector3 spawnPos = Camera.main.WorldToScreenPoint(realWorldSpawnPos); //make it smarter so that it aims at path or enemy when placed or something like that
             currentMarker = Instantiate(marker, spawnPos, Quaternion.identity, markerCanvas.transform);
         }
         if (GetComponent<TowerMenuScript>().towerMenu.activeInHierarchy || choosingMarker)

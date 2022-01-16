@@ -14,12 +14,13 @@ public class TowerMenuScript : MonoBehaviour
     public GameObject upgradeOneDisplay;
     public GameObject upgradeTwoDisplay;
     public GameObject damageDealtDisplay;
+    public GameObject xButton;
     // Start is called before the first frame update
     void Start()
     {
         OpenTowerMenu();
     }
-    
+
     // Update is called once per frame
     void Update()
     {
@@ -40,12 +41,13 @@ public class TowerMenuScript : MonoBehaviour
     }
     public void CloseTowerMenu()
     {
-        if (!GetComponent<TowerSpecialItemScript>().placingItem)
+        if (GetComponent<TowerTargeting>().choosingMarker)
         {
-            GetComponent<TowerSpecialItemScript>().DeactivateSpecialItemPlacement();
-            towerMenu.SetActive(false);
-            towerRadius.GetComponent<Renderer>().enabled = false;
+            GetComponent<TowerTargeting>().CancelNewMarker();
         }
+        GetComponent<TowerSpecialItemScript>().DeactivateSpecialItemPlacement();
+        towerMenu.SetActive(false);
+        towerRadius.GetComponent<Renderer>().enabled = false;
     }
     public void Sell()
     {

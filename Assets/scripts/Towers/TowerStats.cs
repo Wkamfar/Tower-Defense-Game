@@ -37,6 +37,7 @@ public class TowerStats : MonoBehaviour
     public float effectDuration;
     public bool isPermanent;
     public float effectIntensity;
+    public List<GameObject> specialItems;
 
     
     public string towerName;

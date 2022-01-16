@@ -15,10 +15,17 @@ public class PlayerActionScript : MonoBehaviour
     public GameObject towerDisplayRadius;
     public GameObject towerSelectionManager;
     public Canvas markerCanvas;
+    public Canvas pauseCanvas;
     public GameObject pauseMenu;
     public GameObject enemySpawner;
     public List<int> timeModifiers = new List<int>() { 1, 2, 4 };
     public int modifierIndex = 0;
+    public Canvas gameUI;
+    public GameObject xButton;
+    private void Start()
+    {
+        xButton.SetActive(false);
+    }
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -26,6 +33,16 @@ public class PlayerActionScript : MonoBehaviour
             if (!pauseMenu.activeInHierarchy)
                 PauseGame();
             else
+                UnpauseGame();
+        }
+        if (Input.GetKeyDown(KeyCode.Mouse0) && pauseMenu.activeInHierarchy)
+        {
+            GraphicRaycaster raycaster = pauseCanvas.GetComponent<GraphicRaycaster>();
+            PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+            List<RaycastResult> results = new List<RaycastResult>();
+            pointerEventData.position = Input.mousePosition;
+            raycaster.Raycast(pointerEventData, results);
+            if (results.Count == 0)
                 UnpauseGame();
         }
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
@@ -313,6 +330,10 @@ public class PlayerActionScript : MonoBehaviour
         specialItemCost.text = tower.GetComponent<TowerSpecialItemScript>().specialItemCost.ToString();
         buySpecialItem.GetComponent<Button>().onClick.AddListener(delegate { tower.GetComponent<TowerSpecialItemScript>().ActivateSpecialItemPlacement(); });
         tower.GetComponent<TowerSpecialItemScript>().itemBuyButton = buySpecialItem;
+
+        tower.GetComponent<TowerTargeting>().gameUI = gameUI;
+
+        tower.GetComponent<TowerMenuScript>().xButton = xButton;
     }
 
     //Menu Buttons

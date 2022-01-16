@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 /// <summary>
 /// adds anything that comes into the radius and can be shot into a list, and then from there choose the priority, either strongest target, weakest target, first target, or last target, and then remove them when they leave the radius
@@ -17,6 +19,7 @@ public class TowerTargeting : MonoBehaviour
     public bool choosingMarker;
     public GameObject mouseFollower;
     private List<GameObject> targets = new List<GameObject>();
+    public Canvas gameUI;
     private void Update()
     {
         targets = GetComponent<TowerStats>().targets;
@@ -36,11 +39,16 @@ public class TowerTargeting : MonoBehaviour
                 DeleteDeadObject(i);
             }
         }
-        if (choosingMarker)
+        if (choosingMarker && !IsMouseOverSpecificUI(gameUI) && IsInMap())
         {
+            mouseFollower.SetActive(true);
             mouseFollower.transform.position = Input.mousePosition;
         }
-        if (choosingMarker && Input.GetKeyDown(KeyCode.Mouse0) && IsInMap())
+        else if (choosingMarker && (IsMouseOverSpecificUI(gameUI) || !IsInMap()))
+        {
+            mouseFollower.SetActive(false);
+        }
+        if (choosingMarker && Input.GetKeyDown(KeyCode.Mouse0) && IsInMap() && !IsMouseOverSpecificUI(gameUI))
         {
             PlaceChooseMarker();
         }
@@ -217,6 +225,8 @@ public class TowerTargeting : MonoBehaviour
         choosingMarker = true;
         GetComponent<TowerMenuScript>().towerMenu.SetActive(false);
         mouseFollower = Instantiate(marker, markerCanvas.transform);
+        GetComponent<TowerMenuScript>().xButton.SetActive(true);
+        GetComponent<TowerMenuScript>().xButton.GetComponent<Button>().onClick.AddListener(delegate { CancelNewMarker(); });
     }
     public void PlaceChooseMarker()
     {
@@ -224,6 +234,14 @@ public class TowerTargeting : MonoBehaviour
         GetComponent<TowerMenuScript>().towerMenu.SetActive(true);
         currentMarker.transform.position = Input.mousePosition;
         Destroy(mouseFollower);
+        GetComponent<TowerMenuScript>().xButton.SetActive(false);
+    }
+    public void CancelNewMarker()
+    {
+        choosingMarker = false;
+        GetComponent<TowerMenuScript>().towerMenu.SetActive(true);
+        Destroy(mouseFollower);
+        GetComponent<TowerMenuScript>().xButton.SetActive(false);
     }
     public Vector3 FollowMouse() 
     {
@@ -256,5 +274,16 @@ public class TowerTargeting : MonoBehaviour
         float cp = enemy.GetComponent<EnemyAI>().currentPath;
         float cw = enemy.GetComponent<EnemyAI>().currentWaypoint;
         return enemy.transform.position;
+    }
+    private bool IsMouseOverSpecificUI(Canvas canvas)
+    {
+        GraphicRaycaster raycaster = canvas.GetComponent<GraphicRaycaster>();
+        PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
+        List<RaycastResult> results = new List<RaycastResult>();
+        pointerEventData.position = Input.mousePosition;
+        raycaster.Raycast(pointerEventData, results);
+        if (results.Count > 0)
+            return true;
+        return false;
     }
 }

@@ -30,7 +30,7 @@ public class ShielderScript : EnemyAI // make energy shield, physical shield, an
                 {
                     currentIntervalTime = currentIntervalTime > 0 ? currentIntervalTime -= Time.deltaTime : regenerationInterval;
                     if (currentIntervalTime! > 0)
-                        shieldHealth = shieldHealth + shieldHealth * regenerationPercentage / 100 < maxShieldHealth ? shieldHealth + shieldHealth * regenerationPercentage / 100 : maxShieldHealth; Debug.Log("ShielderScript.UseAbility: Healing Health by: " + shieldHealth * regenerationPercentage / 100);
+                        shieldHealth = shieldHealth + shieldHealth * regenerationPercentage / 100 < maxShieldHealth ? shieldHealth + shieldHealth * regenerationPercentage / 100 : maxShieldHealth; //Debug.Log("ShielderScript.UseAbility: Healing Health by: " + shieldHealth * regenerationPercentage / 100);
                 }
             }
         }

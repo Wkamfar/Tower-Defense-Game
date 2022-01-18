@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-public class EnemySpawner : MonoBehaviour
+public class EnemySpawner : MonoBehaviour // Make preset waves to test out the enemy
 {
     public List<GameObject> enemyTypes;
     [SerializeField] private float START_WAVE_TIMER;
@@ -12,12 +12,14 @@ public class EnemySpawner : MonoBehaviour
     private int currentWave;
     private float startWaveTimer;
     public GameObject enemy;
-    public Queue<GameObject> enemiesToSpawn; // Queue<(GameObject, float)>
+    public Queue<GameObject> enemiesToSpawn; // Queue<(GameObject, float, int)> // add spawn time from the start of the round // add what path they will go down
     private float enemySpawnTimer = 0;
     public bool win;
     public bool autostart;
     private bool haltStart;
     public bool startGame;
+    public bool spawningWaveEnded;
+    public bool waveEnded;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,29 +34,37 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         //Debug.Log("EnemySpawner.Update: The amount of AI: " + AIData.totalNumberOfAI);
+        //Debug to display all of the data
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            for (int i = 0; i < DataScript.waveLength.Count; ++i)
+            {
+                Debug.Log("EnemySpawner.Update: Wave " + (i + 1) + " Length is: " + DataScript.waveLength[i]);
+            }
+        }
         if (currentWave >= waveCount)
         {
-            if (AIData.enemies.Count == 0)
+            if (waveEnded)
             {
                 win = true;
+                return;
                 //Debug.Log("You Win!");
             }
-            return;
         }
-        if (enemiesToSpawn.Count == 0 && AIData.enemies.Count == 0 && autostart && !haltStart)
+        if (waveEnded && autostart && !haltStart)
         {
             StartNextWave();  
         }
-        if (enemiesToSpawn.Count == 0 && AIData.enemies.Count == 0 && !autostart)
+        if (waveEnded && !autostart)
         {
             haltStart = true;
             startWaveTimer -= Time.deltaTime;
         }
-        if (startWaveTimer <= 0)
+        if (startWaveTimer <= 0 && startGame)
         {
             StartNextWave();
         }
-        if (MapData.isMapSpawned && enemiesToSpawn.Count > 0 && enemySpawnTimer <= 0 && startGame)
+        if (MapData.isMapSpawned && enemiesToSpawn.Count > 0 && enemySpawnTimer <= 0)
         {
             GameObject unit = enemiesToSpawn.Dequeue();
             Spawn(unit);
@@ -64,6 +74,18 @@ public class EnemySpawner : MonoBehaviour
         {
             enemySpawnTimer -= Time.deltaTime;
         }
+        if (enemiesToSpawn.Count == 0 && !spawningWaveEnded && startGame)
+        {
+            spawningWaveEnded = true;
+            DataScript.currentSpawningWaveEnd = Time.time;
+            DataScript.spawningWaveLength.Add(DataScript.currentSpawningWaveEnd - DataScript.currentWaveStart);
+        }
+        if (enemiesToSpawn.Count == 0 && AIData.enemies.Count == 0 && !waveEnded && startGame)
+        {
+            waveEnded = true;
+            DataScript.currentWaveEnd = Time.time;
+            DataScript.waveLength.Add(DataScript.currentWaveEnd - DataScript.currentWaveStart);
+        }
     }
     
     private void Spawn(GameObject _enemy)
@@ -72,8 +94,14 @@ public class EnemySpawner : MonoBehaviour
     }
     public void StartNextWave()
     {
+        spawningWaveEnded = false;
+        waveEnded = false;
         haltStart = false;
         currentWave++;
+        AIData.currentWave = currentWave;
+        CreateDataRatings.SetTotalPotentialDPS(true);
+        CreateDataRatings.SetTotalPotentialDPS(false);
+        DataScript.currentWaveStart = Time.time;
         roundDisplay.text = currentWave.ToString() + " / " + waveCount.ToString();
         startWaveTimer = START_WAVE_TIMER;
         AIData.ChangeMoney(baseMoney * currentWave);

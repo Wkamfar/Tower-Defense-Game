@@ -31,7 +31,7 @@ public class PlayerManager : MonoBehaviour
             Win();
         }
         healthBar.GetComponent<Slider>().value = PlayerData.playerCurrentHp / PlayerData.playerMaxHp;
-        healthBarText.text = PlayerData.playerCurrentHp.ToString();
+        healthBarText.text = (Mathf.Ceil(PlayerData.playerCurrentHp * 10) / 10).ToString();
         coinCount.text = PlayerData.playerMoney.ToString();
     }
     public void KillPlayer()

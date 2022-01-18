@@ -9,7 +9,6 @@ public class EnemyAI : MonoBehaviour
     [SerializeField] private float maxHp;
     [SerializeField] private float bountyPercentage;
     private int bounty;
-    [SerializeField] private int damage;
     public float movementSpeed = 10f;
     [SerializeField] private int level;
     [SerializeField] private float indicatorDisableTime = 0.25f;
@@ -67,7 +66,7 @@ public class EnemyAI : MonoBehaviour
             if (currentWaypoint >= PathData.realPossiblePaths[currentPath].Count && !IsDead)
             {
                 bounty = 0;
-                PlayerData.ChangeHealth(-damage);
+                PlayerData.ChangeHealth(-currentHp);
                 KillAI();
                 Vector3 direction = (new Vector3(1, 0, 0)).normalized;
                 rigidbody.AddForce(direction * movementSpeed, ForceMode.Impulse);

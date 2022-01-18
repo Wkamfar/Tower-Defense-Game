@@ -26,6 +26,10 @@ public class TowerSelectionScript : MonoBehaviour
         {
             DeselectTower();
         }
+        if (Input.GetKeyDown(KeyCode.Mouse1))
+        {
+            DeselectTower();
+        }
     }
 
     public void DeselectTower()

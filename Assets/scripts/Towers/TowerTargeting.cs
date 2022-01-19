@@ -243,7 +243,7 @@ public class TowerTargeting : MonoBehaviour
         Destroy(mouseFollower);
         GetComponent<TowerMenuScript>().xButton.SetActive(false);
     }
-    public Vector3 FollowMouse() 
+    public Vector3 FollowMouse() // Make it take time to follow the mouse, not instant
     {
         hasMarker = true;
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);

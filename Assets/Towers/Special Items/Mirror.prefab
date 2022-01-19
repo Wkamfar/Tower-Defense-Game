@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 9091164965709263534}
   - component: {fileID: 9101032294881652971}
   - component: {fileID: 951264696582752249}
+  - component: {fileID: -8302794106342252769}
+  - component: {fileID: -6632378587116963310}
   m_Layer: 11
   m_Name: Mirror
   m_TagString: Untagged
@@ -93,7 +95,7 @@ BoxCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7334949644797121825}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
@@ -114,3 +116,31 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 0
+--- !u!114 &-8302794106342252769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334949644797121825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1883efc039867d941a19b1663fa7a511, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  localGameObject: {fileID: 6057071859879254316, guid: 1e35a11c99c16f7469afe71c08aec859, type: 3}
+--- !u!114 &-6632378587116963310
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7334949644797121825}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f89aa43c1174834a997c051521cb253, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hitbox: 0.5
+  hasCapsuleCollider: 0
+  hasBoxCollider: 1

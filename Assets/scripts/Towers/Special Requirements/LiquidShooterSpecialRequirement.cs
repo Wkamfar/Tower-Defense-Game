@@ -86,7 +86,7 @@ public class LiquidShooterSpecialRequirement : TowerSpecialRequirement
             {
                 blockRadius = (closestBlock.GetComponent<BlockStats>().blockSize / 2) / Mathf.Cos(radiant);
             }
-            if (blockRadius + TowerData.selectedTower.GetComponent<TowerStats>().hitbox < maxDistance)
+            if (blockRadius + GetTowerRadius(TowerData.selectedTower, closestBlock) < maxDistance)
             {
                 GetComponent<LiquidShooterStats>().connectedLiquid = closestBlock;
                 GetComponent<TowerStats>().bullet = closestBlock.GetComponent<LiquidStats>().liquidBullet;
@@ -95,5 +95,30 @@ public class LiquidShooterSpecialRequirement : TowerSpecialRequirement
             }
         }
         return false;
+    }
+    private float GetTowerRadius(GameObject tower, GameObject checkObject)
+    {
+        float towerRadius = 0;
+        if (TowerData.selectedTower.GetComponent<TowerStats>().hasCapsuleCollider)
+        {
+            towerRadius = tower.GetComponent<TowerStats>().hitbox;
+        }
+        else if (TowerData.selectedTower.GetComponent<TowerStats>().hasBoxCollider)
+        {
+            float x = Mathf.Abs(checkObject.transform.position.x - tower.transform.position.x);
+            float y = Mathf.Abs(checkObject.transform.position.z - tower.transform.position.z);
+            float totalDistance = Mathf.Sqrt(x * x + y * y);
+            float radiant = Mathf.Asin(y / totalDistance);
+            float angle = radiant * 180 / Mathf.PI;
+            if (angle >= 45)
+            {
+                towerRadius = tower.GetComponent<TowerStats>().hitbox / Mathf.Sin(radiant);
+            }
+            else
+            {
+                towerRadius = tower.GetComponent<TowerStats>().hitbox / Mathf.Cos(radiant);
+            }
+        }
+        return towerRadius;
     }
 }

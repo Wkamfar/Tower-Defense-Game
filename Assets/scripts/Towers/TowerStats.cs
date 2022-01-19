@@ -38,6 +38,8 @@ public class TowerStats : MonoBehaviour
     public bool isPermanent;
     public float effectIntensity;
     public List<GameObject> specialItems;
+    public bool hasCapsuleCollider;
+    public bool hasBoxCollider;
 
     
     public string towerName;

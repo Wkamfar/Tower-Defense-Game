@@ -9,6 +9,10 @@ public class TowerSpecialItemScript : MonoBehaviour
     public GameObject specialItem;
     public int specialItemCost;
     public string specialItemName;
+    public List<GameObject> allowedBlocks = new List<GameObject>();
+    public bool hasCapsuleCollider;
+    public bool hasBoxCollider;
+    public float hitbox;
     public int maxItemCount;
     public int currentItemCount;
     public bool placingItem;
@@ -23,8 +27,10 @@ public class TowerSpecialItemScript : MonoBehaviour
     {
         if (placingItem)
         {
+            //Debug.Log("TowerSpecialItemScript.Update: CanPlaceTower is: " + CanPlaceTower());
             if (CanPlaceTower() && Input.GetKeyDown(KeyCode.Mouse0))
             {
+                //Debug.Log("SolarLaserSpecialItemScript.PlaceTower: This happened");
                 PlaceTower();
             }
         }
@@ -44,16 +50,26 @@ public class TowerSpecialItemScript : MonoBehaviour
     }
     public void ActivateSpecialItemPlacement()
     {
-        placingItem = true;
-        GetComponent<TowerMenuScript>().xButton.SetActive(true);
-        GetComponent<TowerMenuScript>().xButton.GetComponent<Button>().onClick.AddListener(delegate { DeactivateSpecialItemPlacement(); });
-        GetComponent<TowerMenuScript>().towerMenu.SetActive(false);
+        if (currentItemCount < maxItemCount)
+        {
+            placingItem = true;
+            GetComponent<TowerMenuScript>().xButton.SetActive(true);
+            GetComponent<TowerMenuScript>().xButton.GetComponent<Button>().onClick.AddListener(delegate { DeactivateSpecialItemPlacement(false); });
+            GetComponent<TowerMenuScript>().towerMenu.SetActive(false);
+            //The current mouseFollower is temporary
+            mouseFollower = Instantiate(specialItem);
+        }       
     }
-    public void DeactivateSpecialItemPlacement()
+    public void DeactivateSpecialItemPlacement(bool reactivate)
     {
-        placingItem = false;
-        GetComponent<TowerMenuScript>().xButton.SetActive(false);
-        GetComponent<TowerMenuScript>().towerMenu.SetActive(true);
+        if (!reactivate || currentItemCount == maxItemCount - 1)
+        {
+            placingItem = false;
+            GetComponent<TowerMenuScript>().xButton.SetActive(false);
+            GetComponent<TowerMenuScript>().towerMenu.SetActive(true);
+            //The current mouseFollower is temporary
+            Destroy(mouseFollower);
+        }
     }
 
     protected virtual bool CanPlaceTower()
@@ -69,9 +85,11 @@ public class TowerSpecialItemScript : MonoBehaviour
         GetComponent<TowerStats>().specialItems.Add(currentItem);
         GetComponent<TowerStats>().AddValue(specialItemCost);
         PlayerData.ChangeMoney(-specialItemCost);
-        DeactivateSpecialItemPlacement();
+        DeactivateSpecialItemPlacement(true);
         itemCountIndicators[currentItemCount].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
         ++currentItemCount;
-
+        currentItem.GetComponent<SpecialItemStats>().hitbox = hitbox;
+        currentItem.GetComponent<SpecialItemStats>().hasCapsuleCollider = hasCapsuleCollider;
+        currentItem.GetComponent<SpecialItemStats>().hasBoxCollider = hasBoxCollider;
     }
 }

@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4934417263685160134}
   - component: {fileID: 4557793439607848751}
   - component: {fileID: -777829436675654957}
-  - component: {fileID: -5361766741393990191}
+  - component: {fileID: -4538390550568785152}
   m_Layer: 0
   m_Name: Liquid Shooter Holder
   m_TagString: Tower
@@ -180,6 +180,9 @@ MonoBehaviour:
   effectDuration: 0
   isPermanent: 1
   effectIntensity: 1
+  specialItems: []
+  hasCapsuleCollider: 1
+  hasBoxCollider: 0
   towerName: Liquid Shooter
   connectedLiquid: {fileID: 0}
 --- !u!114 &-777829436675654957
@@ -195,7 +198,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullets: []
---- !u!114 &-5361766741393990191
+--- !u!114 &-4538390550568785152
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -204,7 +207,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1678817109574290378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9e1e03e774ad3b4a82eb4b556ae43c2, type: 3}
+  m_Script: {fileID: 11500000, guid: b736d291c4fba8843bd946bc48283e02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   specialItem: {fileID: 0}
@@ -217,3 +220,4 @@ MonoBehaviour:
   indicatorLocation: {fileID: 0}
   itemCountIndicators: []
   itemBuyButton: {fileID: 0}
+  mouseFollower: {fileID: 0}

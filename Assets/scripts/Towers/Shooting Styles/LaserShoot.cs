@@ -15,6 +15,7 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
     public GameObject beam;
     public GameObject preBeam;
     public GameObject beamEnd;
+    public bool hasReflectedBeam;
     public float beamEndDamageMultiplier;
     public float visibleBeamWidth;
     public float beamWidth;
@@ -162,6 +163,14 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
             furthestPoint = hit.point;
             maxDistance = Vector3.Distance(furthestPoint, pointOne);
         }
+        layerMask = LayerMask.GetMask("Mirror");
+        if (Physics.SphereCast(pointOne, width, pointTwo - pointOne, out hit, maxDistance, layerMask))
+        {
+            furthestPoint = hit.point;
+            maxDistance = Vector3.Distance(furthestPoint, pointOne);
+            hit.collider.gameObject.GetComponent<MirrorScript>().FindReflectedBeamEndPoint(gameObject, pointOne, hit.point, maxDistance, width, pierce);
+            hasReflectedBeam = true;
+        }
         layerMask = LayerMask.GetMask("Enemy");
         if (Physics.SphereCast(pointOne, width, pointTwo - pointOne, out hit, maxDistance, layerMask))
         {
@@ -172,6 +181,7 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
                 {
                     return furthestPoint;
                 }
+                hasReflectedBeam = false;
                 for (int i = 0; i < hits.Length - 1; ++i)
                 {
                     for (int j = 0; j < hits.Length - i - 1; ++j)
@@ -230,7 +240,6 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
     }
     void DealDamageWithRaycasts(float damage, float damageRate, Vector3 pointOne, Vector3 pointTwo, float width, int pierce)
     {
-        
         if (damageTimer <= 0)
         {
             LayerMask layerMask = LayerMask.GetMask("Enemy");
@@ -259,12 +268,45 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
             }
             if (enemies.Count < pierce)
             {
+                string hitLayer = "";
+                float closestDistance = -1;
+                RaycastHit closestHit = new RaycastHit();
                 layerMask = LayerMask.GetMask("Shield");
                 RaycastHit hit;
                 if (Physics.SphereCast(pointOne, width, targetPos - pointOne, out hit, maxDistance, layerMask))
                 {
-                    hit.collider.GetComponentInParent<ShielderScript>().TakeShieldDamage(damage, gameObject);
+                    if (closestDistance == -1)
+                    {
+                        hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
+                        closestDistance = Vector3.Distance(pointOne, hit.point);
+                        closestHit = hit;
+                    }
                 }
+                layerMask = LayerMask.GetMask("Mirror");
+                if (Physics.SphereCast(pointOne, width, targetPos - pointOne, out hit, closestDistance, layerMask))
+                {
+                    if (closestDistance == -1)
+                    {
+                        hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
+                        closestDistance = Vector3.Distance(pointOne, hit.point);
+                        closestHit = hit;
+                    }
+                    else if (closestDistance >= Vector3.Distance(pointOne, hit.point))
+                    {
+                        hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
+                        closestDistance = Vector3.Distance(pointOne, hit.point);
+                        closestHit = hit;
+                    }
+                }
+                if (hitLayer == "Shield")
+                {
+                    closestHit.collider.GetComponentInParent<ShielderScript>().TakeShieldDamage(damage, gameObject);
+                }
+                else if (hitLayer == "Mirror")
+                {
+
+                }
+
             }
             foreach (GameObject e in enemies)
             {
@@ -303,12 +345,41 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
         }
         if (enemies.Count < pierce)
         {
+            string hitLayer = "";
+            float closestDistance = -1;
             layerMask = LayerMask.GetMask("Shield");
             RaycastHit hit;
             if (Physics.SphereCast(pointOne, width, targetPos - pointOne, out hit, maxDistance, layerMask))
             {
+                if (closestDistance == -1)
+                {
+                    hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
+                    closestDistance = Vector3.Distance(pointOne, hit.point);
+                }
+            }
+            layerMask = LayerMask.GetMask("Mirror");
+            if (Physics.SphereCast(pointOne, width, targetPos - pointOne, out hit, closestDistance, layerMask))
+            {
+                if (closestDistance == -1)
+                {
+                    hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
+                    closestDistance = Vector3.Distance(pointOne, hit.point);
+                }
+                else if (closestDistance >= Vector3.Distance(pointOne, hit.point))
+                {
+                    hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
+                    closestDistance = Vector3.Distance(pointOne, hit.point);
+                }
+            }
+            if (hitLayer == "Shield" && Physics.SphereCast(pointOne, width, targetPos - pointOne, out hit, maxDistance, layerMask))
+            {
                 hit.collider.GetComponentInParent<ShielderScript>().TakeShieldDamage(damage, gameObject);
             }
+            else if (hitLayer == "Mirror" && Physics.SphereCast(pointOne, width, targetPos - pointOne, out hit, closestDistance, layerMask))
+            {
+
+            }
+
         }
         foreach (GameObject e in enemies)
         {

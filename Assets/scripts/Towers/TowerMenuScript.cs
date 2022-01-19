@@ -41,13 +41,13 @@ public class TowerMenuScript : MonoBehaviour
     }
     public void CloseTowerMenu()
     {
-        if (GetComponent<TowerTargeting>().choosingMarker)
-        {
-            GetComponent<TowerTargeting>().CancelNewMarker();
-        }
-        GetComponent<TowerSpecialItemScript>().DeactivateSpecialItemPlacement();
-        towerMenu.SetActive(false);
-        towerRadius.GetComponent<Renderer>().enabled = false;
+            if (GetComponent<TowerTargeting>().choosingMarker)
+            {
+                GetComponent<TowerTargeting>().CancelNewMarker();
+            }
+            GetComponent<TowerSpecialItemScript>().DeactivateSpecialItemPlacement(false);
+            towerMenu.SetActive(false);
+            towerRadius.GetComponent<Renderer>().enabled = false;     
     }
     public void Sell()
     {

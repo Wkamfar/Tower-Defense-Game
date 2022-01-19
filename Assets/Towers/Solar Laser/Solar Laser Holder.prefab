@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: -9124362336117325770}
   - component: {fileID: 8093468919777568748}
   - component: {fileID: 160695790509159199}
-  - component: {fileID: -6443293715525067750}
+  - component: {fileID: 7848644582078535767}
   m_Layer: 0
   m_Name: Solar Laser Holder
   m_TagString: Tower
@@ -177,6 +177,9 @@ MonoBehaviour:
   effectDuration: 0
   isPermanent: 0
   effectIntensity: 0
+  specialItems: []
+  hasCapsuleCollider: 1
+  hasBoxCollider: 0
   towerName: Solar Laser
   powerSource: {fileID: 0}
 --- !u!114 &160695790509159199
@@ -209,7 +212,7 @@ MonoBehaviour:
   preBeamPierce: 1
   radCount: 1
   laserFadeDuration: 0
---- !u!114 &-6443293715525067750
+--- !u!114 &7848644582078535767
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -218,12 +221,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1678817109574290378}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b9e1e03e774ad3b4a82eb4b556ae43c2, type: 3}
+  m_Script: {fileID: 11500000, guid: ea36fdbda6bdfb9428812be4d786f54e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  specialItem: {fileID: 0}
+  specialItem: {fileID: 7334949644797121825, guid: 53f495dc44f19c744a1df79e2d159acc, type: 3}
   specialItemCost: 0
   specialItemName: Mirror
+  allowedBlocks:
+  - {fileID: 2622019978693544177, guid: 5b40b3ea85a944f43a3030cade8d06d1, type: 3}
+  hasCapsuleCollider: 0
+  hasBoxCollider: 1
+  hitbox: 0.5
   maxItemCount: 3
   currentItemCount: 0
   placingItem: 0
@@ -231,3 +239,4 @@ MonoBehaviour:
   indicatorLocation: {fileID: 0}
   itemCountIndicators: []
   itemBuyButton: {fileID: 0}
+  mouseFollower: {fileID: 0}

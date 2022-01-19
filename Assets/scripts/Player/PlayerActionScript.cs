@@ -11,6 +11,8 @@ public class PlayerActionScript : MonoBehaviour
     public GameObject towerMenuHolder;
     public GameObject towerRadius;
     public GameObject mouseFollower;
+    private GameObject mouseFollowerModel;
+    private GameObject currentSelectedTower;
     public GameObject towerModelDisplay;
     public GameObject towerDisplayRadius;
     public GameObject towerSelectionManager;
@@ -52,8 +54,17 @@ public class PlayerActionScript : MonoBehaviour
             mouseFollower.SetActive(true);
             mouseFollower.transform.position = spawnPos;
             towerDisplayRadius.transform.localScale = new Vector3(TowerData.selectedTower.GetComponent<TowerStats>().radius, towerDisplayRadius.transform.localScale.y, TowerData.selectedTower.GetComponent<TowerStats>().radius);
-            float hitboxSize = 2 * TowerData.selectedTower.GetComponent<TowerStats>().hitbox;
-            towerModelDisplay.transform.localScale = new Vector3(hitboxSize, hitboxSize, hitboxSize);
+            if (currentSelectedTower != TowerData.selectedTower)
+            {
+                Destroy(mouseFollowerModel);
+            }
+            if (mouseFollowerModel == null)
+            {
+                mouseFollowerModel = Instantiate(TowerData.selectedTower.GetComponent<TowerUpgradeScript>().baseTowerModel, mouseFollower.transform);
+                currentSelectedTower = TowerData.selectedTower;
+            }
+            //float hitboxSize = 2 * TowerData.selectedTower.GetComponent<TowerStats>().hitbox;
+            //towerModelDisplay.transform.localScale = new Vector3(hitboxSize, hitboxSize, hitboxSize);
             if (!CanPlaceTower())
             {
                 towerDisplayRadius.GetComponent<Renderer>().material.color = new Color(1, 0, 0, 0.3f);
@@ -91,33 +102,125 @@ public class PlayerActionScript : MonoBehaviour
                 GameObject[] towerMenus = GameObject.FindGameObjectsWithTag("Tower");
                 foreach (GameObject t in towerMenus)
                 {
-                    t.GetComponent<TowerMenuScript>().CloseTowerMenu();
+                    if (!t.GetComponent<TowerSpecialItemScript>().placingItem)
+                    {
+                        t.GetComponent<TowerMenuScript>().CloseTowerMenu();
+                    }
                 }
             }
         }
     }
     private bool CanPlaceTower()
     {
-        if (!TowerData.hasSelectedTower || IsMouseOverUI() || PlayerData.playerMoney < TowerData.selectedTower.GetComponent<TowerStats>().cost || TooCloseToOtherTower() || WrongBlock() || !SpecialRequirement() || !IsInMap())
+        if (!TowerData.hasSelectedTower || PlayerData.playerMoney < TowerData.selectedTower.GetComponent<TowerStats>().cost || !IsInMap() || IsMouseOverUI()  || WrongBlock() || TooCloseToOtherTower() || !SpecialRequirement() )
         {
             return false;
         }
         return true;
     }
-    private bool TooCloseToOtherTower()
+    private float GetTowerRadius(GameObject tower, GameObject checkObject)
     {
-        foreach (GameObject t in TowerData.towers)
+        float towerRadius = 0;
+        if (TowerData.selectedTower.GetComponent<TowerStats>().hasCapsuleCollider)
         {
-            float x = Mathf.Abs(mouseFollower.transform.position.x - t.transform.position.x);
-            float y = Mathf.Abs(mouseFollower.transform.position.z - t.transform.position.z);
-            float distance = Mathf.Sqrt(x * x + y * y);
-            if (distance < TowerData.selectedTower.GetComponent<TowerStats>().hitbox + t.GetComponent<TowerStats>().hitbox)
+            towerRadius = tower.GetComponent<TowerStats>().hitbox;
+        }
+        else if (TowerData.selectedTower.GetComponent<TowerStats>().hasBoxCollider)
+        {
+            float x = Mathf.Abs(checkObject.transform.position.x - tower.transform.position.x);
+            float y = Mathf.Abs(checkObject.transform.position.z - tower.transform.position.z);
+            float totalDistance = Mathf.Sqrt(x * x + y * y);
+            float radiant = Mathf.Asin(y / totalDistance);
+            float angle = radiant * 180 / Mathf.PI;
+            if (angle >= 45)
             {
-                return true;
+                towerRadius = tower.GetComponent<TowerStats>().hitbox / Mathf.Sin(radiant);
+            }
+            else
+            {
+                towerRadius = tower.GetComponent<TowerStats>().hitbox / Mathf.Cos(radiant);
             }
         }
-        return false;
+        return towerRadius;
     }
+    private bool TooCloseToOtherTower()
+    {
+        bool tooClose = false;
+        foreach (GameObject t in TowerData.towers)
+        {
+            if (t.GetComponent<TowerStats>().hasCapsuleCollider)
+            {
+                float x = Mathf.Abs(mouseFollower.transform.position.x - t.transform.position.x);
+                float y = Mathf.Abs(mouseFollower.transform.position.z - t.transform.position.z);
+                float distance = Mathf.Sqrt(x * x + y * y);
+                if (distance < GetTowerRadius(TowerData.selectedTower, t) + t.GetComponent<TowerStats>().hitbox)
+                {
+                    tooClose = true;
+                }
+            }
+            else if (t.GetComponent<TowerStats>().hasBoxCollider)
+            {
+                float towerRadius = 0;
+                float x = Mathf.Abs(t.transform.position.x - mouseFollower.transform.position.x);
+                float y = Mathf.Abs(t.transform.position.z - mouseFollower.transform.position.z);
+                float totalDistance = Mathf.Sqrt(x * x + y * y);
+                float radiant = Mathf.Asin(y / totalDistance);
+                float angle = radiant * 180 / Mathf.PI;
+                if (angle >= 45)
+                {
+                    towerRadius = t.GetComponent<TowerStats>().hitbox / Mathf.Sin(radiant);
+                }
+                else
+                {
+                    towerRadius = t.GetComponent<TowerStats>().hitbox / Mathf.Cos(radiant);
+                }
+                //Debug.Log("PlayerActionScript.WrongBlock: The radius of the block currently is")
+                //Fix all of the issues
+                if (towerRadius + GetTowerRadius(TowerData.selectedTower, t) > totalDistance)
+                {
+                    tooClose = true;
+                }
+            }
+        }
+        foreach (GameObject i in TowerData.specialItems)
+        {
+            if (i.GetComponent<SpecialItemStats>().hasCapsuleCollider)
+            {
+                float x = Mathf.Abs(mouseFollower.transform.position.x - i.transform.position.x);
+                float y = Mathf.Abs(mouseFollower.transform.position.z - i.transform.position.z);
+                float distance = Mathf.Sqrt(x * x + y * y);
+                if (distance < GetTowerRadius(TowerData.selectedTower, i) + i.GetComponent<SpecialItemStats>().hitbox)
+                {
+                    tooClose = true;
+                }
+            }
+            else if (i.GetComponent<SpecialItemStats>().hasBoxCollider)
+            {
+                float towerRadius = 0;
+                float x = Mathf.Abs(i.transform.position.x - mouseFollower.transform.position.x);
+                float y = Mathf.Abs(i.transform.position.z - mouseFollower.transform.position.z);
+                float totalDistance = Mathf.Sqrt(x * x + y * y);
+                float radiant = Mathf.Asin(y / totalDistance);
+                float angle = radiant * 180 / Mathf.PI;
+                if (angle >= 45)
+                {
+                    towerRadius = i.GetComponent<SpecialItemStats>().hitbox / Mathf.Sin(radiant);
+                }
+                else
+                {
+                    towerRadius = i.GetComponent<SpecialItemStats>().hitbox / Mathf.Cos(radiant);
+                }
+                //Debug.Log("PlayerActionScript.WrongBlock: The radius of the block currently is")
+                //Fix all of the issues
+                if (towerRadius + GetTowerRadius(TowerData.selectedTower, i) > totalDistance)
+                {
+                    tooClose = true;
+                }
+            }
+        }
+        return tooClose;
+    }
+    //Add too close to special items later
     private bool WrongBlock()
     {
         List<List<int>> blocks = InRangeBlocks();
@@ -141,7 +244,7 @@ public class PlayerActionScript : MonoBehaviour
             }           
             //Debug.Log("PlayerActionScript.WrongBlock: The radius of the block currently is")
             //Fix all of the issues
-            if (blockRadius + TowerData.selectedTower.GetComponent<TowerStats>().hitbox > totalDistance) 
+            if (blockRadius + GetTowerRadius(TowerData.selectedTower, b) > totalDistance) 
             {
                 return true;
             }

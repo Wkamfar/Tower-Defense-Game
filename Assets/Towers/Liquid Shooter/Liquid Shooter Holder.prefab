@@ -149,8 +149,9 @@ MonoBehaviour:
   infiniteRange: 0
   radius: 10
   hitbox: 0.5
-  damage: 0
+  damage: 720
   fireRate: 120
+  towerTurnSpeed: 0
   bulletSpeed: 40
   bulletLifespan: 20
   maxTravelDistance: 100
@@ -211,8 +212,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   specialItem: {fileID: 0}
+  specialItemPlacementModel: {fileID: 0}
   specialItemCost: 0
   specialItemName: Liquid Pump
+  allowedBlocks: []
+  hasCapsuleCollider: 0
+  hasBoxCollider: 0
+  hitbox: 0
   maxItemCount: 1
   currentItemCount: 0
   placingItem: 0

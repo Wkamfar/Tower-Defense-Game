@@ -11,6 +11,7 @@ public class TowerUpgradeChanges : MonoBehaviour
     [SerializeField] private float hitboxChange;
     [SerializeField] private float damageChange;
     [SerializeField] private float fireRateChange;
+    [SerializeField] private float towerTurnSpeedChange;
     [SerializeField] private float bulletSpeedChange;
     [SerializeField] private float bulletLifespanChange;
     [SerializeField] private float maxTravelDistanceChange;
@@ -31,6 +32,7 @@ public class TowerUpgradeChanges : MonoBehaviour
         towerStats.hitbox = towerStats.hitbox + hitboxChange >= 0 ? towerStats.hitbox + hitboxChange : 0;
         towerStats.damage = towerStats.damage + damageChange >= 0 ? towerStats.damage + damageChange : 0;
         towerStats.fireRate = towerStats.fireRate + fireRateChange >= 0 ? towerStats.fireRate + fireRateChange : 0;
+        towerStats.towerTurnSpeed = towerStats.towerTurnSpeed + towerTurnSpeedChange >= 0 ? towerStats.towerTurnSpeed + towerTurnSpeedChange : 0;
         towerStats.bulletSpeed = towerStats.bulletSpeed + bulletSpeedChange >= 0 ? towerStats.bulletSpeed + bulletSpeedChange : 0;
         towerStats.bulletLifespan = towerStats.bulletLifespan + bulletLifespanChange >= 0 ? towerStats.bulletLifespan + bulletLifespanChange : 0;
         towerStats.maxTravelDistance = towerStats.maxTravelDistance + maxTravelDistanceChange >= 0 ? towerStats.maxTravelDistance + maxTravelDistanceChange : 0;

@@ -7,6 +7,7 @@ using TMPro;
 public class TowerSpecialItemScript : MonoBehaviour
 {
     public GameObject specialItem;
+    public GameObject specialItemPlacementModel;
     public int specialItemCost;
     public string specialItemName;
     public List<GameObject> allowedBlocks = new List<GameObject>();
@@ -33,6 +34,10 @@ public class TowerSpecialItemScript : MonoBehaviour
                 //Debug.Log("SolarLaserSpecialItemScript.PlaceTower: This happened");
                 PlaceTower();
             }
+            else if (Input.GetKeyDown(KeyCode.Mouse1))
+            {
+                DeactivateSpecialItemPlacement(false);
+            }
         }
     }
     public void SetButtonIndicators()
@@ -57,7 +62,7 @@ public class TowerSpecialItemScript : MonoBehaviour
             GetComponent<TowerMenuScript>().xButton.GetComponent<Button>().onClick.AddListener(delegate { DeactivateSpecialItemPlacement(false); });
             GetComponent<TowerMenuScript>().towerMenu.SetActive(false);
             //The current mouseFollower is temporary
-            mouseFollower = Instantiate(specialItem);
+            mouseFollower = Instantiate(specialItemPlacementModel);
         }       
     }
     public void DeactivateSpecialItemPlacement(bool reactivate)

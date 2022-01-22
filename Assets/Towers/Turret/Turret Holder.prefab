@@ -111,6 +111,7 @@ MonoBehaviour:
   hitbox: 0.5
   damage: 5
   fireRate: 180
+  towerTurnSpeed: 720
   bulletSpeed: 35
   bulletLifespan: 20
   maxTravelDistance: 100
@@ -203,8 +204,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   specialItem: {fileID: 0}
+  specialItemPlacementModel: {fileID: 0}
   specialItemCost: 0
   specialItemName: Magnet Gun
+  allowedBlocks: []
+  hasCapsuleCollider: 0
+  hasBoxCollider: 0
+  hitbox: 0
   maxItemCount: 1
   currentItemCount: 0
   placingItem: 0

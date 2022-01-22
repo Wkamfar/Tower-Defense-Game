@@ -246,6 +246,7 @@ public class TowerTargeting : MonoBehaviour
     public Vector3 FollowMouse() // Make it take time to follow the mouse, not instant
     {
         hasMarker = true;
+        //minDistance
         Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         return new Vector3(mousePos.x, transform.position.y, mousePos.z);
     }

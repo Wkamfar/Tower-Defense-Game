@@ -46,7 +46,34 @@ public class ProjectileShoot : TowerActionScript
             angle += 180;
         }
         angle = Mathf.Abs(360 - angle);
-        GetComponent<TowerUpgradeScript>().currentActiveTowerModel.transform.rotation = Quaternion.Euler(this.gameObject.transform.rotation.x, angle, this.gameObject.transform.rotation.z);
+        GameObject towerModel = GetComponent<TowerUpgradeScript>().currentActiveTowerModel;
+        if (Mathf.Round(towerModel.transform.rotation.eulerAngles.y * 100) / 100 != Mathf.Round(angle * 100) / 100)
+        {
+            float rotationAmount = GetComponent<TowerStats>().towerTurnSpeed * Time.deltaTime;
+            float angleDistance = angle - towerModel.transform.rotation.eulerAngles.y;
+            if (angleDistance <= 180)
+            {
+                if (angle > towerModel.transform.rotation.eulerAngles.y)
+                {
+                    towerModel.transform.rotation = Quaternion.Euler(transform.rotation.x, towerModel.transform.rotation.eulerAngles.y + rotationAmount, transform.rotation.z);
+                }
+                else
+                {
+                    towerModel.transform.rotation = Quaternion.Euler(transform.rotation.x, towerModel.transform.rotation.eulerAngles.y - rotationAmount, transform.rotation.z);
+                }
+            }
+            else
+            {
+                if (angle > towerModel.transform.rotation.eulerAngles.y)
+                {
+                    towerModel.transform.rotation = Quaternion.Euler(transform.rotation.x, towerModel.transform.rotation.eulerAngles.y - rotationAmount, transform.rotation.z);
+                }
+                else
+                {
+                    towerModel.transform.rotation = Quaternion.Euler(transform.rotation.x, towerModel.transform.rotation.eulerAngles.y + rotationAmount, transform.rotation.z);
+                }
+            }
+        }
     }
     protected override void Shoot()
     {
@@ -58,7 +85,7 @@ public class ProjectileShoot : TowerActionScript
         currentBullet.GetComponent<BulletStats>().despawnTimer = this.gameObject.GetComponent<TowerStats>().bulletLifespan;
         currentBullet.GetComponent<BulletStats>().maxDistance = this.gameObject.GetComponent<TowerStats>().maxTravelDistance;
         currentBullet.GetComponent<BulletStats>().pierce = this.gameObject.GetComponent<TowerStats>().pierce;
-        Vector3 direction = (GetComponent<TowerStats>().targetedLocation - gameObject.transform.position).normalized;
+        Vector3 direction = (GetComponent<TowerStats>().currentAimLocation - gameObject.transform.position).normalized;
         currentBullet.GetComponent<Rigidbody>().AddForce(direction * GetComponent<TowerStats>().bulletSpeed, ForceMode.Impulse);
     }
     protected override bool CanShoot()

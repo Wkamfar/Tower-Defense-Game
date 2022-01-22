@@ -15,6 +15,7 @@ public class TowerStats : MonoBehaviour
     public float hitbox;
     public float damage;
     public float fireRate;
+    public float towerTurnSpeed; //degrees per second
     public float bulletSpeed;
     public float bulletLifespan;
     public float maxTravelDistance;
@@ -31,6 +32,7 @@ public class TowerStats : MonoBehaviour
     public GameObject bullet;
     public GameObject shootPoint;
     public Vector3 targetedLocation;
+    public Vector3 currentAimLocation;
     public List<GameObject> targets;
     public bool hasEffect;
     public GameObject bulletEffect;

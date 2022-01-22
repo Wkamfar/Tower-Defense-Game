@@ -11,7 +11,6 @@ public class LaserBeamStats : MonoBehaviour
     [SerializeField] float chargeTime;
     [SerializeField] GameObject beamEndMaterial; //Add this later
     [SerializeField] float beamEndDamageMultiplier;
-    [SerializeField] float visibleBeamWidth;
     [SerializeField] float beamWidth;
     [SerializeField] int radCount;
     [SerializeField] float laserFadeDuration;
@@ -30,7 +29,6 @@ public class LaserBeamStats : MonoBehaviour
         tower.GetComponent<LaserShoot>().chargeTime = chargeTime;
         tower.GetComponent<LaserShoot>().beamEndMaterial = beamEndMaterial;
         tower.GetComponent<LaserShoot>().beamEndDamageMultiplier = beamEndDamageMultiplier;
-        tower.GetComponent<LaserShoot>().visibleBeamWidth = visibleBeamWidth;
         tower.GetComponent<LaserShoot>().beamWidth = beamWidth;
         tower.GetComponent<LaserShoot>().radCount = radCount;
         tower.GetComponent<LaserShoot>().laserFadeDuration = laserFadeDuration;

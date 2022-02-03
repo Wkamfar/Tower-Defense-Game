@@ -15,6 +15,7 @@ public static class TowerData
 {
     public static GameObject selectedTower;
     public static bool hasSelectedTower = false;
+    public static bool hasSelectedItem = false;
     public static List<GameObject> towers = new List<GameObject>();
     public static List<GameObject> specialItems = new List<GameObject>();
 }

@@ -323,7 +323,7 @@ public class PlayerActionScript : MonoBehaviour
 
     private bool CanSelectTower()
     {
-        if (TowerData.hasSelectedTower || IsMouseOverUI())
+        if (TowerData.hasSelectedTower || TowerData.hasSelectedItem || IsMouseOverUI())
         {
             return false;
         }

@@ -87,8 +87,8 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
     }
     protected override void TrackEnemy() //add aiming ahead and predicting movement later for projectile bullets
     {
-        float xDifference = Mathf.Abs(GetComponent<TowerStats>().targetedLocation.x - this.gameObject.transform.position.x);
-        float yDifference = Mathf.Abs(GetComponent<TowerStats>().targetedLocation.z - this.gameObject.transform.position.z);
+        float xDifference = Mathf.Abs(GetComponent<TowerStats>().targetedLocation.x - transform.position.x);
+        float yDifference = Mathf.Abs(GetComponent<TowerStats>().targetedLocation.z - transform.position.z);
         float angle = Mathf.Atan(yDifference / xDifference);
         angle = angle / Mathf.PI * 180 + 90;
         if (GetComponent<TowerStats>().targetedLocation.x < transform.position.x && GetComponent<TowerStats>().targetedLocation.z > transform.position.z)
@@ -215,7 +215,9 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
         Vector3 furthestPoint = ray.GetPoint(maxDistance);
         if (Physics.SphereCast(ray, width / 2, out hit, maxDistance, layerMask))
         {
-            RaycastHit raycastHit;
+            furthestPoint = new Vector3(hit.point.x, GetComponent<TowerStats>().shootPoint.transform.position.y, hit.point.z);
+            maxDistance = Vector3.Distance(furthestPoint, pointOne);
+            /*RaycastHit raycastHit;
             if (Physics.Raycast(ray, out raycastHit, Vector3.Distance(hit.point, pointOne) + width, layerMask))
             {
                 furthestPoint = raycastHit.point;
@@ -244,24 +246,28 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
                 //maxDistance = Vector3.Distance(furthestPoint, pointOne);
                 //Debug.Log("Furthest point is located at: " + furthestPoint);
                 //Debug.Log("hit.point is located at: " + hit.point);
-            }
+            }*/
 
         }
         layerMask = LayerMask.GetMask("Mirror");
         if (Physics.SphereCast(ray, width / 2, out hit, maxDistance, layerMask))
         {
-            furthestPoint = hit.point;
+            furthestPoint = new Vector3(hit.point.x, GetComponent<TowerStats>().shootPoint.transform.position.y, hit.point.z);
             maxDistance = Vector3.Distance(furthestPoint, pointOne);
             if (hasReflectedBeam && currentMirror != hit.collider.gameObject)
                 currentMirror.GetComponent<MirrorScript>().DeleteReflectedBeam(gameObject);
             currentMirror = hit.collider.gameObject;
-            mirrorHitPoint = hit.point;
+            mirrorHitPoint = new Vector3(hit.point.x, GetComponent<TowerStats>().shootPoint.transform.position.y, hit.point.z);
             hitsMirror = true;
         }
         layerMask = LayerMask.GetMask("Enemy");
         if (Physics.SphereCast(ray, width / 2, out hit, maxDistance, layerMask))
         {
             RaycastHit[] hits = Physics.SphereCastAll(ray, width / 2, maxDistance, layerMask);
+            for (int i = 0; i < hits.Length; ++i)
+            {
+                hits[i].point = new Vector3(hits[i].point.x, GetComponent<TowerStats>().shootPoint.transform.position.y, hits[i].point.z);
+            }
             if (hits.Length > 0)
             {
                 if (hits.Length < pierce)
@@ -282,7 +288,7 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
                 {
                     for (int j = 0; j < hits.Length - i - 1; ++j)
                     {
-                        if (Vector3.Distance(pointOne, hits[j].transform.position) > Vector3.Distance(pointOne, hits[j + 1].transform.position))
+                        if (Vector3.Distance(pointOne, new Vector3(hits[j].transform.position.x, GetComponent<TowerStats>().shootPoint.transform.position.y, hits[j].transform.position.z)) > Vector3.Distance(pointOne, new Vector3(hits[j + 1].transform.position.x, GetComponent<TowerStats>().shootPoint.transform.position.y, hits[j + 1].transform.position.z)))
                         {
                             RaycastHit temp = hits[j];
                             hits[j] = hits[j + 1];
@@ -357,6 +363,10 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
             Vector3 targetPos = FindLaserEndPoint(pointOne, pointTwo, width, pierce);
             float maxDistance = Vector3.Distance(targetPos, pointOne);
             RaycastHit[] hits = Physics.SphereCastAll(pointOne, width / 2, targetPos - pointOne, maxDistance, layerMask);
+            for (int i = 0; i < hits.Length; ++i)
+            {
+                hits[i].point = new Vector3(hits[i].point.x, GetComponent<TowerStats>().shootPoint.transform.position.y, hits[i].point.z);
+            }
             List<GameObject> enemies = new List<GameObject>();
             if (hits.Length > 0)
             {
@@ -364,7 +374,7 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
                 {
                     for (int j = 0; j < hits.Length - i - 1; ++j)
                     {
-                        if (Vector3.Distance(pointOne, hits[j].transform.position) > Vector3.Distance(pointOne, hits[j + 1].transform.position))
+                        if (Vector3.Distance(pointOne, new Vector3(hits[j].transform.position.x, pointOne.y, hits[j].transform.position.z)) > Vector3.Distance(pointOne, new Vector3(hits[j + 1].transform.position.x, pointOne.y, hits[j + 1].transform.position.z)))
                         {
                             RaycastHit temp = hits[j];
                             hits[j] = hits[j + 1];
@@ -389,7 +399,7 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
                     if (closestDistance == -1)
                     {
                         hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
-                        closestDistance = Vector3.Distance(pointOne, hit.point);
+                        closestDistance = Vector3.Distance(pointOne, new Vector3(hit.point.x, pointOne.y, hit.point.z));
                         closestHit = hit;
                     }
                 }
@@ -399,13 +409,13 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
                     if (closestDistance == -1)
                     {
                         hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
-                        closestDistance = Vector3.Distance(pointOne, hit.point);
+                        closestDistance = Vector3.Distance(pointOne, new Vector3(hit.point.x, pointOne.y, hit.point.z));
                         closestHit = hit;
                     }
-                    else if (closestDistance >= Vector3.Distance(pointOne, hit.point))
+                    else if (closestDistance >= Vector3.Distance(pointOne, new Vector3(hit.point.x, pointOne.y, hit.point.z)))
                     {
                         hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
-                        closestDistance = Vector3.Distance(pointOne, hit.point);
+                        closestDistance = Vector3.Distance(pointOne, new Vector3(hit.point.x, pointOne.y, hit.point.z));
                         closestHit = hit;
                     }
                 }
@@ -434,6 +444,10 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
         Vector3 targetPos = FindLaserEndPoint(pointOne, pointTwo, width, pierce);
         float maxDistance = Vector3.Distance(targetPos, pointOne);
         RaycastHit[] hits = Physics.SphereCastAll(pointOne, width / 2, targetPos - pointOne, maxDistance, layerMask);
+        for (int i = 0; i < hits.Length; ++i)
+        {
+            hits[i].point = new Vector3(hits[i].point.x, GetComponent<TowerStats>().shootPoint.transform.position.y, hits[i].point.z);
+        }
         List<GameObject> enemies = new List<GameObject>();
         if (hits.Length > 0)
         {
@@ -441,7 +455,7 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
             {
                 for (int j = 0; j < hits.Length - i - 1; ++j)
                 {
-                    if (Vector3.Distance(pointOne, hits[j].transform.position) > Vector3.Distance(pointOne, hits[j + 1].transform.position))
+                    if (Vector3.Distance(pointOne, new Vector3(hits[j].transform.position.x, pointOne.y, hits[j].transform.position.z)) > Vector3.Distance(pointOne, new Vector3(hits[j + 1].transform.position.x, pointOne.y, hits[j + 1].transform.position.z)))
                     {
                         RaycastHit temp = hits[j];
                         hits[j] = hits[j + 1];
@@ -466,7 +480,7 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
                 if (closestDistance == -1)
                 {
                     hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
-                    closestDistance = Vector3.Distance(pointOne, hit.point);
+                    closestDistance = Vector3.Distance(pointOne, new Vector3(hit.point.x, pointOne.y, hit.point.z));
                     closestHit = hit;
                 }
             }
@@ -476,13 +490,13 @@ public class LaserShoot : TowerActionScript // Add radiation manager for the rad
                 if (closestDistance == -1)
                 {
                     hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
-                    closestDistance = Vector3.Distance(pointOne, hit.point);
+                    closestDistance = Vector3.Distance(pointOne, new Vector3(hit.point.x, pointOne.y, hit.point.z));
                     closestHit = hit;
                 }
-                else if (closestDistance >= Vector3.Distance(pointOne, hit.point))
+                else if (closestDistance >= Vector3.Distance(pointOne, new Vector3(hit.point.x, pointOne.y, hit.point.z)))
                 {
                     hitLayer = LayerMask.LayerToName(hit.collider.gameObject.layer);
-                    closestDistance = Vector3.Distance(pointOne, hit.point);
+                    closestDistance = Vector3.Distance(pointOne, new Vector3(hit.point.x, pointOne.y, hit.point.z));
                     closestHit = hit;
                 }
             }

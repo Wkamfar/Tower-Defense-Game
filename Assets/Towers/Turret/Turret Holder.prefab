@@ -111,7 +111,7 @@ MonoBehaviour:
   hitbox: 0.5
   damage: 5
   fireRate: 180
-  towerTurnSpeed: 720
+  towerTurnSpeed: 180
   bulletSpeed: 35
   bulletLifespan: 20
   maxTravelDistance: 100
@@ -135,6 +135,7 @@ MonoBehaviour:
   bullet: {fileID: 9051132128199530449, guid: a9641cd6cc4af704f8918bfe18053a65, type: 3}
   shootPoint: {fileID: 0}
   targetedLocation: {x: 0, y: 0, z: 0}
+  currentAimLocation: {x: 0, y: 0, z: 0}
   targets: []
   hasEffect: 0
   bulletEffect: {fileID: 0}

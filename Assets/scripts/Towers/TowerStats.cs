@@ -61,7 +61,7 @@ public class TowerStats : MonoBehaviour
     public void IncreaseDamageDealt(float amount)
     {
         damageDealt += amount;
-        this.gameObject.GetComponent<TowerMenuScript>().damageDealtDisplay.GetComponent<TextMeshProUGUI>().text = Mathf.Round(damageDealt).ToString();
+        GetComponent<TowerMenuScript>().damageDealtDisplay.GetComponent<TextMeshProUGUI>().text = Mathf.Round(damageDealt).ToString();
     }
     public virtual string GetTowerName()
     {

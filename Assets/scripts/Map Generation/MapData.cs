@@ -11,7 +11,7 @@ public static class MapData
     public static int xLength;
     public static int yLength;
     public static List<float> offset = new List<float>();
-    public static float spawnHeight = 1.5f; //add some value here later
+    public static float spawnHeight = 2f; //add some value here later
     public static bool isMapSpawned = false;
     public static List<List<GameObject>> gameObjectGrid = new List<List<GameObject>>();
     public static Vector2 mapCenter;

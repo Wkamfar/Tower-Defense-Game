@@ -12,7 +12,7 @@ public class SolarLaserSpecialItemScript : TowerSpecialItemScript
         int xPoint = Mathf.RoundToInt((mousePos.x - MapData.offset[0]) / MapData.offset[2]);
         int yPoint = Mathf.RoundToInt((mousePos.z - MapData.offset[1]) / -MapData.offset[2]);
         Vector3 realWorldPos = MapData.PointToRealWorld(new List<int>() { xPoint, yPoint });
-        mouseFollower.transform.position = new Vector3(realWorldPos.x, 1.5f, realWorldPos.z);
+        mouseFollower.transform.position = new Vector3(realWorldPos.x, GetComponent<TowerStats>().shootPoint.transform.position.y, realWorldPos.z);
         //mouseFollower.transform.position = new Vector3(mousePos.x, 1.5f, mousePos.z);
         if (PlayerData.playerMoney < specialItemCost || !IsInMap() || IsMouseOverUI() || WrongBlock() || TooCloseToOtherTower())
         {

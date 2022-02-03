@@ -11,10 +11,11 @@ public class BulletStats : MonoBehaviour
     public GameObject tower;
     private Vector2 startingPosition;
     private List<Vector3> bulletLocations = new List<Vector3>();
+    List<GameObject> hitEnemies = new List<GameObject>();
 
     private void Start()
     {
-        startingPosition = new Vector2(this.transform.position.x, this.transform.position.z);
+        startingPosition = new Vector2(transform.position.x, transform.position.z);
         bulletLocations.Add(transform.position);
         Invoke("DestroyBullet", despawnTimer);
     }
@@ -22,33 +23,47 @@ public class BulletStats : MonoBehaviour
     {
         //Work on this later
         bulletLocations.Add(transform.position);
+        Ray ray = new Ray(bulletLocations[bulletLocations.Count - 2], bulletLocations[bulletLocations.Count - 1] - bulletLocations[bulletLocations.Count - 2]);
         RaycastHit hit;
         LayerMask layerMask = LayerMask.GetMask("Shield");
         float d = Vector3.Distance(bulletLocations[bulletLocations.Count - 2], bulletLocations[bulletLocations.Count - 1]);
-        if (Physics.SphereCast(bulletLocations[bulletLocations.Count - 2], transform.localScale.x / 2, (bulletLocations[bulletLocations.Count - 1] - bulletLocations[bulletLocations.Count - 2]), out hit, d + transform.localScale.x / 2, layerMask))
+        if (Physics.SphereCast(ray, transform.localScale.x / 2, out hit, d + transform.localScale.x / 2, layerMask))
         {
             DamageShield(hit.collider.gameObject);
         }
         layerMask = LayerMask.GetMask("Enemy");
-        if (Physics.SphereCast(bulletLocations[bulletLocations.Count - 2], transform.localScale.x / 2, (bulletLocations[bulletLocations.Count - 1] - bulletLocations[bulletLocations.Count - 2]), out hit, d + transform.localScale.x / 2, layerMask))
+        if (Physics.SphereCast(ray, transform.localScale.x / 2, out hit, d + transform.localScale.x / 2, layerMask))
         {
             //Debug.Log("BulletStats.Update: The raycast hit an enemy");
             DamageEnemy(hit.collider.gameObject);
         }
-        float distance = Mathf.Sqrt(Mathf.Abs(startingPosition.x - this.transform.position.x) + Mathf.Abs(startingPosition.y - this.transform.position.z));
+        float distance = Mathf.Sqrt(Mathf.Abs(startingPosition.x - transform.position.x) + Mathf.Abs(startingPosition.y - transform.position.z));
         if (distance > maxDistance)
         {
             DestroyBullet();
+        }
+        if (hitEnemies.Count > 0)
+        {
+            List<GameObject> hitEnemiesRemoval = new List<GameObject>();
+            for (int i = 0; i < hitEnemies.Count; ++i)
+            {
+                RaycastHit[] hits = Physics.SphereCastAll(ray, transform.localScale.x / 2, d + transform.localScale.x / 2, layerMask);
+                if (!WFunctions.AlreadyInList(hits, hitEnemies[i]))
+                {
+                    hitEnemies.Remove(hitEnemies[i]);
+                    --i;
+                }
+            }
         }
     }
     private void DestroyBullet()
     {
         tower.GetComponent<ProjectileShoot>().bullets.Remove(gameObject);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
     private void DamageEnemy(GameObject enemy)
     {
-        if (!enemy.GetComponent<EnemyAI>().IsDead && !enemy.GetComponent<EnemyAI>().isHit)
+        if (!enemy.GetComponent<EnemyAI>().IsDead && !WFunctions.AlreadyInList(hitEnemies, enemy))
         {
             enemy.GetComponent<EnemyAI>().TakeDamage(damage, tower);
             if (tower.GetComponent<TowerStats>().hasEffect)
@@ -61,6 +76,7 @@ public class BulletStats : MonoBehaviour
                 currentEffect.GetComponent<LiquidEffect>().isPermanent = tower.GetComponent<TowerStats>().isPermanent;
             }
             pierce--;
+            hitEnemies.Add(enemy);
             if (pierce <= 0)
             {
                 DestroyBullet();

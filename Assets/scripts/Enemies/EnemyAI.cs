@@ -76,7 +76,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void KillAI()
     {
-        //Instantiate(deathEffect, this.gameObject.transform.position, Quaternion.identity, this.gameObject.transform);
+        //Instantiate(deathEffect, transform.position, Quaternion.identity, transform);
         //--AIData.totalNumberOfAI;
         AIData.enemies.Remove(gameObject);
         Invoke("DespawnBody", 1f);
@@ -85,12 +85,12 @@ public class EnemyAI : MonoBehaviour
     }
     private void DespawnBody()
     {
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
     private float GetDistance()
     {
-        float x = Mathf.Abs(this.transform.position.x - PathData.realPossiblePaths[currentPath][currentWaypoint].x);
-        float y = Mathf.Abs(this.transform.position.z - PathData.realPossiblePaths[currentPath][currentWaypoint].z);
+        float x = Mathf.Abs(transform.position.x - PathData.realPossiblePaths[currentPath][currentWaypoint].x);
+        float y = Mathf.Abs(transform.position.z - PathData.realPossiblePaths[currentPath][currentWaypoint].z);
         return Mathf.Sqrt(x * x + y * y);
     }
     public void TakeDamage(float damage, GameObject tower)
@@ -105,7 +105,7 @@ public class EnemyAI : MonoBehaviour
     }
     private void DamageIndicator()
     {
-        this.gameObject.GetComponent<Renderer>().material.color = Color.red;
+        GetComponent<Renderer>().material.color = Color.red;
         currentIndicatorDisableTime = indicatorDisableTime;
         isHit = true;
     }
@@ -117,7 +117,7 @@ public class EnemyAI : MonoBehaviour
         }
         else
         {
-            this.gameObject.GetComponent<Renderer>().material.color = Color.white;
+            GetComponent<Renderer>().material.color = Color.white;
             isHit = false;
         }
     }

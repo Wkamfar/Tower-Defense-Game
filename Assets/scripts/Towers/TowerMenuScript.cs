@@ -52,26 +52,26 @@ public class TowerMenuScript : MonoBehaviour
     public void Sell()
     {
         GetComponent<TowerActionScript>().OnDestroyTower();
-        PlayerData.ChangeMoney(this.gameObject.GetComponent<TowerStats>().SellValue());
-        TowerData.towers.Remove(this.gameObject);
+        PlayerData.ChangeMoney(GetComponent<TowerStats>().SellValue());
+        TowerData.towers.Remove(gameObject);
         Destroy(towerMenu);
         Destroy(towerRadius);
-        Destroy(this.gameObject);
+        Destroy(gameObject);
     }
     public void UpdateUpgradePath(int p, TextMeshProUGUI upgradeNameDisplay, TextMeshProUGUI upgradeCostDisplay)
     {
-        if (this.GetComponent<TowerUpgradeScript>().upgradePathMaxLevel[p] > this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p] &&
-            this.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]] <= PlayerData.playerMoney)
+        if (GetComponent<TowerUpgradeScript>().upgradePathMaxLevel[p] > GetComponent<TowerUpgradeScript>().upgradePathLevel[p] &&
+            GetComponent<TowerUpgradeScript>().upgradeCost[p][GetComponent<TowerUpgradeScript>().upgradePathLevel[p]] <= PlayerData.playerMoney)
         {
-            PlayerData.ChangeMoney(-this.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]]);
-            this.GetComponent<TowerStats>().AddValue(this.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]]);
-            this.gameObject.GetComponent<TowerUpgradeScript>().upgradeIndicators[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
-            ++this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p];
+            PlayerData.ChangeMoney(-GetComponent<TowerUpgradeScript>().upgradeCost[p][GetComponent<TowerUpgradeScript>().upgradePathLevel[p]]);
+            GetComponent<TowerStats>().AddValue(GetComponent<TowerUpgradeScript>().upgradeCost[p][GetComponent<TowerUpgradeScript>().upgradePathLevel[p]]);
+            GetComponent<TowerUpgradeScript>().upgradeIndicators[p][GetComponent<TowerUpgradeScript>().upgradePathLevel[p]].GetComponent<RawImage>().color = new Color(0f, 1f, 0f, 0.3f);
+            ++GetComponent<TowerUpgradeScript>().upgradePathLevel[p];
             GetComponent<TowerUpgradeScript>().UpdateTower(p);
-            if (this.GetComponent<TowerUpgradeScript>().upgradePathMaxLevel[p] > this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p])
+            if (GetComponent<TowerUpgradeScript>().upgradePathMaxLevel[p] > GetComponent<TowerUpgradeScript>().upgradePathLevel[p])
             {
-                upgradeNameDisplay.text = this.gameObject.GetComponent<TowerUpgradeScript>().upgradeNames[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]];
-                upgradeCostDisplay.text = this.gameObject.GetComponent<TowerUpgradeScript>().upgradeCost[p][this.GetComponent<TowerUpgradeScript>().upgradePathLevel[p]].ToString();
+                upgradeNameDisplay.text = GetComponent<TowerUpgradeScript>().upgradeNames[p][GetComponent<TowerUpgradeScript>().upgradePathLevel[p]];
+                upgradeCostDisplay.text = GetComponent<TowerUpgradeScript>().upgradeCost[p][GetComponent<TowerUpgradeScript>().upgradePathLevel[p]].ToString();
             }
             else
             {
@@ -83,17 +83,17 @@ public class TowerMenuScript : MonoBehaviour
     }
     public void ChangeTargetLeft()
     {
-        _targetingIndex = _targetingIndex == 0 ? this.GetComponent<TowerStats>().targetingOptions.Count - 1 : _targetingIndex - 1;
+        _targetingIndex = _targetingIndex == 0 ? GetComponent<TowerStats>().targetingOptions.Count - 1 : _targetingIndex - 1;
         UpdateTarget();
     }
     public void ChangeTargetRight()
     {
-        _targetingIndex = (_targetingIndex + 1) % this.GetComponent<TowerStats>().targetingOptions.Count;
+        _targetingIndex = (_targetingIndex + 1) % GetComponent<TowerStats>().targetingOptions.Count;
         UpdateTarget();
     }
     private void UpdateTarget()
     {
-        this.GetComponent<TowerStats>().targetingIndex = _targetingIndex;
-        targetDisplay.GetComponent<TextMeshProUGUI>().text = this.GetComponent<TowerStats>().targetingOptionNames[this.GetComponent<TowerStats>().targetingOptions[_targetingIndex]];
+        GetComponent<TowerStats>().targetingIndex = _targetingIndex;
+        targetDisplay.GetComponent<TextMeshProUGUI>().text = GetComponent<TowerStats>().targetingOptionNames[GetComponent<TowerStats>().targetingOptions[_targetingIndex]];
     }
 }

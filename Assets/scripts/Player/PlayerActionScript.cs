@@ -30,14 +30,14 @@ public class PlayerActionScript : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(Controls.escape))
         {
             if (!pauseMenu.activeInHierarchy)
                 PauseGame();
             else
                 UnpauseGame();
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0) && pauseMenu.activeInHierarchy)
+        if (Input.GetKeyDown(Controls.mouse0) && pauseMenu.activeInHierarchy)
         {
             GraphicRaycaster raycaster = pauseCanvas.GetComponent<GraphicRaycaster>();
             PointerEventData pointerEventData = new PointerEventData(EventSystem.current);
@@ -78,7 +78,7 @@ public class PlayerActionScript : MonoBehaviour
         { // This is where the tower placer gets disabled
             mouseFollower.SetActive(false);
         }
-        if (Input.GetKeyDown(KeyCode.Mouse0))
+        if (Input.GetKeyDown(Controls.mouse0))
         {
             if (CanPlaceTower())
             {

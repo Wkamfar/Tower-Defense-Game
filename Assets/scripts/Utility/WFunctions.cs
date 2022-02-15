@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public static class WFunctions
+public static class WForLoopFunctions
 {
     //Already in List
     public static  bool AlreadyInList(List<GameObject> list, GameObject item)
@@ -175,6 +175,10 @@ public static class WFunctions
         return -1;
     }
     //sort
+    public static void Sort(List<int> list)
+    {
+        Sort(list, 0, list.Count - 1);
+    }
     public static void Sort(List<int> list, int l, int r)
     {
         if (l < r)
@@ -225,6 +229,10 @@ public static class WFunctions
             j++;
             k++;
         }
+    }
+    public static void Sort(List<float> list)
+    {
+        Sort(list, 0, list.Count - 1);
     }
     public static void Sort(List<float> list, int l, int r)
     {
@@ -314,7 +322,7 @@ public static class WFunctions
         }
     }
     //merge 
-    public static List<int> Merge(List<List<int>> lists)
+    public static List<int> UnsortedMerge(List<List<int>> lists)
     {
         List<int> mergedList = new List<int>();
         for (int i = 0; i < lists.Count; ++i)
@@ -327,8 +335,77 @@ public static class WFunctions
         return mergedList;
     }
     //Merge and Sort
-
+    public static List<int> SortedMerge(List<List<int>> lists)
+    {
+        List<int> mergedList = UnsortedMerge(lists);
+        Sort(mergedList);
+        return mergedList;
+    }
+    //Sum
+    public static float Sum(List<float> list)
+    {
+        float sum = 0;
+        for (int i = 0; i < list.Count; ++i)
+        {
+            sum += list[i];
+        }
+        return sum;
+    }
+    //Average
+    public static float Average(List<float> list)
+    {
+        return Sum(list) / list.Count;
+    }
+    //FindMax
+    public static float FindMax(List<float> list)
+    {
+        float min = list[0];
+        for (int i = 1; i < list.Count; ++i)
+            min = Mathf.Min(min, list[i]);
+        return min;
+    }
+    //FindMin
+    public static float FindMin(List<float> list)
+    {
+        float max = list[0];
+        for (int i = 1; i < list.Count; ++i)
+            max = Mathf.Max(max, list[i]);
+        return max;
+    }
+    //Round
+    public static void Round(List<float> list)
+    {
+        for (int i = 0; i < list.Count; ++i)
+        {
+            list[i] = Mathf.Round(list[i]);
+        }
+    }
+    //FloatToInt
+    public static List<int> FloatToInt(List<float> list)
+    {
+        List<int> clonedList = new List<int>();
+        for (int i = 0; i < list.Count; ++i)
+        {
+            clonedList.Add((int)list[i]);
+        }
+        return clonedList;
+    }
+    //IntToFloat
+    public static List<float> IntToFloat(List<int> list)
+    {
+        List<float> clonedList = new List<float>();
+        for (int i = 0; i < list.Count; ++i)
+        {
+            clonedList.Add((float)(list[i]));
+        }
+        return clonedList;
+    }
     //Debug.Log array contents
+    
+    
+}
+public static class WDistanceFunctions
+{
     //Horizontal Distance
     public static float HorizontalDistance(Vector2 point1, Vector2 point2)
     {

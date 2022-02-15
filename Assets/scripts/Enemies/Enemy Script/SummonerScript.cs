@@ -32,6 +32,6 @@ public class SummonerScript : EnemyAI // make a separate enemy for the summonr
         GameObject currentEnemy = Instantiate(spawnedEnemy, transform.position, Quaternion.identity);
         currentEnemy.GetComponent<EnemyAI>().currentPath = currentPath;
         currentEnemy.GetComponent<EnemyAI>().currentWaypoint = currentWaypoint;
-        summonedEnemies.Add(currentEnemy); 
+        summonedEnemies.Add(currentEnemy);
     }
 }

@@ -289,11 +289,43 @@ public static class WFunctions
         }
     }
     //clone
-
+    public static List<int> Clone(List<int> list)
+    {
+        List<int> clonedList = new List<int>();
+        for (int i = 0; i < list.Count; ++i)
+        {
+            clonedList.Add(list[i]);
+        }
+        return clonedList;
+    }
     //remove duplicates
-
+    public static void RemoveDuplicates(List<int> list)
+    {
+        for (int i = 0; i < list.Count - 1; ++i)
+        {
+            for (int j = i; j < list.Count; ++j)
+            {
+                if (list[i] == list[j])
+                {
+                    list.Remove(j);
+                    --j;
+                }
+            }
+        }
+    }
     //merge 
-
+    public static List<int> Merge(List<List<int>> lists)
+    {
+        List<int> mergedList = new List<int>();
+        for (int i = 0; i < lists.Count; ++i)
+        {
+            for (int j = 0; j < lists[i].Count; ++j)
+            {
+                mergedList.Add(lists[i][j]);
+            }
+        }
+        return mergedList;
+    }
     //Merge and Sort
 
     //Debug.Log array contents
